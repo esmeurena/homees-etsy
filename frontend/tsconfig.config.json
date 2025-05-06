@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "composite": true,
+        "types": [
+            "node",
+            "vite/client"
+        ]
+    }
+}

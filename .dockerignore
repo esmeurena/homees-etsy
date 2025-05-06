@@ -1,0 +1,9 @@
+instance/*
+instance
+*/node_modules
+*/*.env
+*/.venv
+*/*.db
+.git
+.gitignore
+*/package-lock.json
