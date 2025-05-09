@@ -1,3 +1,8 @@
+# Homeees
+## Description Sumamry
+
+
+
 # Flask React Project
 
 This is the starter for the Flask React project.
@@ -32,7 +37,8 @@ This is the starter for the Flask React project.
    ```bash
    flask db upgrade
    ```
-
+   if upgrade error about not having database named " something " then just do createdb " something "
+   as precaution, or if you get an error do: flask seed undo
    ```bash
    flask seed all
    ```

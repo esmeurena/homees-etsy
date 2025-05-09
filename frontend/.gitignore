@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+.backend/Pipfile.lock
+Pipfile.lock
 
 # Editor directories and files
 .vscode/*
