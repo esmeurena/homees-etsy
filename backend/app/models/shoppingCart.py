@@ -9,10 +9,14 @@ class ShoppingCart(db.Model):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    productId = db.Column(db.Integer, nullable=False)
-    userId = db.Column(db.Integer, nullable=False)
+    productId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")), nullable=False)
+    userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     createdAt = db.Column(db.TIMESTAMP, default=datetime.now)
     updatedAt = db.Column(db.TIMESTAMP, default=datetime.now)
+
+    # one-to-many
+    products = db.relationship("Product", back_populates="shoppingCarts")
+    user = db.relationship("User", back_populates="shoppingCarts")
 
     def to_dict(self):
         return {"id": self.id, "productId": self.productId, "userId": self.userId}

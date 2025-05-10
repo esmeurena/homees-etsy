@@ -23,6 +23,13 @@ class User(db.Model, UserMixin):
     createdAt = db.Column(db.TIMESTAMP, default=datetime.now)
     updatedAt = db.Column(db.TIMESTAMP, default=datetime.now)
 
+    # one-to-many
+    products = db.relationship("Product", back_populates="user")
+    favorites = db.relationship("Favorite", back_populates="user")
+    shoppingCarts = db.relationship("ShoppingCart", back_populates="user")
+    transactions = db.relationship("Transaction", back_populates="user")
+    reviews = db.relationship("Review", back_populates="user")
+
     @property
     def password(self):
         return self.hashed_password
