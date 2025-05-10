@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-import datetime
+from datetime import datetime
 
 
 class Review(db.Model):
@@ -13,8 +13,8 @@ class Review(db.Model):
     userId = db.Column(db.Integer, nullable=False)
     review = db.Column(db.String(200), nullable=False)
     stars = db.Column(db.Integer)
-    createdAt = db.Column(db.TIMESTAMP, default=datetime.now)
-    updatedAt = db.Column(db.TIMESTAMP, default=datetime.now)
+    createdAt = db.Column(db.TIMESTAMP, default=datetime.utcnow)
+    updatedAt = db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utucnow)
 
     def to_dict(self):
         return {"id": self.id, "productId": self.productId, "userId": self.userId, "review": self.review, "stars": self.stars}
