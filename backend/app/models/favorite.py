@@ -1,5 +1,5 @@
 from db import db, environment, SCHEMA, add_prefix_for_prod
-import datetime
+from datetime import datetime
 
 
 class Favorite(db.Model):
@@ -11,8 +11,8 @@ class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     productId = db.Column(db.Integer, nullable=False)
     userId = db.Column(db.Integer, nullable=False)
-    createdAt = db.Column(db.TIMESTAMP, default=datetime.now)
-    updatedAt = db.Column(db.TIMESTAMP, default=datetime.now)
+    createdAt = db.Column(db.TIMESTAMP, default=datetime.utcnow)
+    updatedAt = db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utucnow)
 
 
     def to_dict(self):
