@@ -14,7 +14,7 @@ class Review(db.Model):
     review = db.Column(db.String(200), nullable=False)
     stars = db.Column(db.Integer)
     created_at = db.Column(db.TIMESTAMP, default=datetime.utcnow)
-    updated_at = db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utucnow)
+    updated_at = db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # one-to-many
     review_images = db.relationship("ReviewImage", back_populates="reviews")
