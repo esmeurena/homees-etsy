@@ -6,5 +6,3 @@ __pycache__/
 .vscode/
 node_modules
 dist
-.backend/Pipfile.lock
-Pipfile.lock
