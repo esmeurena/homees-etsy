@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .productImage import ProductImage
 import datetime
 
 
@@ -29,4 +30,4 @@ class Product(db.Model):
 
 
     def to_dict(self):
-        return {"id": self.id, "ownerId": self.ownerId, "name": self.name, "description": self.description, "price": self.price, "itemCount": self.itemCount}
+        return {"id": self.id, "ownerId": self.ownerId, "name": self.name, "description": self.description, "price": self.price, "itemCount": self.itemCount, "productImages": ProductImage.query(ProductImage.productId == self.id)}

@@ -9,11 +9,11 @@ class Transaction(db.Model):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    productId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")), nullable=False)
-    userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
-    totalPrice = db.Column(db.Integer, nullable=False)
-    createdAt = db.Column(db.TIMESTAMP, default=datetime.now)
-    updatedAt = db.Column(db.TIMESTAMP, default=datetime.now)
+    product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
+    total_price = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.TIMESTAMP, default=datetime.now)
+    updated_at = db.Column(db.TIMESTAMP, default=datetime.now)
 
     # one-to-many
     products = db.relationship("Product", back_populates="transactions")

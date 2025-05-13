@@ -9,11 +9,11 @@ class ProductImage(db.Model):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    productId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")), nullable=False)
     url = db.Column(db.String(100))
     preview = db.Column(db.Boolean, nullable=False)
-    createdAt = db.Column(db.TIMESTAMP, default=datetime.utcnow)
-    updatedAt = db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.TIMESTAMP, default=datetime.utcnow)
+    updated_at = db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # one-to-many
     products = db.relationship("Product", back_populates="productImages")
