@@ -12,10 +12,10 @@ class ReviewImage(db.Model):
     review_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("reviews.id")), nullable=False)
     url = db.Column(db.String, nullable=True) 
     created_at = db.Column(db.TIMESTAMP, default=datetime.utcnow)
-    updated_at = db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utucnow)
+    updated_at = db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # one-to-many
-    reviews = db.relationship("Review", back_populates="reviewImages")
+    reviews = db.relationship("Review", back_populates="review_images")
 
     def to_dict(self):
         return {"id": self.id, "review_id": self.review_id, "url": self.url}

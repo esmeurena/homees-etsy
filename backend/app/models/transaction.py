@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-import datetime
+from datetime import datetime
 
 
 class Transaction(db.Model):
@@ -12,8 +12,8 @@ class Transaction(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     total_price = db.Column(db.Integer, nullable=False)
-    created_at = db.Column(db.TIMESTAMP, default=datetime.now)
-    updated_at = db.Column(db.TIMESTAMP, default=datetime.now)
+    created_at = db.Column(db.TIMESTAMP, default=datetime.utcnow)
+    updated_at = db.Column(db.TIMESTAMP, default=datetime.utcnow)
 
     # one-to-many
     products = db.relationship("Product", back_populates="transactions")
