@@ -3,17 +3,17 @@ from sqlalchemy.sql import text
 
 
 # Adds a demo user, you can add other users here if you want
-def seed_users():
-    product_1 = Product(ownerId=1, name='name_1', price=5,
-                        description='a description')
-    product_2 = Product(ownerId=2, name='name_2', price=10,
-                        description='a description')
-    product_3 = Product(ownerId=3, name='name_3', price=15,
-                        description='a description')
-    product_4 = Product(ownerId=4, name='name_4', price=20,
-                        description='a description')
-    product_5 = Product(ownerId=5, name='name_5', price=25,
-                        description='a description')
+def seed_products():
+    product_1 = Product(owner_id=1, name='name_1', price=5,
+                        description='a description', item_count='5')
+    product_2 = Product(owner_id=2, name='name_2', price=10,
+                        description='a description', item_count='10')
+    product_3 = Product(owner_id=3, name='name_3', price=15,
+                        description='a description', item_count='15')
+    product_4 = Product(owner_id=4, name='name_4', price=20,
+                        description='a description', item_count='20')
+    product_5 = Product(owner_id=5, name='name_5', price=25,
+                        description='a description', item_count='25')
 
     db.session.add(product_1)
     db.session.add(product_2)
