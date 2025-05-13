@@ -20,4 +20,4 @@ class Transaction(db.Model):
     user = db.relationship("User", back_populates="transactions")
 
     def to_dict(self):
-        return {"id": self.id, "productId": self.productId, "userId": self.userId, "totalPrice": self.totalPrice}
+        return {"id": self.id, "product_id": self.productId, "user_id": self.userId, "total_price": self.total_price}

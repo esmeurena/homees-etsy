@@ -19,4 +19,4 @@ class ProductImage(db.Model):
     products = db.relationship("Product", back_populates="productImages")
 
     def to_dict(self):
-        return {"id": self.id, "productId": self.productId, "userId": self.userId, "preview": self.preview}
+        return {"id": self.id, "product_id": self.product_id, "preview": self.preview}

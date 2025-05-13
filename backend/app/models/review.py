@@ -17,9 +17,9 @@ class Review(db.Model):
     updated_at = db.Column(db.TIMESTAMP, default=datetime.utcnow, onupdate=datetime.utucnow)
 
     # one-to-many
-    reviewImages = db.relationship("ReviewImage", back_populates="reviews")
+    review_images = db.relationship("ReviewImage", back_populates="reviews")
     user = db.relationship("User", back_populates="reviews")
     products = db.relationship("Product", back_populates="reviews")
 
     def to_dict(self):
-        return {"id": self.id, "productId": self.productId, "userId": self.userId, "review": self.review, "stars": self.stars}
+        return {"id": self.id, "product_id": self.product_id, "user_id": self.user_id, "review": self.review, "stars": self.stars}

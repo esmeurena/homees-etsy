@@ -19,4 +19,4 @@ class Favorite(db.Model):
     products = db.relationship("Product", back_populates="favorites")
 
     def to_dict(self):
-        return {"id": self.id, "productId": self.productId, "userId": self.userId}
+        return {"id": self.id, "product_id": self.product_id, "user_id": self.user_id}
