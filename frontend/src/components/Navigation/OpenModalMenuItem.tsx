@@ -15,7 +15,7 @@ function OpenModalMenuItem({
   };
 
   return (
-    <li onClick={onClick}>{itemText}</li>
+    <div onClick={onClick} style={{padding: '.2rem'}}>{itemText}</div>
   );
 }
 
