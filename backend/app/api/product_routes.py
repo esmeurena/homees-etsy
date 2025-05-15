@@ -35,7 +35,7 @@ def get_product(id):
 @product_routes.route('/create', methods=['POST'])
 @login_required
 def create_product():
-    data = data_request.get_json()
+    data = data.get_json()
     new_product = {
         'id' : len(id) + 1,
         'name' : data['name'],
@@ -50,7 +50,7 @@ def create_product():
     if __name__ == '__main__':
         app.run(debug=True)
 
-        
+
 # Update a Product Route
 @product_routes.route('/<int:id>', methods=['PUT'])
 @login_required
