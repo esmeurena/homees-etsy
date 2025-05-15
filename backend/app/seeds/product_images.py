@@ -4,9 +4,9 @@ from sqlalchemy.sql import text
 def seed_product_images():
     product_image_1 = ProductImage(product_id=1, url='url_1.com', preview=True)
     product_image_2 = ProductImage(product_id=2, url='url_2.com', preview=True)
-    product_image_3 = ProductImage(product_id=3, url='url_3.com', Preview=True)
-    product_image_4 = ProductImage(product_id=4, url='url_4.com', Preview=True)
-    product_image_5 = ProductImage(product_id=5, url='url_5.com', Preview=True)
+    product_image_3 = ProductImage(product_id=3, url='url_3.com', preview=True)
+    product_image_4 = ProductImage(product_id=4, url='url_4.com', preview=True)
+    product_image_5 = ProductImage(product_id=5, url='url_5.com', preview=True)
 
     db.session.add(product_image_1)
     db.session.add(product_image_2)
