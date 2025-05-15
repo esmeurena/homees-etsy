@@ -16,7 +16,7 @@ const ProductCard = ({name, description, price, owner, image}: ProductProps): JS
     return (
         <NavLink id='product-card' to=''> {/* FILL THIS IN FOR GET A PRODUCT*/}
             <img id='product-card-image' src={image}/>
-            <div id='product-card-text'>
+            <div>
             <p className='product-card-text'>{name}</p>
             <b className='product-card-text'>${price}</b>
             <p className='product-card-text' style={{color: '#595959'}}>{owner}</p>
