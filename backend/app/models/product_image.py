@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 class ProductImage(db.Model):
-    __tablename__ = "product_images"
+    __tablename__ = "productimages"
 
     if environment == "production":
         __table_args__ = {"schema": SCHEMA}

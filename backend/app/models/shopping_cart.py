@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 class ShoppingCart(db.Model):
-    __tablename__ = "shopping_carts"
+    __tablename__ = "shoppingcarts"
 
     if environment == "production":
         __table_args__ = {"schema": SCHEMA}

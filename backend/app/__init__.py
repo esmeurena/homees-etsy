@@ -4,15 +4,15 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
-from .models import db, User, Product, Favorite, ProductImage, Review, ReviewImage, ShoppingCart, Transaction
+from .models import db, User, Product, Favorite, ProductImage, Review, ShoppingCart, Transaction # ReviewImage
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.product_routes import product_routes
-from .api.favorite_routes import favorite_routes
-from .api.product_image_routes import product_image_routes
+from .api.favorite_routes import favorites_routes
+from .api.product_images_routes import productimages_routes
 from .api.review_routes import review_routes
-from .api.review_image_routes import review_image_routes
-from .api.shopping_cart_routes import shopping_cart_routes
+from .api.review_images_routes import reviewimages_routes
+from .api.shopping_cart_routes import shoppingcart_routes
 from .api.transaction_routes import transaction_routes
 
 from .seeds import seed_commands
@@ -37,12 +37,12 @@ app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix="/api/users")
 app.register_blueprint(auth_routes, url_prefix="/api/auth")
 app.register_blueprint(product_routes, url_prefix="/api/products")
-app.register_blueprint(favorite_routes, url_prefix="/api/favorites")
-app.register_blueprint(product_image_routes, url_prefix="/api/product_images")
+app.register_blueprint(favorites_routes, url_prefix="/api/favorites")
+app.register_blueprint(productimages_routes, url_prefix="/api/productimages")
 app.register_blueprint(review_routes, url_prefix="/api/reviews")
-app.register_blueprint(shopping_cart_routes, url_prefix="/api/shopping_carts")
+app.register_blueprint(shoppingcart_routes, url_prefix="/api/shoppingcarts")
 app.register_blueprint(transaction_routes, url_prefix="/api/transactions")
-app.register_blueprint(review_image_routes, url_prefix="/api/review_images")
+app.register_blueprint(reviewimages_routes, url_prefix="/api/reviewimages")
 db.init_app(app)
 Migrate(app, db)
 
