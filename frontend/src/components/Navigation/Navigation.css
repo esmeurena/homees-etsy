@@ -3,10 +3,11 @@
 }
 
 #nav-logo {
-  color: var(--orange);
+  color: #F1641E;
   text-decoration: none;
   font-size: 2.5rem;
   margin-left: 1rem;
+  font-family: serif;
 }
 
 #nav-bar {

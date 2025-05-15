@@ -1,0 +1,23 @@
+#product-card {
+    display: flex;
+    flex-direction: column;
+    height: 22rem;
+    width: 20rem;
+    cursor: pointer;
+}
+
+
+#product-card-image {
+    height: 15rem;
+    object-fit: cover;
+    transition: filter .1s ease-in;
+}
+
+#product-card:hover #product-card-image {
+    filter: drop-shadow(0 0 .1rem rgb(177, 177, 177))
+}
+
+.product-card-text {
+    font-size: .9rem;
+    margin: .5rem 0
+}

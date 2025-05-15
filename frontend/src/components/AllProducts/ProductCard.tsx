@@ -1,4 +1,5 @@
-import './AllProducts';
+import { NavLink } from 'react-router-dom';
+import './ProductCard.css';
 
 interface ProductProps {
     id: number,
@@ -6,15 +7,21 @@ interface ProductProps {
     description: string,
     price: number,
     owner: string,
+    image: string,
 }
 
-const ProductCard = ({...product}: ProductProps): JSX.Element => {
+const ProductCard = ({name, description, price, owner, image}: ProductProps): JSX.Element => {
 
 
     return (
-        <div id='product-card'>
-            hello
-        </div>
+        <NavLink id='product-card' to=''> {/* FILL THIS IN FOR GET A PRODUCT*/}
+            <img id='product-card-image' src={image}/>
+            <div id='product-card-text'>
+            <p className='product-card-text'>{name}</p>
+            <b className='product-card-text'>${price}</b>
+            <p className='product-card-text' style={{color: '#595959'}}>{owner}</p>
+            </div>
+        </NavLink>
     )
 }
 
