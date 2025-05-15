@@ -2,7 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 class ReviewImage(db.Model):
-    __tablename__ = "reviewImages"
+    __tablename__ = "review_images"
 
     if environment == "production":
         __table_args__ = {"schema": SCHEMA}

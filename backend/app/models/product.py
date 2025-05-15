@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .productImage import ProductImage
+from .product_image import ProductImage
 from datetime import datetime
 
 

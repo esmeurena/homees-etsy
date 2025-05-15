@@ -8,9 +8,9 @@ def seed_reviews():
                         stars= 2)
     review_3 = Review(product_id=3, user_id=3, review='review_3',
                         stars= 3)
-    review_4 = Review(product_id=4, user_id=4, review='review_04',
+    review_4 = Review(product_id=4, user_id=4, review='review_4',
                         stars= 4)
-    review_5 = Review(product_id=5, user_id=5, review='review_05',
+    review_5 = Review(product_id=5, user_id=5, review='review_5',
                         stars= 5)
 
     db.session.add(review_1)
