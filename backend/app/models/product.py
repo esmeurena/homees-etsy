@@ -12,7 +12,7 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     name = db.Column(db.String(30), nullable=False, unique=True)
-    description = db.Column(db.String(100))
+    description = db.Column(db.String(100), nullable = True)
     price = db.Column(db.Numeric(10,2), nullable=False)
     item_count = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.TIMESTAMP, default=datetime.utcnow)
@@ -28,4 +28,4 @@ class Product(db.Model):
 
 
     def to_dict(self):
-        return {"id": self.id, "user_id": self.user_id, "name": self.name, "description": self.description, "price": self.price, "item_count": self.item_count, "product_images": ProductImage.query(ProductImage.productId == self.id)}
+        return {"id": self.id, "user_id": self.user_id, "name": self.name, "description": self.description, "price": self.price, "item_count": self.item_count, "product_images": [img.to_dict() for img in self.product_images]}
