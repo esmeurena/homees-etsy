@@ -35,9 +35,22 @@ def get_product(id):
 @product_routes.route('/create', methods=['POST'])
 @login_required
 def create_product():
-    pass
+    data = data_request.get_json()
+    new_product = {
+        'id' : len(id) + 1,
+        'name' : data['name'],
+        'description' : data['description'],
+        'price' : data['price']
+    }
 
+    products.append(new_product)
 
+    return jsonify({'message': 'Product created successfully', 'item': new_product }), 201
+
+    if __name__ == '__main__':
+        app.run(debug=True)
+
+        
 # Update a Product Route
 @product_routes.route('/<int:id>', methods=['PUT'])
 @login_required
