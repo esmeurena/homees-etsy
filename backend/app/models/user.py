@@ -24,7 +24,7 @@ class User(db.Model, UserMixin):
     updated_at = db.Column(db.TIMESTAMP, default=datetime.utcnow)
 
     # one-to-many
-    products = db.relationship("Product", back_populates="owner")
+    products = db.relationship("Product", back_populates="user")
     favorites = db.relationship("Favorite", back_populates="user")
     shopping_carts = db.relationship("ShoppingCart", back_populates="user")
     transactions = db.relationship("Transaction", back_populates="user")

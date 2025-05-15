@@ -1,70 +1,72 @@
-// ------- Imports -------
-import { Dispatch } from 'redux';
+// IMPORTS
+import { IProduct, IProductState, IActionCreator } from './types/products';
 
-// ------- Types -------
-export interface Product {
-    id: number;
-    ownerId: number;
-    name: string;
-    description: string;
-    price: number;
-    stock: number;
-    imageUrl?: string;
-    createdAt: string;
-    updatedAt: string;
-}
+//ACTION TYPES
+const GET_ALL_PRODUCTS = 'products/GET_ALL_PRODUCTS';
 
-interface ProductState {
-    byId: { [id: number]: Product };
-}
 
-// ------- Action Types -------
-const PRODUCT_DETAILS = "products/productDetails" as const;
+// ACTION CREATORS
 
-// ------- Action Creator -------
-const setProduct = (product: Product) => ({
-    type: PRODUCT_DETAILS,
-    payload: product,
-});
+const getAllProducts = (products: IProduct[]) => ({
+    type: GET_ALL_PRODUCTS,
+    payload: products
+})
 
-// ------- Union Type for Actions -------
-type ProductAction = ReturnType<typeof setProduct>;
-
-// ------- Thunk -------
-export const getOneProductThunk = (productId: string) => async (dispatch: Dispatch<ProductAction>) => {
+// THUNK
+export const getAllProductsThunk = (): any => async (dispatch: any) => {
     try {
-        const response = await fetch(`/api/products/${productId}`);
-        if (response.ok) {
-            const data: Product = await response.json();
-            dispatch(setProduct(data));
-            return data;
+        const res = await fetch('/api/products');
+        if (res.ok) {
+            const data = await res.json();
+            if (data.errors) {
+                throw res;
+            }
+            dispatch(getAllProducts(data))
+            return data.Products;
         } else {
-            throw response;
+            throw res;
         }
-    } catch (error) {
-        return error;
+    } catch (e) {
+        const err = e as Response;
+        return (await err.json());
     }
-};
+}
 
-// ------- Initial State -------
-const initialState: ProductState = {
+
+// INITIAL STATE
+const initialState: IProductState = {
     byId: {},
+    allProducts: []
 };
 
-// ------- Reducer -------
-const productsReducer = (state = initialState, action: ProductAction): ProductState => {
+
+// REDUCER 
+function productsReducer(state = initialState, action: IActionCreator) {
+    let newState: IProductState = {
+        byId: { ...state.byId },
+        allProducts: [...state.allProducts]
+    };
+
     switch (action.type) {
-        case PRODUCT_DETAILS:
-            return {
-                ...state,
-                byId: {
-                    ...state.byId,
-                    [action.payload.id]: action.payload,
-                },
-            };
+        case GET_ALL_PRODUCTS:
+            const products = action.payload;
+            newState.byId = {};
+            newState.allProducts = [];
+
+            for (let product of products) {
+                newState.byId[product.id] = product;
+            }
+
+            newState.allProducts = products;
+
+            return newState;
+    
         default:
             return state;
     }
-};
+}
+
+
+
 
 export default productsReducer;

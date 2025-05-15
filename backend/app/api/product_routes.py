@@ -14,7 +14,7 @@ def get_all_products():
     all_products = [product.to_dict() for product in Product.query.all()]
 
     for product in all_products:
-        user = User.query.get(product['ownerId'])
+        user = User.query.get(product['user_id'])
         products.append(user)
     
     users = [user.to_dict() for user in products]
