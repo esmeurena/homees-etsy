@@ -4,6 +4,9 @@ export interface SessionInitialState {
 }
 
 export interface IUser {
+    lastName: string;
+    firstName: string;
+    username: string;
     id: number;
     email: string;
 }

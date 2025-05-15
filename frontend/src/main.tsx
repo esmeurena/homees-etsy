@@ -6,6 +6,7 @@ import { router } from "./router";
 import * as sessionActions from "./redux/session";
 import "./index.css";
 import store from "./redux/store";
+import AllProducts from "./components/AllProducts";
 
 declare global {
   interface Window {

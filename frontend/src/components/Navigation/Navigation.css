@@ -1,3 +1,42 @@
 .profile-dropdown {
   position: absolute;
 }
+
+#nav-logo {
+  color: #F1641E;
+  text-decoration: none;
+  font-size: 2.5rem;
+  margin-left: 1rem;
+  font-family: serif;
+}
+
+#nav-bar {
+    display: flex;
+    justify-content: space-between;
+}
+
+#nav-right {
+    display: flex;
+}
+
+
+#shopping-cart-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    color: black;
+    font-size: 1.2rem;
+    height: 3rem;
+    width: 3rem;
+    border-radius: 10rem;
+    transition: ease-in .2s;
+    background-color: white;
+    cursor: pointer;
+    margin-top: .2rem;
+}
+
+#shopping-cart-button:hover {
+  transition: ease-in .2s;
+  background-color: #CCEBFF;
+}
