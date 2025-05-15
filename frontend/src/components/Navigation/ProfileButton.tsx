@@ -43,47 +43,13 @@ function ProfileButton():JSX.Element {
 
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
-  // return (
-  //   <>
-  //     <button onClick={(e) => toggleMenu(e)}>
-  //       <FaUserCircle />
-  //     </button>
-  //     {showMenu && (
-  //       <ul className={"profile-dropdown"} ref={ulRef}>
-  //         {user ? (
-  //           <>
-  //             <li>{user.username}</li>
-  //             <li>{user.email}</li>
-  //             <li>
-  //               <button onClick={(e) => logout(e)}>Log Out</button>
-  //             </li>
-  //           </>
-  //         ) : (
-  //           <>
-  //             <OpenModalMenuItem
-  //               itemText="Log In"
-  //               onItemClick={closeMenu}
-  //               modalComponent={<LoginFormModal />}
-  //             />
-  //             <OpenModalMenuItem
-  //               itemText="Sign Up"
-  //               onItemClick={closeMenu}
-  //               modalComponent={<SignupFormModal />}
-  //             />
-  //           </>
-  //         )}
-  //       </ul>
-  //     )}
-  //   </>
-  // );
-
   return (
     <>
       <div className="button-and-info">
         <div id='nav-right'>
         <button onClick={toggleMenu} id="profile-button">
-          <div style={{fontSize: '1.5rem'}}><FaUserCircle /></div>
-          <p style={{fontSize: '.8rem', margin: '0 0 .5rem .2rem'}}>&#11206;</p>
+          <div style={{fontSize: '1.5rem', marginTop: '.4rem'}}><FaUserCircle /></div>
+          <p style={{fontSize: '.8rem', margin: '.4rem 0 .5rem .2rem'}}>&#11206;</p>
         </button>
 
         </div>
