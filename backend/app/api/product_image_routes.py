@@ -5,32 +5,32 @@ from app.models import db
 # from app.models import ProductImage
 # from app.forms import
 
-productimages_routes = Blueprint('productimages', __name__)
+product_image_routes = Blueprint('product_images', __name__)
 
 # Get All Product Images Route
-@productimages_routes.route('/')
+@product_image_routes.route('/')
 def get_all_productimages():
     pass
 
 # Get Single Product Image Route
-@productimages_routes.route('/<int:id>')
+@product_image_routes.route('/<int:id>')
 def get_productimage(id):
     pass
 
 # Create a Product Image Route
-@productimages_routes.route('/create', methods=['POST'])
+@product_image_routes.route('/create', methods=['POST'])
 @login_required
 def create_productimage():
     pass
 
 # Update a Product Image Route
-@productimages_routes.route('/<int:id>', methods=['PUT'])
+@product_image_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_productimage(id):
     pass
 
 # Delete a Product Image Route
-@productimages_routes.route('/<int:id>', methods=['DELETE'])
+@product_image_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_productimage(id):
     pass
