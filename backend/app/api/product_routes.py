@@ -14,7 +14,7 @@ def get_all_products():
     all_products = [product.to_dict() for product in Product.query.all()]
 
     for product in all_products:
-        user = User.query.get(product['user_id'])
+        user = User.query.get(product['owner_id'])
         products.append(user)
     
     users = [user.to_dict() for user in products]
@@ -49,4 +49,13 @@ def update_product(id):
 @product_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_product(id):
-    pass
+    product = Product.query.get(id)
+
+    if product:
+        if product.owner_id == current_user.id:
+            db.session.delete(product)
+            db.session.commit()
+            return {'message': 'Deleted'}, 200
+        else: 
+            return {'error': 'Forbidden'}, 403
+    return {'error': 'Product not found'}, 404 
