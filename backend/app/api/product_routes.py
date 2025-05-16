@@ -1,6 +1,5 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-# import whatever the Product model class name is below
 from app.models import db, Product, User
 # import the product form class 
 # from app.forms import 
@@ -27,8 +26,9 @@ def get_all_products():
 
 # Get Single Product Route
 @product_routes.route('/<int:id>')
-def get_product(id):
-    pass
+def get_single_product(id):
+    single_product = Product.query.get(id)
+    return single_product.to_dict()
 
 
 # Create a Product Route
