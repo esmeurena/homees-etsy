@@ -35,7 +35,21 @@ def get_single_product(id):
 @product_routes.route('/create', methods=['POST'])
 @login_required
 def create_product():
-    pass
+    form = NewProduct()  #****  NewProduct should match the form name in the front end   ******
+
+    if form.validate_on_submit():
+        data = form.data
+        new_product = {
+            'name' : data['name'],
+            'description' : data['description'],
+            'price' : data['price']
+        }
+
+        db.session.add(new_product)
+        db.session.commit()
+
+    else:
+        return "Bad data"
 
 
 # Update a Product Route
