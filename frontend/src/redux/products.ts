@@ -3,13 +3,18 @@ import { IProduct, IProductState, IActionCreator } from './types/products';
 
 //ACTION TYPES
 const GET_ALL_PRODUCTS = 'products/GET_ALL_PRODUCTS';
-
+const GET_SINGLE_PRODUCT = 'products/GET_SINGLE_PRODUCT';
 
 // ACTION CREATORS
 
 const getAllProducts = (products: IProduct[]) => ({
     type: GET_ALL_PRODUCTS,
     payload: products
+})
+
+const getSingleProduct = (product: IProduct[]) => ({
+    type: GET_SINGLE_PRODUCT,
+    payload: product
 })
 
 // THUNK
@@ -32,6 +37,26 @@ export const getAllProductsThunk = (): any => async (dispatch: any) => {
     }
 }
 
+export const getSingleProductThunk = (productId: number): any => async (dispatch: any) => {
+    try {
+        const res = await fetch(`/api/products/${productId}`);
+        if (res.ok) {
+            const data = await res.json();
+            if (data.errors) {
+                throw res;
+            }
+            dispatch(getSingleProduct(data))
+            return data.Products;
+        } else {
+            throw res;
+        }
+    } catch (e) {
+        const err = e as Response;
+        return (await err.json());
+    }
+}
+
+
 
 // INITIAL STATE
 const initialState: IProductState = {
@@ -40,7 +65,7 @@ const initialState: IProductState = {
 };
 
 
-// REDUCER 
+// REDUCER
 function productsReducer(state = initialState, action: IActionCreator) {
     let newState: IProductState = {
         byId: { ...state.byId },
@@ -60,7 +85,19 @@ function productsReducer(state = initialState, action: IActionCreator) {
             newState.allProducts = products;
 
             return newState;
-    
+
+        case GET_SINGLE_PRODUCT:
+            const singleProduct = action.payload;
+            newState.byId = {};
+            newState.allProducts = [...state.allProducts];
+            let newByIdProduct = {};
+            for (let product of singleProduct) {
+                newState.byId[product.id] = product;
+            }
+            newState.byId = newByIdProduct;
+
+            return newState;
+
         default:
             return state;
     }
