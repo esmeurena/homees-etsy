@@ -35,20 +35,21 @@ def get_product(id):
 @product_routes.route('/create', methods=['POST'])
 @login_required
 def create_product():
-    data = data.get_json()
-    new_product = {
-        'id' : len(id) + 1,
-        'name' : data['name'],
-        'description' : data['description'],
-        'price' : data['price']
-    }
+    form = NewProduct()  #****  NewProduct should match the form name in the front end   ******
 
-    products.append(new_product)
+    if form.validate_on_submit():
+        data = form.data
+        new_product = {
+            'name' : data['name'],
+            'description' : data['description'],
+            'price' : data['price']
+        }
 
-    return jsonify({'message': 'Product created successfully', 'item': new_product }), 201
+        db.session.add(new_product)
+        db.session.commit()
 
-    if __name__ == '__main__':
-        app.run(debug=True)
+    else:
+        return "Bad data"
 
 
 # Update a Product Route
