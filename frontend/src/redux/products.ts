@@ -2,14 +2,19 @@
 import { IProduct, IProductState, IActionCreator } from './types/products';
 
 //ACTION TYPES
-const GET_ALL_PRODUCTS = 'products/GET_ALL_PRODUCTS';
-
+const GET_ALL_PRODUCTS = 'products/getAllProducts';
+const DELETE_PRODUCT = 'products/deleteProduct'
 
 // ACTION CREATORS
 
 const getAllProducts = (products: IProduct[]) => ({
     type: GET_ALL_PRODUCTS,
     payload: products
+})
+
+const deleteProduct = (productId: number) => ({
+    type: DELETE_PRODUCT,
+    payload: productId,
 })
 
 // THUNK
@@ -32,6 +37,23 @@ export const getAllProductsThunk = (): any => async (dispatch: any) => {
     }
 }
 
+export const deleteProductThunk = (productId: number) => async (dispatch: any) => {
+    try {
+        const res = await fetch(`/api/products/${productId}`, {
+            method: "DELETE",
+        })
+        if (res.ok) {
+            dispatch(deleteProduct(productId));
+            return { success: true }
+        } else {
+            throw res;
+        }
+    } catch (error) {
+        return {
+            errors: { message: "Failed to delete product" }
+        }
+    }
+} 
 
 // INITIAL STATE
 const initialState: IProductState = {
@@ -60,7 +82,18 @@ function productsReducer(state = initialState, action: IActionCreator) {
             newState.allProducts = products;
 
             return newState;
-    
+        case DELETE_PRODUCT: {
+            const productId = action.payload;
+            newState = { ...state };
+            newState.allProducts = state.allProducts.filter(
+                (product) => product.id !== productId
+            );
+            const newById = { ...state.byId };
+            delete newById[productId];
+            newState.byId = newById;
+
+            return newState;
+        }
         default:
             return state;
     }

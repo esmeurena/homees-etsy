@@ -22,4 +22,4 @@ class Review(db.Model):
     products = db.relationship("Product", back_populates="reviews")
 
     def to_dict(self):
-        return {"id": self.id, "product_id": self.product_id, "user_id": self.user_id, "review": self.review, "stars": self.stars}
+        return {"id": self.id, "product_id": self.product_id, "user_id": self.user_id, "review": self.review, "stars": self.stars, "review_images": [img.to_dict() for img in self.review_images]}
