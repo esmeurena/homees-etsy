@@ -5,13 +5,11 @@ import ProductCard from '../AllProducts/ProductCard';
 
 
 
-
-
 const GetSingleProduct = (): JSX.Element => {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
 
-    const product = useSelector((state) => state.products.byId[id])
+    // const product = useSelector((state) => state.products.byId[id])
 
     useEffect(() => {
 
