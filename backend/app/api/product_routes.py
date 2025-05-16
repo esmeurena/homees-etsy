@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from app.models import db, Product, User
-# import the product form class 
-# from app.forms import 
+# import the product form class
+# from app.forms import
 
 product_routes = Blueprint('products', __name__)
 
@@ -15,7 +15,7 @@ def get_all_products():
     for product in all_products:
         user = User.query.get(product['user_id'])
         products.append(user)
-    
+
     users = [user.to_dict() for user in products]
 
     for i in range(len(users)):
