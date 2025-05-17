@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
+from app.forms import ProductForm
 from app.models import db, Product, User
 # import the product form class
 # from app.forms import
@@ -34,22 +35,25 @@ def get_single_product(id):
 # Create a Product Route
 @product_routes.route('/create', methods=['POST'])
 @login_required
-def create_product():
-    form = NewProduct()  #****  NewProduct should match the form name in the front end   ******
 
+
+def create_product():
+    form = ProductForm()
+
+    form["csrf_token"].data = request.cookies["csrf_token"]
     if form.validate_on_submit():
         data = form.data
-        new_product = {
-            'name' : data['name'],
-            'description' : data['description'],
-            'price' : data['price']
-        }
+        product_form = Product (
+            name = data['name'],
+            description = data['description'],
+            price = data['price']
+        )
 
-        db.session.add(new_product)
+        db.session.add(product_form)
         db.session.commit()
+        return product_form.to_dict(), 201
 
-    else:
-        return "Bad data"
+    return form.errors, 401
 
 
 # Update a Product Route
