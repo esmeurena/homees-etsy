@@ -67,26 +67,27 @@ const initialState: IProductState = {
 
 // REDUCER
 function productsReducer(state = initialState, action: IActionCreator) {
-    let newState: IProductState = {
-        byId: { ...state.byId },
-        allProducts: [...state.allProducts]
-    };
-
+    // let newState: IProductState = {
+    //     byId: { ...state.byId },
+    //     allProducts: [...state.allProducts]
+    // };
+    let newState;
     switch (action.type) {
         case GET_ALL_PRODUCTS:
-            const products = action.payload;
-            newState.byId = {};
-            newState.allProducts = [];
-
+            const products = action.payload.Products;
+            newState = { ...state }
+            newState.allProducts = products;
+            let newByIdGetAllProducts: { [id: number]: IProduct} = {};
             for (let product of products) {
-                newState.byId[product.id] = product;
+                newByIdGetAllProducts[product.id] = product;
             }
-
+            newState.byId = newByIdGetAllProducts;
             newState.allProducts = products;
 
             return newState;
 
         case GET_SINGLE_PRODUCT:
+            newState = { ...state }
             const singleProduct = action.payload;
             newState.byId = {};
             newState.allProducts = [...state.allProducts];
