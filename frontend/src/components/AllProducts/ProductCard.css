@@ -19,6 +19,11 @@
     filter: drop-shadow(0 0 .1rem rgb(177, 177, 177))
 }
 
+#product-card-name-review {
+    display: flex;
+    justify-content: space-between;
+}
+
 .product-card-text {
     font-size: .9rem;
     margin: .5rem 0;

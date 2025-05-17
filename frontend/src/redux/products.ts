@@ -27,7 +27,7 @@ export const getAllProductsThunk = (): any => async (dispatch: any) => {
                 throw res;
             }
             dispatch(getAllProducts(data))
-            return data.Products;
+            // return data.Products;
         } else {
             throw res;
         }
@@ -74,11 +74,11 @@ function productsReducer(state = initialState, action: IActionCreator) {
 
     switch (action.type) {
         case GET_ALL_PRODUCTS:
-            const products = action.payload;
+            const products = action.payload.Products;
             newState.byId = {};
             newState.allProducts = [];
 
-            for (let product of products) {
+            for (let product in products) {
                 newState.byId[product.id] = product;
             }
 
