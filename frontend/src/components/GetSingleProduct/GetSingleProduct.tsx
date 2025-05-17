@@ -2,26 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './GetSingleProduct.css'
 import ProductCard from '../AllProducts/ProductCard';
+import { useParams } from 'react-router-dom';
+import { getSingleProductThunk } from '../../redux/products';
 
 
 
 const GetSingleProduct = (): JSX.Element => {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
+    const { id } = useParams();
 
-    // const product = useSelector((state) => state.products.byId[id])
+    const product = useSelector((state) => state.products.byId[id])
 
     useEffect(() => {
 
-    const getSpotDetails = async () => {
+    const singleProduct = async () => {
         await dispatch(getSingleProductThunk(id));
         setIsLoaded(true);
     }
 
         if (!isLoaded) {
-            getSpotDetails();
+            singleProduct();
         }
-    });
+        
+    }, [isLoaded, dispatch, id]);
 
     if(!isLoaded) {
         return <h1>Loading...</h1>
