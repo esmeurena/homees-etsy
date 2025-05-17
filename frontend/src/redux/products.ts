@@ -48,10 +48,9 @@ export const deleteProductThunk = (productId: number) => async (dispatch: any) =
         } else {
             throw res;
         }
-    } catch (error) {
-        return {
-            errors: { message: "Failed to delete product" }
-        }
+    } catch (e) {
+        const err = e as Response;
+        return (await err.json());
     }
 } 
 
