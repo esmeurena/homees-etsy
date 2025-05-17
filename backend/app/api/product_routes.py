@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from .forms import NewProduct
+from app.forms import ProductForm
 # import whatever the Product model class name is below
 from app.models import db, Product, User
 # import the product form class 
@@ -38,20 +38,20 @@ def get_product(id):
 
 
 def create_product():
-    form = NewProduct()  #****  NewProduct should match the form name in the front end   ******
+    form = ProductForm()
 
     form["csrf_token"].data = request.cookies["csrf_token"]
     if form.validate_on_submit():
         data = form.data
-        new_product = Product (
+        product_form = Product (
             name = data['name'],
             description = data['description'],
             price = data['price']
         )
 
-        db.session.add(new_product)
+        db.session.add(product_form)
         db.session.commit()
-        return new_product.to_dict(), 201
+        return product_form.to_dict(), 201
 
     return form.errors, 401
 
