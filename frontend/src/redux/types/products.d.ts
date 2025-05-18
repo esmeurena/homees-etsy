@@ -1,13 +1,25 @@
 export interface IProduct {
     id: number;
-    owner_id: number;
+    user_id: number;
     name: string;
     description: string;
     price: number;
     item_count: number;
     created_at: string;
     updated_at: string;
+}
 
+export interface ICreateProduct {
+    name: string;
+    description: string;
+    price: number;
+    item_count: number;
+    
+    product_images: string[];
+    // product_images:{
+    //     id: number;
+    //     image_url: string
+    // }[];
 }
 
 export interface IProductImage {

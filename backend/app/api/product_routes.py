@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from app.forms import ProductForm
 from app.models import db, Product, User
+from datetime import datetime
 # import the product form class
 # from app.forms import
 
@@ -44,9 +45,13 @@ def create_product():
     if form.validate_on_submit():
         data = form.data
         product_form = Product (
+            user_id = current_user.id,
             name = data['name'],
             description = data['description'],
-            price = data['price']
+            price = data['price'],
+            item_count = data['item_count'],
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow()
         )
 
         db.session.add(product_form)

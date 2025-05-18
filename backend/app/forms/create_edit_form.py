@@ -6,4 +6,5 @@ class ProductForm(FlaskForm):
     name = StringField("name", validators = [DataRequired()])
     description = StringField("description", validators = [DataRequired()])
     price = IntegerField("price", validators = [DataRequired()])
+    item_count = IntegerField("item_count", validators = [DataRequired()])
     submit = SubmitField("Submit")

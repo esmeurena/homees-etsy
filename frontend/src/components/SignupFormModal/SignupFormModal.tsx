@@ -11,7 +11,7 @@ interface ISignUpErrors {
   server?: any;
   first_name?: string;
   last_name?: string;
-  address?:string;
+  address?: string;
   city?: string;
   state?: string;
   country?: string;
@@ -95,12 +95,12 @@ function SignupFormModal() {
     setPassword("password" + count);
     setConfirmPassword("password" + count);
 
-     counter.current += 1;
+    counter.current += 1;
   };
 
   return (
     <>
-    <button type="button" onClick={fillValues}>AUTO-FILL</button>
+      <button type="button" onClick={fillValues}>AUTO-FILL</button>
       <h1>Sign Up</h1>
       {errors.server && <p>{errors.server}</p>}
       <form onSubmit={handleSubmit}>

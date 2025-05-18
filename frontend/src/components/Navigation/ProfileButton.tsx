@@ -7,9 +7,12 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { useAppSelector } from "../../redux/store";
+// import CreateProductPage from "../CreateProductPage";
+import { useNavigate } from "react-router-dom";
 
 function ProfileButton():JSX.Element {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const user = useAppSelector((store) => store.session.user);
   const ulRef = useRef<any>();
@@ -43,6 +46,10 @@ function ProfileButton():JSX.Element {
 
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
+    const goToCreateProduct = () => {
+    navigate('/products/create');
+  };
+
   return (
     <>
       <div className="button-and-info">
@@ -59,9 +66,12 @@ function ProfileButton():JSX.Element {
               <div className="login-info">
                 {user.username}
                 <div>
-                  {user.firstName} {user.lastName}
+                  {user.first_name} {user.last_name}
                 </div>
                 {user.email}
+                <button className="profile-buttons" onClick={goToCreateProduct}>
+                  Create a Product
+                </button>
                 <div>
                   <button onClick={logout} className="profile-buttons">Log Out</button>
                 </div>

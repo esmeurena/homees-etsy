@@ -29,6 +29,7 @@ class Product(db.Model):
 
     def to_dict(self):
         avg_rating = None
+        ratings = []
         if self.reviews:
             ratings = [review.stars for review in self.reviews
                        if review.stars is not None]
