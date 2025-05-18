@@ -26,9 +26,13 @@ def get_all_products():
 
 
 # Get Single Product Route
-@product_routes.route('/<int:id>')
+@product_routes.route('/<int:id>', methods=['GET'])
 def get_single_product(id):
     single_product = Product.query.get(id)
+
+    if not single_product:
+        return {'errors': ['Product not found']}, 404
+
     return single_product.to_dict()
 
 
