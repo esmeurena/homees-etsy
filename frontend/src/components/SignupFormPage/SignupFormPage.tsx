@@ -86,7 +86,6 @@ function SignupFormPage() {
     <>
       <h1>Sign Up</h1>
       {errors.server && <p>{errors.server}</p>}
-      <button type="submit">AUTO-FILL</button>
       <form onSubmit={(e) => handleSubmit}>
         <label>
           First Name
