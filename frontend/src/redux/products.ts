@@ -11,6 +11,7 @@ import { IProduct, IProductState, IActionCreator, ICreateProduct } from './types
 const CREATE_A_PRODUCT = 'products/createProduct'
 const GET_ALL_PRODUCTS = 'products/GET_ALL_PRODUCTS';
 const GET_SINGLE_PRODUCT = 'products/GET_SINGLE_PRODUCT';
+const UPDATE_A_PRODUCT = 'products/UPDATE_A_PRODUCT';
 
 /************************************
 ↓↓↓↓↓↓↓↓↓↓ ACTION CREATORS ↓↓↓↓↓↓↓↓↓↓
@@ -28,6 +29,11 @@ const getAllProducts = (products: IProduct[]) => ({
 
 const getSingleProduct = (product: IProduct[]) => ({
     type: GET_SINGLE_PRODUCT,
+    payload: product
+})
+
+const updateAProduct = (product: IProduct) => ({
+    type: UPDATE_A_PRODUCT, 
     payload: product
 })
 
@@ -95,6 +101,28 @@ export const getSingleProductThunk = (productId: number): any => async (dispatch
     }
 }
 
+export const updateAProductThunk = (product: ICreateProduct):any => async (dispatch: any) => {
+  try {
+
+    const response = await fetch(`/api/products/${product}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(product)
+    });
+
+    if (response.ok) {
+    //   const data = await response.json();
+    const data : IProduct = await response.json();
+      dispatch(updateAProduct(data));
+    } else {
+      throw response;
+    }
+  } catch (e) {
+    const err = e as Response;
+    return (await err.json())
+  }
+};
+
 
 /**********************************
 ↓↓↓↓↓↓↓↓↓↓ INITIAL STATE ↓↓↓↓↓↓↓↓↓↓
@@ -150,6 +178,13 @@ function productsReducer(state = initialState, action: IActionCreator) {
             newState.byId = newByIdProduct;
 
             return newState;
+
+        case UPDATE_A_PRODUCT:
+            newState = { ...state };
+            newState.allProducts = [...newState.allProducts, action.payload];
+            newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
+
+            return newState;    
 
         default:
             return state;
