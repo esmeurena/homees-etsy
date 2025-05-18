@@ -40,5 +40,6 @@ class Product(db.Model):
             "description": self.description, "price": self.price,
             "item_count": self.item_count,
             "product_images": [img.to_dict() for img in self.product_images],
-            "avg_rating": avg_rating
+            "avg_rating": avg_rating,
+            "reviews": [review.to_dict() for review in self.reviews]
             }

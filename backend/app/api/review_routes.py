@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 # import whatever the Review model class name is below
+from app.models import Review
 from app.models import db
 # import the review form class
 # from app.forms import
@@ -8,10 +9,14 @@ from app.models import db
 review_routes = Blueprint('reviews', __name__)
 
 # Get All Reviews Route
-@review_routes.route('/')
-def get_all_reviews():
-    pass
+@review_routes.route('/products/<int:id>')
+def get_all_reviews(id):
+    all_reviews = [
+        review.to_dict() for review in Review.query.filter(
+            Review.product_id == id
+            )]
 
+    return all_reviews
 
 # Get Single Review Route
 @review_routes.route('/<int:id>')
