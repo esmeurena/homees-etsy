@@ -82,24 +82,20 @@ export const getAllProductsThunk = (): any => async (dispatch: any) => {
     }
 }
 
-export const getSingleProductThunk = (productId: number): any => async (dispatch: any) => {
+export const getSingleProductThunk = (productId: number) => async (dispatch: any) => {
     try {
         const res = await fetch(`/api/products/${productId}`);
         if (res.ok) {
             const data = await res.json();
-            if (data.errors) {
-                throw res;
-            }
-            dispatch(getSingleProduct(data))
-            return data.Products;
+            dispatch(getSingleProduct(data));
+            return data;
         } else {
             throw res;
         }
-    } catch (e) {
-        const err = e as Response;
-        return (await err.json());
+    } catch (error) {
+        return error;
     }
-}
+};
 
 export const updateAProductThunk = (product: ICreateProduct):any => async (dispatch: any) => {
   try {
@@ -163,29 +159,25 @@ function productsReducer(state = initialState, action: IActionCreator) {
             }
             newState.byId = newByIdGetAllProducts;
             newState.allProducts = products;
-
             return newState;
 
         case GET_SINGLE_PRODUCT:
-            newState = { ...state }
             const singleProduct = action.payload;
-            newState.byId = {};
-            newState.allProducts = [...state.allProducts];
-            let newByIdProduct = {};
-            for (let product of singleProduct) {
-                newState.byId[product.id] = product;
+            newState = { ...state };
+            newState.allProducts = singleProduct;
+            let newByIdGetSingleProduct: { [id: number]: IProduct } = {};
+            for (let product of [singleProduct]) {
+                newByIdGetSingleProduct[product.id] = product;
             }
-            newState.byId = newByIdProduct;
-
+            newState.byId = newByIdGetSingleProduct;
             return newState;
-
+        
         case UPDATE_A_PRODUCT:
             newState = { ...state };
             newState.allProducts = [...newState.allProducts, action.payload];
             newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
 
-            return newState;    
-
+            return newState;
         default:
             return state;
     }
