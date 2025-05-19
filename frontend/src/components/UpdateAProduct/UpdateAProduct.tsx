@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../redux/store";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useAppSelector, RootState } from "../../redux/store";
 import { updateAProductThunk } from "../../redux/products";
-import { useRef } from 'react';
 
-interface ICreateImageErrors {
+interface IUpdateErrors {
     name?: string;
     description?: string;
     price?: string;
@@ -17,17 +16,30 @@ function UpdateAProduct() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { id } = useParams();
     const sessionUser = useAppSelector((state) => state.session.user);
+    const product = useSelector((state: RootState) => state.products.byId[Number(id)]);
+
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
     const [item_count, setItemCount] = useState(0);
-
     // const [product_images, setProductImages] = useState([]);
     const [product_images, setProductImages] = useState<string[]>([]);
     // const [moreImages, setMoreImages] = useState("");
 
-    const [errors, setErrors] = useState<ICreateImageErrors>({
+    useEffect(() => {
+
+        if (product) {
+            setName(product.name);
+            setDescription(product.description);
+            setPrice(product.price);
+            setItemCount(product.item_count);
+            setProductImages(product.product_images[0].url);
+        }
+    }, [product]);
+
+    const [errors, setErrors] = useState<IUpdateErrors>({
         name: "",
         description: "",
         price: "",
@@ -41,7 +53,7 @@ function UpdateAProduct() {
         e.preventDefault();
 
         const serverResponse = await dispatch(
-            updateAProductThunk({
+            updateAProductThunk(Number(id), {
                 name,
                 description,
                 price,
@@ -112,7 +124,7 @@ function UpdateAProduct() {
                     />
                 </label>
                 {errors.product_images && <p>{errors.product_images}</p>}
-                <button type="submit">Create Product</button>
+                <button type="submit">Update Product</button>
             </form>
         </>
     );

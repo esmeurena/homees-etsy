@@ -27,7 +27,7 @@ const getAllProducts = (products: IProduct[]) => ({
     payload: products
 })
 
-const getSingleProduct = (product: IProduct[]) => ({
+const getSingleProduct = (product: IProduct) => ({
     type: GET_SINGLE_PRODUCT,
     payload: product
 })
@@ -82,7 +82,7 @@ export const getAllProductsThunk = (): any => async (dispatch: any) => {
     }
 }
 
-export const getSingleProductThunk = (productId: number) => async (dispatch: any) => {
+export const getSingleProductThunk = (productId: number): any => async (dispatch: any) => {
     try {
         const res = await fetch(`/api/products/${productId}`);
         if (res.ok) {
@@ -97,10 +97,10 @@ export const getSingleProductThunk = (productId: number) => async (dispatch: any
     }
 };
 
-export const updateAProductThunk = (product: ICreateProduct):any => async (dispatch: any) => {
+export const updateAProductThunk = (productId: number, product: ICreateProduct):any => async (dispatch: any) => {
   try {
 
-    const response = await fetch(`/api/products/${product}`, {
+    const response = await fetch(`/api/products/${productId}/update`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(product)
@@ -162,14 +162,17 @@ function productsReducer(state = initialState, action: IActionCreator) {
             return newState;
 
         case GET_SINGLE_PRODUCT:
-            const singleProduct = action.payload;
+            // const singleProduct = [action.payload];
+            // newState.allProducts = singleProduct;
+            // let newByIdGetSingleProduct: { [id: number]: IProduct } = {};
+            // for (let product of [singleProduct]) {
+            //     newByIdGetSingleProduct[product.id] = product;
+            // }
+            // newState.byId = newByIdGetSingleProduct;
             newState = { ...state };
-            newState.allProducts = singleProduct;
-            let newByIdGetSingleProduct: { [id: number]: IProduct } = {};
-            for (let product of [singleProduct]) {
-                newByIdGetSingleProduct[product.id] = product;
-            }
-            newState.byId = newByIdGetSingleProduct;
+            newState.allProducts = [action.payload];
+           
+            newState.byId[action.payload.id] = action.payload;
             return newState;
         
         case UPDATE_A_PRODUCT:

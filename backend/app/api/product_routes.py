@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.forms import ProductForm
 from app.models import db, Product, User
 from datetime import datetime
+from app.models import ProductImage
 # import the product form class
 # from app.forms import
 
@@ -55,6 +56,20 @@ def create_product():
         )
 
         db.session.add(product_form)
+        db.session.flush()# for product_id
+        urls = request.json.get("product_images", [])#array of url's, leave empty
+
+        # product_images = []
+        first_image = True
+        for url in urls:
+            image = ProductImage(
+                url = url,
+                preview = first_image,
+                product_id=product_form.id
+            )
+            db.session.add(image)
+            first_image = False
+        # db.session.add(product_form)
         db.session.commit()
         return product_form.to_dict(), 201
 
