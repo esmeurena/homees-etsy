@@ -11,6 +11,7 @@ import { IProduct, IProductState, IActionCreator, ICreateProduct } from './types
 const CREATE_A_PRODUCT = 'products/createProduct'
 const GET_ALL_PRODUCTS = 'products/GET_ALL_PRODUCTS';
 const GET_SINGLE_PRODUCT = 'products/GET_SINGLE_PRODUCT';
+const DELETE_PRODUCT = 'products/DELETE_PRODUCT';
 
 /************************************
 ↓↓↓↓↓↓↓↓↓↓ ACTION CREATORS ↓↓↓↓↓↓↓↓↓↓
@@ -30,6 +31,11 @@ const getSingleProduct = (product: IProduct[]) => ({
     type: GET_SINGLE_PRODUCT,
     payload: product
 })
+
+const deleteProduct = (productId: number) => ({
+    type: DELETE_PRODUCT,
+    payload: productId
+});
 
 /***************************
 ↓↓↓↓↓↓↓↓↓↓ THUNKS ↓↓↓↓↓↓↓↓↓↓
@@ -95,6 +101,24 @@ export const getSingleProductThunk = (productId: number): any => async (dispatch
     }
 }
 
+export const deleteProductThunk = (productId: number): any => async (dispatch: any) => {
+    try {
+        const res = await fetch(`/api/products/${productId}`, {
+            method: "DELETE",
+        });
+
+        if (res.ok) {
+            dispatch(deleteProduct(productId));
+        }else{
+            throw res;
+        }
+        } catch (e) {
+          const err = e as Response;
+          return await err.json();
+        }
+    };
+
+
 
 /**********************************
 ↓↓↓↓↓↓↓↓↓↓ INITIAL STATE ↓↓↓↓↓↓↓↓↓↓
@@ -149,6 +173,15 @@ function productsReducer(state = initialState, action: IActionCreator) {
             }
             newState.byId = newByIdProduct;
 
+            return newState;
+
+        case DELETE_PRODUCT:
+            newState = {
+                ...state,
+                allProducts: state.allProducts.filter((product) => product.id !== action.payload),
+                byId: { ...state.byId }
+            };
+            delete newState.byId[action.payload];
             return newState;
 
         default:

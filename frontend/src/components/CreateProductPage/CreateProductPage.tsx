@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/store";
 import { createProductThunk } from "../../redux/products";
 import { useRef } from 'react';
+import './CreateProduct.css';
 
 interface ICreateImageErrors {
     name?: string;
@@ -64,7 +65,7 @@ function CreateProductPage() {
         setPrice(count);
         setItemCount(count);
         setProductImages(["https://upload.wikimedia.org/wikipedia/commons/1/1c/6sided_dice_%28cropped%29.jpg"]);
-        
+
         counter.current += 1;
     };
 

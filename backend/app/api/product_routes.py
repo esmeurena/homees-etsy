@@ -72,4 +72,14 @@ def update_product(id):
 @product_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_product(id):
-    pass
+    product = Product.query.get(id)
+
+    if not product:
+        return {"error": "Product not found"}, 404
+
+    if product.user_id != current_user.id:
+        return {"error": "Unauthorized"}, 403
+
+    db.session.delete(product)
+    db.session.commit()
+    return {"message": "Product deleted successfully"}, 200
