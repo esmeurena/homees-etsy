@@ -4,6 +4,7 @@ import { useModal } from '../../context/Modal';
 interface IOpenModalButon {
   modalComponent: any;
   buttonText: any;
+  buttonClassName: any;
   onButtonClick: any;
   onModalClose: any;
 }

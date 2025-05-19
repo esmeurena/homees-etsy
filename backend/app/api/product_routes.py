@@ -80,7 +80,7 @@ def create_product():
 @product_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_product(id):
-    
+
     form = ProductForm()
 
     form["csrf_token"].data = request.cookies["csrf_token"]
@@ -107,4 +107,17 @@ def update_product(id):
 @product_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_product(id):
-    pass
+    product = Product.query.get(id)
+
+    if not product:
+        return {"error": "Product not found"}, 404
+
+    if product.user_id != current_user.id:
+        return {"error": "Unauthorized"}, 403
+
+    for image in product.product_images:
+        db.session.delete(image)
+
+    db.session.delete(product)
+    db.session.commit()
+    return {"message": "Product deleted successfully"}, 200
