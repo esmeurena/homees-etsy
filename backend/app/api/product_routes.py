@@ -117,4 +117,5 @@ def delete_product(id):
 
     db.session.delete(product)
     db.session.commit()
+    
     return {"message": "Product deleted successfully"}, 200
