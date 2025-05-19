@@ -115,9 +115,6 @@ def delete_product(id):
     if product.user_id != current_user.id:
         return {"error": "Unauthorized"}, 403
 
-    for image in product.product_images:
-        db.session.delete(image)
-
     db.session.delete(product)
     db.session.commit()
     return {"message": "Product deleted successfully"}, 200
