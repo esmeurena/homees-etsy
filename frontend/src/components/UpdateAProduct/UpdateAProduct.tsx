@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../redux/store";
-import { createProductThunk } from "../../redux/products";
-import { useRef } from 'react';
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useAppSelector, RootState } from "../../redux/store";
+import { updateAProductThunk } from "../../redux/products";
 
-interface ICreateImageErrors {
+interface IUpdateErrors {
     name?: string;
     description?: string;
     price?: string;
@@ -13,22 +12,34 @@ interface ICreateImageErrors {
     product_images?: string;
 }
 
-function CreateProductPage() {
-    const counter = useRef(1);
+function UpdateAProduct() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { id } = useParams();
     const sessionUser = useAppSelector((state) => state.session.user);
+    const product = useSelector((state: RootState) => state.products.byId[Number(id)]);
+
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
     const [item_count, setItemCount] = useState(0);
-
     // const [product_images, setProductImages] = useState([]);
     const [product_images, setProductImages] = useState<string[]>([]);
-    const [additionalImage, setAdditionalImage] = useState("");//placeholder for urls
+    // const [moreImages, setMoreImages] = useState("");
 
-    const [errors, setErrors] = useState<ICreateImageErrors>({
+    useEffect(() => {
+
+        if (product) {
+            setName(product.name);
+            setDescription(product.description);
+            setPrice(product.price);
+            setItemCount(product.item_count);
+            setProductImages(product.product_images[0].url);
+        }
+    }, [product]);
+
+    const [errors, setErrors] = useState<IUpdateErrors>({
         name: "",
         description: "",
         price: "",
@@ -42,7 +53,7 @@ function CreateProductPage() {
         e.preventDefault();
 
         const serverResponse = await dispatch(
-            createProductThunk({
+            updateAProductThunk(Number(id), {
                 name,
                 description,
                 price,
@@ -57,21 +68,10 @@ function CreateProductPage() {
             navigate("/");
         }
     };
-    const fillValues = () => {
-        const count = counter.current;
-        setName("ProductName" + count);
-        setDescription("Very Long Description" + count);
-        setPrice(count);
-        setItemCount(count);
-        setProductImages(["https://upload.wikimedia.org/wikipedia/commons/1/1c/6sided_dice_%28cropped%29.jpg"]);
-
-        counter.current += 1;
-    };
 
     return (
         <>
-            <button type="button" onClick={fillValues}>AUTO-FILL</button>
-            <h1>Create a Product</h1>
+            <h1>Update a Product</h1>
 
             <form onSubmit={handleSubmit}>
                 <label>
@@ -119,64 +119,15 @@ function CreateProductPage() {
                     <input
                         type="text"
                         value={product_images[0]}
-                        onChange={(e) => {
-                            const preview_img = e.target.value;
-                            let image_array = [preview_img];
-                            //will work for both update and create
-                            for (let i = 1; i < product_images.length; i++) {
-                                image_array.push(product_images[i]);
-                            }
-                            setProductImages(image_array);
-                        }}
+                        onChange={(e) => setProductImages([e.target.value])}
                         required
                     />
                 </label>
                 {errors.product_images && <p>{errors.product_images}</p>}
-
-                <label>
-                    Additional Image
-                    <input
-                        type="text"
-                        value={additionalImage}
-                        onChange={(e) => setAdditionalImage(e.target.value)}
-                    />
-                    <button type="button"
-                        onClick={() => {
-                            if (additionalImage) {
-                                const adding_an_image = [];
-                                //we need to re-save the images again every time
-                                for (let i = 0; i < product_images.length; i++) {
-                                    adding_an_image.push(product_images[i]);
-                                }
-                                adding_an_image.push(additionalImage);
-                                setProductImages(adding_an_image);
-                            }
-                        }}
-                    >Add this image</button>
-                </label>
-                {/* {errors.additionalImage && <p>{errors.additionalImage}</p>} */}
-                <button type="submit">Create Product</button>
+                <button type="submit">Update Product</button>
             </form>
-
-            {product_images[0] && (
-                <div>
-                    <p>Preview Image</p>
-                    <img src={product_images[0]} />
-                </div>
-            )}
-
-            {product_images.length > 1 && (
-                <div>
-                    <p>Additional Images</p>
-                    {product_images.slice(1).map((img, idx) => (
-                        <div key={idx}>
-                            <img src={img} />
-                        </div>
-                    ))}
-                </div>
-            )}
         </>
     );
 }
 
-export default CreateProductPage;
+export default UpdateAProduct;

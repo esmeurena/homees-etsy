@@ -11,6 +11,7 @@ import { IProduct, IProductState, IActionCreator, ICreateProduct } from './types
 const CREATE_A_PRODUCT = 'products/createProduct'
 const GET_ALL_PRODUCTS = 'products/GET_ALL_PRODUCTS';
 const GET_SINGLE_PRODUCT = 'products/GET_SINGLE_PRODUCT';
+const UPDATE_A_PRODUCT = 'products/UPDATE_A_PRODUCT';
 
 /************************************
 ↓↓↓↓↓↓↓↓↓↓ ACTION CREATORS ↓↓↓↓↓↓↓↓↓↓
@@ -26,8 +27,13 @@ const getAllProducts = (products: IProduct[]) => ({
     payload: products
 })
 
-const getSingleProduct = (product: IProduct[]) => ({
+const getSingleProduct = (product: IProduct) => ({
     type: GET_SINGLE_PRODUCT,
+    payload: product
+})
+
+const updateAProduct = (product: IProduct) => ({
+    type: UPDATE_A_PRODUCT, 
     payload: product
 })
 
@@ -81,19 +87,37 @@ export const getSingleProductThunk = (productId: number): any => async (dispatch
         const res = await fetch(`/api/products/${productId}`);
         if (res.ok) {
             const data = await res.json();
-            if (data.errors) {
-                throw res;
-            }
-            dispatch(getSingleProduct(data))
-            return data.Products;
+            dispatch(getSingleProduct(data));
+            return data;
         } else {
             throw res;
         }
-    } catch (e) {
-        const err = e as Response;
-        return (await err.json());
+    } catch (error) {
+        return error;
     }
-}
+};
+
+export const updateAProductThunk = (productId: number, product: ICreateProduct):any => async (dispatch: any) => {
+  try {
+
+    const response = await fetch(`/api/products/${productId}/update`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(product)
+    });
+
+    if (response.ok) {
+    //   const data = await response.json();
+    const data : IProduct = await response.json();
+      dispatch(updateAProduct(data));
+    } else {
+      throw response;
+    }
+  } catch (e) {
+    const err = e as Response;
+    return (await err.json())
+  }
+};
 
 
 /**********************************
@@ -135,22 +159,28 @@ function productsReducer(state = initialState, action: IActionCreator) {
             }
             newState.byId = newByIdGetAllProducts;
             newState.allProducts = products;
-
             return newState;
 
         case GET_SINGLE_PRODUCT:
-            newState = { ...state }
-            const singleProduct = action.payload;
-            newState.byId = {};
-            newState.allProducts = [...state.allProducts];
-            let newByIdProduct = {};
-            for (let product of singleProduct) {
-                newState.byId[product.id] = product;
-            }
-            newState.byId = newByIdProduct;
+            // const singleProduct = [action.payload];
+            // newState.allProducts = singleProduct;
+            // let newByIdGetSingleProduct: { [id: number]: IProduct } = {};
+            // for (let product of [singleProduct]) {
+            //     newByIdGetSingleProduct[product.id] = product;
+            // }
+            // newState.byId = newByIdGetSingleProduct;
+            newState = { ...state };
+            newState.allProducts = [action.payload];
+           
+            newState.byId[action.payload.id] = action.payload;
+            return newState;
+        
+        case UPDATE_A_PRODUCT:
+            newState = { ...state };
+            newState.allProducts = [...newState.allProducts, action.payload];
+            newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
 
             return newState;
-
         default:
             return state;
     }

@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.forms import ProductForm
 from app.models import db, Product, User
 from datetime import datetime
+from app.models import ProductImage
 # import the product form class
 # from app.forms import
 
@@ -55,6 +56,20 @@ def create_product():
         )
 
         db.session.add(product_form)
+        db.session.flush()# for product_id
+        urls = request.json.get("product_images", [])#array of url's, leave empty
+
+        # product_images = []
+        first_image = True
+        for url in urls:
+            image = ProductImage(
+                url = url,
+                preview = first_image,
+                product_id=product_form.id
+            )
+            db.session.add(image)
+            first_image = False
+        # db.session.add(product_form)
         db.session.commit()
         return product_form.to_dict(), 201
 
@@ -65,7 +80,27 @@ def create_product():
 @product_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_product(id):
-    pass
+    
+    form = ProductForm()
+
+    form["csrf_token"].data = request.cookies["csrf_token"]
+    if form.validate_on_submit():
+        data = form.data
+        product_form = Product (
+            user_id = current_user.id,
+            name = data['name'],
+            description = data['description'],
+            price = data['price'],
+            item_count = data['item_count'],
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow()
+        )
+
+        db.session.update(product_form)
+        db.session.commit()
+        return product_form.to_dict(), 201
+
+    return form.errors, 401
 
 
 # Delete a Product Route
