@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/store";
 import { createProductThunk } from "../../redux/products";
+import './CreateProduct.css';
 import { useRef } from 'react';
 
 interface ICreateImageErrors {

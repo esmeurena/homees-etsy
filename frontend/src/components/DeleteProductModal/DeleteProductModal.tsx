@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useModal } from '../../context/Modal';
 import { deleteAProductThunk } from '../../redux/products';
+import './DeleteProductModal.css';
 import React from 'react';
 
 interface DeleteProductModalProps {
