@@ -3,6 +3,7 @@ import { useModal } from '../../context/Modal';
 import { deleteAProductThunk } from '../../redux/products';
 import './DeleteProductModal.css';
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 interface DeleteProductModalProps {
     productId: number;
@@ -10,12 +11,14 @@ interface DeleteProductModalProps {
 
 const DeleteProductModal: React.FC<DeleteProductModalProps> = ({ productId }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { closeModal } = useModal();
 
     const handleClickDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         await dispatch(deleteAProductThunk(productId));
         closeModal();
+        navigate("/")
     };
 
     return (
