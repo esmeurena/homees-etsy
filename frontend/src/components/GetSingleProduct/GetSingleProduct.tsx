@@ -31,14 +31,29 @@ const GetSingleProduct = (): JSX.Element => {
     }
 
     return (
+        <div id='single-product'>
+            <div id='single-product-image-text'>
+                <div>
+                    <img id='single-product-image'
+                         src={product.product_images[0].url} />
+                </div>
+                <div id='single-product-text'>
+                    <h2 style={{fontSize: '2rem', marginBottom: '0'}}>${product.price}</h2>
+                    <p>{product.name}</p>
+                    <div id='single-product-buttons-container'>
+                        <button className='single-product-buttons
+                                           single-product-buy-it-now'>
+                        Buy it now
+                        </button>
+                        <button className='single-product-buttons
+                                           single-product-add-to-cart'>
+                        Add to cart
+                        </button>
+                    </div>
+                    {/* <p>{product.description}</p> */}
+                    {/* <p>&#9733;{product.avg_rating}</p> */}
+                </div>
 
-        <div>
-            <h1>{product.name}</h1>
-            <p>{product.price}</p>
-            <p>{product.description}</p>
-            <p>⭐️{product.avg_rating}</p>
-            <div>
-                <img src={product.product_images[0].url} />
             </div>
             <NavLink to={`/products/${Number(id)}/update`}>
                 Update a Product
