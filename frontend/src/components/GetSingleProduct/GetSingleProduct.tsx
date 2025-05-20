@@ -5,6 +5,8 @@ import './GetSingleProduct.css';
 import { useParams } from 'react-router-dom';
 import { getSingleProductThunk } from '../../redux/products';
 import { RootState } from '../../redux/store';
+import OpenModalButton from '../OpenModalButton';
+import ReviewFormModal from '../AllProducts/ReviewFormModal/ReviewFormModal';
 
 
 
@@ -43,8 +45,13 @@ const GetSingleProduct = (): JSX.Element => {
             <NavLink to={`/products/${Number(id)}/update`}>
                 Update a Product
             </NavLink>
+        
+            <OpenModalButton
+                buttonText="Write a review"
+                modalComponent={<ReviewFormModal productId={product.Id} />}
+            />
         </div>
-
+        
     );
 };
 

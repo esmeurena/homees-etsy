@@ -4,8 +4,8 @@ import { useModal } from '../../context/Modal';
 interface IOpenModalButon {
   modalComponent: any;
   buttonText: any;
-  onButtonClick: any;
-  onModalClose: any;
+  onButtonClick?: any;
+  onModalClose?: any;
 }
 
 function OpenModalButton({
