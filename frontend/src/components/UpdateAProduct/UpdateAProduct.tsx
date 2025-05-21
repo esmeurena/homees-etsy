@@ -16,7 +16,7 @@ function UpdateAProduct() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
     const sessionUser = useAppSelector((state) => state.session.user);
     const product = useSelector((state: RootState) => state.products.byId[Number(id)]);
 
@@ -35,7 +35,7 @@ function UpdateAProduct() {
             setDescription(product.description);
             setPrice(product.price);
             setItemCount(product.item_count);
-            setProductImages(product.product_images[0].url);
+            setProductImages([product.product_images[0].url]);
         }
     }, [product]);
 
@@ -46,6 +46,7 @@ function UpdateAProduct() {
         item_count: "",
         product_images: ""
     });
+
     if (!sessionUser) return <Navigate to="/" replace={true} />;
 
 
@@ -65,9 +66,13 @@ function UpdateAProduct() {
         if (serverResponse) {
             setErrors(serverResponse);
         } else {
-            navigate("/");
+            navigate("/products/${id}");
         }
     };
+
+    if (!product){
+        return <div>Loading product details...</div>
+    }
 
     return (
         <>
@@ -118,7 +123,7 @@ function UpdateAProduct() {
                     Preview Product Image
                     <input
                         type="text"
-                        value={product_images[0]}
+                        value={product_images.length > 0 ? product_images[0] : ''}
                         onChange={(e) => setProductImages([e.target.value])}
                         required
                     />

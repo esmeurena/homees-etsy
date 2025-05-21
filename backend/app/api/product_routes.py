@@ -80,27 +80,40 @@ def create_product():
 @product_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_product(id):
-    
+
     form = ProductForm()
+    update_a_product = Product.query.get(id)
 
     form["csrf_token"].data = request.cookies["csrf_token"]
+
     if form.validate_on_submit():
         data = form.data
-        product_form = Product (
-            user_id = current_user.id,
-            name = data['name'],
-            description = data['description'],
-            price = data['price'],
-            item_count = data['item_count'],
-            created_at=datetime.utcnow(),
-            updated_at=datetime.utcnow()
-        )
 
-        db.session.update(product_form)
+        # user_id = current_user.id
+        update_a_product.name = data['name'],
+        update_a_product.description = data['description'],
+        update_a_product.price = data['price'],
+        update_a_product.item_count = data['item_count'],
+        update_a_product.updated_at=datetime.utcnow(),
+        # update_a_product.update({user_id, }),
+        urls = request.json.get("product_images", [])
+
+        # product_images = []
+        # first_image = True
+        # for url in urls:
+        #     image = ProductImage(
+        #         url = url,
+        #         preview = first_image,
+        #         product_id=update_a_product.id
+        #     )
+        #     db.session.add(image)
+        #     first_image = False
+
+        db.session.update(update_a_product)
         db.session.commit()
-        return product_form.to_dict(), 201
+        return update_a_product.to_dict(), 200
 
-    return form.errors, 401
+    return form.errors, 400
 
 
 # Delete a Product Route
