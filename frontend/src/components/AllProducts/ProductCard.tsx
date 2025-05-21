@@ -29,7 +29,7 @@ const ProductCard = ({id, name, price, User, product_images, avg_rating}: Produc
                 <b className='product-card-text'>${price}</b>
                 <p className='product-card-text' style={{color: '#595959'}}>{User.first_name} {User.last_name}</p>
             </div>
-            
+
         </NavLink>
 
 
