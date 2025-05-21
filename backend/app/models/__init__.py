@@ -8,4 +8,5 @@ from .review import Review
 from .favorite import Favorite
 from .product_image import ProductImage
 from .review_image import ReviewImage
+from .shopping_cart_item import ShoppingCartItem
 

@@ -5,6 +5,7 @@ import './GetSingleProduct.css';
 import { useParams } from 'react-router-dom';
 import { getSingleProductThunk } from '../../redux/products';
 import { RootState } from '../../redux/store';
+import { addItemToShoppingCartThunk } from '../../redux/shopping_cart';
 
 
 
@@ -29,6 +30,11 @@ const GetSingleProduct = (): JSX.Element => {
     if (!isLoaded) {
         return <h1>Loading...</h1>;
     }
+    
+const addItemToCart = async () => {
+
+    await dispatch(addItemToShoppingCartThunk(product.id));
+};
 
     return (
 
@@ -43,6 +49,10 @@ const GetSingleProduct = (): JSX.Element => {
             <NavLink to={`/products/${Number(id)}/update`}>
                 Update a Product
             </NavLink>
+            <button
+                onClick={addItemToCart}>
+                Add to Cart
+            </button>
         </div>
 
     );

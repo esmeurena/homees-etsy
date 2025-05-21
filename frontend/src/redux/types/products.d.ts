@@ -9,6 +9,23 @@ export interface IProduct {
     updated_at: string;
 }
 
+export interface IProductImage {
+  id: number;
+  product_id: number;
+  url: string;
+  preview: boolean;
+}
+
+export interface IProductWithImages {
+  id: number;
+  user_id: number;
+  name: string;
+  description: string;
+  price: number;
+  item_count: number;
+  product_images: IProductImage[];
+}
+
 export interface ICreateProduct {
     name: string;
     description: string;
