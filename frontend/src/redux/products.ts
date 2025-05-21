@@ -100,7 +100,7 @@ export const getSingleProductThunk = (productId: number): any => async (dispatch
 export const updateAProductThunk = (productId: number, product: ICreateProduct):any => async (dispatch: any) => {
   try {
 
-    const response = await fetch(`/api/products/${productId}/update`, {
+    const response = await fetch(`/api/products/${productId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(product)

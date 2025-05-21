@@ -21,7 +21,8 @@ def get_all_reviews(id):
 # Get Single Review Route
 @review_routes.route('/<int:id>')
 def get_review(id):
-    pass
+    single_review = Review.query.get(id)
+    return single_review.to_dict()
 
 
 # Create a Review Route
