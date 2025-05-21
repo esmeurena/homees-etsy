@@ -9,9 +9,7 @@ import OpenModalButton from '../OpenModalButton';
 import ReviewFormModal from '../AllProducts/ReviewFormModal/ReviewFormModal';
 import { addItemToShoppingCartThunk } from '../../redux/shopping_cart';
 import DeleteProductModal from '../DeleteProductModal';
-import OpenModalButton from '../OpenModalButton';
 import AllReviews from '../AllReviews';
-import { IProduct } from '../../redux/types/products';
 
 
 
@@ -23,7 +21,6 @@ const GetSingleProduct = (): JSX.Element => {
 
     const product = useSelector((state: RootState) => state.products.byId[Number(id)]);
     const currentUser = useSelector((state: RootState) => state.session.user);
-    // const product: IProduct = useSelector((state: RootState) => state.products.byId[Number(id)]);
 
     useEffect(() => {
         const singleProduct = async () => {
@@ -51,7 +48,7 @@ const addItemToCart = async () => {
                 <div>
                     <div id='single-product-images-container'>
                         <div id='single-product-images-list'>
-                            {product.product_images.map((image, i) => {
+                            {product.product_images.map((image: { url: string | undefined; }) => {
                                 return (
                                     <img className='single-product-images-list-image' src={image.url}/>
                                 )
@@ -103,9 +100,8 @@ const addItemToCart = async () => {
 
         
             <OpenModalButton
-                buttonText="Write a review"
-                modalComponent={<ReviewFormModal productId={product.Id} />}
-            />
+                        buttonText="Write a review"
+                        modalComponent={<ReviewFormModal productId={product.Id} />} buttonClassName={undefined}            />
 
 
             <button
