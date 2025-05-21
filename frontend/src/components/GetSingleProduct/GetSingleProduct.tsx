@@ -10,6 +10,7 @@ import ReviewFormModal from '../AllProducts/ReviewFormModal/ReviewFormModal';
 import { addItemToShoppingCartThunk } from '../../redux/shopping_cart';
 import DeleteProductModal from '../DeleteProductModal';
 import AllReviews from '../AllReviews';
+import { getAllReviewsThunk } from '../../redux/reviews';
 
 
 
@@ -29,6 +30,7 @@ const GetSingleProduct = (): JSX.Element => {
     useEffect(() => {
         const singleProduct = async () => {
             await dispatch(getSingleProductThunk(Number(id)));
+            await dispatch(getAllReviewsThunk(Number(id)))
             setIsLoaded(true);
         };
 
