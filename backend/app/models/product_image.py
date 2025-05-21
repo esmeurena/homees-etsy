@@ -18,7 +18,7 @@ class ProductImage(db.Model):
                            onupdate=datetime.utcnow)
 
     # one-to-many
-    products = db.relationship("Product", back_populates="product_images")
+    product = db.relationship("Product", back_populates="product_images")
 
     def to_dict(self):
         return {"id": self.id, "product_id": self.product_id,

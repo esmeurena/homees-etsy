@@ -13,6 +13,7 @@ const CREATE_A_PRODUCT = 'products/createProduct'
 const GET_ALL_PRODUCTS = 'products/GET_ALL_PRODUCTS';
 const GET_SINGLE_PRODUCT = 'products/GET_SINGLE_PRODUCT';
 const UPDATE_A_PRODUCT = 'products/UPDATE_A_PRODUCT';
+const DELETE_A_PRODUCT = 'products/DELETE_A_PRODUCT';
 
 /************************************
 ↓↓↓↓↓↓↓↓↓↓ ACTION CREATORS ↓↓↓↓↓↓↓↓↓↓
@@ -36,9 +37,14 @@ const getSingleProduct = (product: IProduct) => ({
 })
 
 const updateAProduct = (product: IProduct) => ({
-    type: UPDATE_A_PRODUCT, 
+    type: UPDATE_A_PRODUCT,
     payload: product
 })
+
+const deleteAProduct = (productId: number) => ({
+  type: DELETE_A_PRODUCT,
+  payload: productId
+});
 
 /***************************
 ↓↓↓↓↓↓↓↓↓↓ THUNKS ↓↓↓↓↓↓↓↓↓↓
@@ -108,7 +114,7 @@ export const getSingleProductThunk = (productId: number): any => async (dispatch
 export const updateAProductThunk = (productId: number, product: ICreateProduct):any => async (dispatch: any) => {
   try {
 
-    const response = await fetch(`/api/products/${productId}/update`, {
+    const response = await fetch(`/api/products/${productId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(product)
@@ -126,6 +132,25 @@ export const updateAProductThunk = (productId: number, product: ICreateProduct):
     return (await err.json())
   }
 };
+
+
+export const deleteAProductThunk = (productId: number): any => async (dispatch: any) => {
+  try {
+    const res = await fetch(`/api/products/${productId}`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      dispatch(deleteAProduct(productId));
+    } else {
+      throw res;
+    }
+  } catch (e) {
+    const err = e as Response;
+    return await err.json();
+  }
+};
+
 
 
 /**********************************
@@ -180,16 +205,25 @@ function productsReducer(state = initialState, action: IActionCreator) {
             // newState.byId = newByIdGetSingleProduct;
             newState = { ...state };
             newState.allProducts = [action.payload];
-           
+
             newState.byId[action.payload.id] = action.payload;
             return newState;
-        
+
         case UPDATE_A_PRODUCT:
             newState = { ...state };
             newState.allProducts = [...newState.allProducts, action.payload];
             newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
 
             return newState;
+
+
+
+        case DELETE_A_PRODUCT:
+          newState = { ...state };
+          newState.allProducts = state.allProducts.filter( (product) => product.id !== action.payload);
+          newState.byId = { ...state.byId };
+          delete newState.byId[action.payload];
+          return newState;
 
 
         default:

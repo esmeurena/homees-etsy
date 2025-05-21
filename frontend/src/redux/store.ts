@@ -9,11 +9,13 @@ import sessionReducer from "./session";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import productsReducer from "./products";
 import reviewsReducer from "./reviews";
+import shoppingCartReducer from "./shopping_cart";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   products: productsReducer,
-  // reviews: reviewsReducer
+  reviews: reviewsReducer,
+  shopping_cart: shoppingCartReducer,
 });
 
 
