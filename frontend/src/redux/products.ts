@@ -1,23 +1,72 @@
-// IMPORTS
-import { IProduct, IProductState, IActionCreator } from './types/products';
+/****************************
+↓↓↓↓↓↓↓↓↓↓ IMPORTS ↓↓↓↓↓↓↓↓↓↓
+ ***************************/
 
-//ACTION TYPES
-const GET_ALL_PRODUCTS = 'products/getAllProducts';
-const DELETE_PRODUCT = 'products/deleteProduct'
 
-// ACTION CREATORS
+import { IProduct, IProductState, IActionCreator, ICreateProduct } from './types/products';
+
+/*********************************
+↓↓↓↓↓↓↓↓↓↓ ACTION TYPES ↓↓↓↓↓↓↓↓↓↓
+ ********************************/
+
+const CREATE_A_PRODUCT = 'products/createProduct'
+const GET_ALL_PRODUCTS = 'products/GET_ALL_PRODUCTS';
+const GET_SINGLE_PRODUCT = 'products/GET_SINGLE_PRODUCT';
+const UPDATE_A_PRODUCT = 'products/UPDATE_A_PRODUCT';
+
+/************************************
+↓↓↓↓↓↓↓↓↓↓ ACTION CREATORS ↓↓↓↓↓↓↓↓↓↓
+ ***********************************/
+
+
+const createProduct = (product: IProduct) => ({
+  type: CREATE_A_PRODUCT,
+  payload: product
+});
 
 const getAllProducts = (products: IProduct[]) => ({
     type: GET_ALL_PRODUCTS,
     payload: products
 })
 
-const deleteProduct = (productId: number) => ({
-    type: DELETE_PRODUCT,
-    payload: productId,
+
+const getSingleProduct = (product: IProduct) => ({
+    type: GET_SINGLE_PRODUCT,
+    payload: product
 })
 
-// THUNK
+const updateAProduct = (product: IProduct) => ({
+    type: UPDATE_A_PRODUCT, 
+    payload: product
+})
+
+/***************************
+↓↓↓↓↓↓↓↓↓↓ THUNKS ↓↓↓↓↓↓↓↓↓↓
+ **************************/
+
+export const createProductThunk = (product: ICreateProduct):any => async (dispatch: any) => {
+  try {
+
+    const response = await fetch("/api/products/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(product)
+    });
+
+    if (response.ok) {
+    //   const data = await response.json();
+    const data : IProduct = await response.json();
+      dispatch(createProduct(data));
+    } else {
+      throw response;
+    }
+  } catch (e) {
+    const err = e as Response;
+    return (await err.json())
+  }
+};
+
+
 export const getAllProductsThunk = (): any => async (dispatch: any) => {
     try {
         const res = await fetch('/api/products');
@@ -37,63 +86,112 @@ export const getAllProductsThunk = (): any => async (dispatch: any) => {
     }
 }
 
-export const deleteProductThunk = (productId: number) => async (dispatch: any) => {
+
+export const getSingleProductThunk = (productId: number): any => async (dispatch: any) => {
     try {
-        const res = await fetch(`/api/products/${productId}`, {
-            method: "DELETE",
-        })
+        const res = await fetch(`/api/products/${productId}`);
         if (res.ok) {
-            dispatch(deleteProduct(productId));
-            return { success: true }
+            const data = await res.json();
+            dispatch(getSingleProduct(data));
+            return data;
+
+
         } else {
             throw res;
         }
     } catch (error) {
-        return {
-            errors: { message: "Failed to delete product" }
-        }
-    }
-} 
 
-// INITIAL STATE
+        return error;
+    }
+};
+
+export const updateAProductThunk = (productId: number, product: ICreateProduct):any => async (dispatch: any) => {
+  try {
+
+    const response = await fetch(`/api/products/${productId}/update`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(product)
+    });
+
+    if (response.ok) {
+    //   const data = await response.json();
+    const data : IProduct = await response.json();
+      dispatch(updateAProduct(data));
+    } else {
+      throw response;
+    }
+  } catch (e) {
+    const err = e as Response;
+    return (await err.json())
+  }
+};
+
+
+/**********************************
+↓↓↓↓↓↓↓↓↓↓ INITIAL STATE ↓↓↓↓↓↓↓↓↓↓
+ *********************************/
+
+
 const initialState: IProductState = {
     byId: {},
     allProducts: []
 };
 
 
-// REDUCER 
+/****************************
+↓↓↓↓↓↓↓↓↓↓ REDUCER ↓↓↓↓↓↓↓↓↓↓
+ ***************************/
+
 function productsReducer(state = initialState, action: IActionCreator) {
-    let newState: IProductState = {
-        byId: { ...state.byId },
-        allProducts: [...state.allProducts]
-    };
-
+    // let newState: IProductState = {
+    //     byId: { ...state.byId },
+    //     allProducts: [...state.allProducts]
+    // };
+    let newState;
     switch (action.type) {
-        case GET_ALL_PRODUCTS:
-            const products = action.payload;
-            newState.byId = {};
-            newState.allProducts = [];
 
-            for (let product of products) {
-                newState.byId[product.id] = product;
-            }
-
-            newState.allProducts = products;
-
-            return newState;
-        case DELETE_PRODUCT: {
-            const productId = action.payload;
+        case CREATE_A_PRODUCT:
             newState = { ...state };
-            newState.allProducts = state.allProducts.filter(
-                (product) => product.id !== productId
-            );
-            const newById = { ...state.byId };
-            delete newById[productId];
-            newState.byId = newById;
+            newState.allProducts = [...newState.allProducts, action.payload];
+            newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
 
             return newState;
-        }
+
+        case GET_ALL_PRODUCTS:
+            const products = action.payload.Products;
+            newState = { ...state }
+            newState.allProducts = products;
+            let newByIdGetAllProducts: { [id: number]: IProduct} = {};
+            for (let product of products) {
+                newByIdGetAllProducts[product.id] = product;
+            }
+            newState.byId = newByIdGetAllProducts;
+            newState.allProducts = products;
+            return newState;
+
+        case GET_SINGLE_PRODUCT:
+            // const singleProduct = [action.payload];
+            // newState.allProducts = singleProduct;
+            // let newByIdGetSingleProduct: { [id: number]: IProduct } = {};
+            // for (let product of [singleProduct]) {
+            //     newByIdGetSingleProduct[product.id] = product;
+            // }
+            // newState.byId = newByIdGetSingleProduct;
+            newState = { ...state };
+            newState.allProducts = [action.payload];
+           
+            newState.byId[action.payload.id] = action.payload;
+            return newState;
+        
+        case UPDATE_A_PRODUCT:
+            newState = { ...state };
+            newState.allProducts = [...newState.allProducts, action.payload];
+            newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
+
+            return newState;
+
+
         default:
             return state;
     }

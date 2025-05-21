@@ -4,6 +4,8 @@
     height: 22rem;
     width: 20rem;
     cursor: pointer;
+    text-decoration: none;
+    color: black;
 }
 
 
@@ -17,7 +19,12 @@
     filter: drop-shadow(0 0 .1rem rgb(177, 177, 177))
 }
 
+#product-card-name-review {
+    display: flex;
+    justify-content: space-between;
+}
+
 .product-card-text {
     font-size: .9rem;
-    margin: .5rem 0
+    margin: .5rem 0;
 }
