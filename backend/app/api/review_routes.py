@@ -42,4 +42,13 @@ def update_review(id):
 @review_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_review(id):
-    pass
+    review = Review.query.get(id)
+
+    if review:
+        if review.user_id == current_user.id:
+            db.session.delete(review)
+            db.session.commit()
+            return {'message': 'Deleted'}, 200
+    else:
+        return {'error': 'Forbidden'}, 403
+    return {'error': 'Review not found'}, 404
