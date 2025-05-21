@@ -29,6 +29,7 @@ class User(db.Model, UserMixin):
     shopping_carts = db.relationship("ShoppingCart", back_populates="user")
     transactions = db.relationship("Transaction", back_populates="user")
     reviews = db.relationship("Review", back_populates="user")
+    shopping_cart_items = db.relationship("ShoppingCartItem", back_populates="user", cascade="all, delete-orphan")
 
     @property
     def password(self):

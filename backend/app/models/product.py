@@ -26,6 +26,7 @@ class Product(db.Model):
     favorites = db.relationship("Favorite", back_populates="products")
     shopping_carts = db.relationship("ShoppingCart", back_populates="products")
     transactions = db.relationship("Transaction", back_populates="products")
+    shopping_cart_items = db.relationship("ShoppingCartItem", back_populates="products")
 
 
     def to_dict(self):

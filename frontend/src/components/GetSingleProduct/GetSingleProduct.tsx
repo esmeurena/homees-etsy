@@ -5,6 +5,7 @@ import './GetSingleProduct.css';
 import { useParams } from 'react-router-dom';
 import { getSingleProductThunk } from '../../redux/products';
 import { RootState } from '../../redux/store';
+import { addItemToShoppingCartThunk } from '../../redux/shopping_cart';
 import DeleteProductModal from '../DeleteProductModal';
 import OpenModalButton from '../OpenModalButton';
 import AllReviews from '../AllReviews';
@@ -35,6 +36,11 @@ const GetSingleProduct = (): JSX.Element => {
     if (!isLoaded || !product) {
         return <h1>Loading...</h1>;
     }
+    
+const addItemToCart = async () => {
+
+    await dispatch(addItemToShoppingCartThunk(product.id));
+};
 
     return (
         <div id='single-product'>
@@ -91,6 +97,12 @@ const GetSingleProduct = (): JSX.Element => {
             <NavLink to={`/products/${Number(id)}/update`}>
                 Update a Product
             </NavLink>
+
+            <button
+                onClick={addItemToCart}>
+                Add to Cart
+            </button>
+
                 <OpenModalButton
                     buttonText="Delete"
                     buttonClassName="delete-btn"
@@ -100,6 +112,7 @@ const GetSingleProduct = (): JSX.Element => {
              </>
             )}
             <AllReviews reviews={product.reviews}/>
+
         </div>
 
     );
