@@ -5,11 +5,14 @@ import './GetSingleProduct.css';
 import { useParams } from 'react-router-dom';
 import { getSingleProductThunk } from '../../redux/products';
 import { RootState } from '../../redux/store';
+import OpenModalButton from '../OpenModalButton';
+import ReviewFormModal from '../AllProducts/ReviewFormModal/ReviewFormModal';
 import { addItemToShoppingCartThunk } from '../../redux/shopping_cart';
 import DeleteProductModal from '../DeleteProductModal';
 import OpenModalButton from '../OpenModalButton';
 import AllReviews from '../AllReviews';
 import { IProduct } from '../../redux/types/products';
+
 
 
 const GetSingleProduct = (): JSX.Element => {
@@ -98,6 +101,13 @@ const addItemToCart = async () => {
                 Update a Product
             </NavLink>
 
+        
+            <OpenModalButton
+                buttonText="Write a review"
+                modalComponent={<ReviewFormModal productId={product.Id} />}
+            />
+
+
             <button
                 onClick={addItemToCart}>
                 Add to Cart
@@ -113,8 +123,9 @@ const addItemToCart = async () => {
             )}
             <AllReviews reviews={product.reviews}/>
 
-        </div>
 
+        </div>
+        
     );
 };
 

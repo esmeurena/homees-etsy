@@ -16,7 +16,7 @@ def get_all_products():
     all_products = [product.to_dict() for product in Product.query.all()]
 
     for product in all_products:
-        user = User.query.get(product['user_id'])
+        user = User.query.get(product['owner_id'])
         products.append(user)
 
     users = [user.to_dict() for user in products]
@@ -122,6 +122,7 @@ def update_product(id):
 def delete_product(id):
     product = Product.query.get(id)
 
+
     if not product:
         return {"error": "Product not found"}, 404
 
@@ -132,3 +133,4 @@ def delete_product(id):
     db.session.commit()
     
     return {"message": "Product deleted successfully"}, 200
+
