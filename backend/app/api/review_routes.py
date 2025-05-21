@@ -39,7 +39,7 @@ def update_review(id):
 
 
 # Delete a Review Route
-@review_routes.route('/<int:id>', methods=['DELETE'])
+@review_routes.route('/<int:id/delete>', methods=['DELETE'])
 @login_required
 def delete_review(id):
     review = Review.query.get(id)
