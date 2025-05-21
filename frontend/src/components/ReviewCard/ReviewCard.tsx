@@ -1,7 +1,5 @@
-import { IReview } from '../../redux/types/reviews';
 import './ReviewCard.css';
 import { IReviewCard } from '../../redux/types/reviews';
-import { RiTimelineView } from 'react-icons/ri';
 
 const ReviewCard = ({review}: IReviewCard) => {
 
@@ -11,7 +9,6 @@ const ReviewCard = ({review}: IReviewCard) => {
         `${splReviewDate[2]} ${splReviewDate[1]}, ${splReviewDate[3]}`
         return constructedReviewDate;
     }
-    console.log(reviewDate(review.updated_at))
 
     return (
         <div id='review-card'>
