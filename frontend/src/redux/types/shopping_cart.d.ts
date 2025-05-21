@@ -1,11 +1,12 @@
-import { IProductWithImages, IProductImage } from "./products";
+// import { IProductWithImages, IProductImage } from "./products";
+import { IProductWithImages } from "./products";
 
-export interface IShoppingCart {
-    id: number;
-    user_id: number;
-    product_id: number;
-    product_images: IProductImage[];
-}
+// export interface IShoppingCart {
+//     id: number;
+//     user_id: number;
+//     product_id: number;
+//     product_images: IProductImage[];
+// }
 
 export interface IShoppingCartItem {
     id: number;
