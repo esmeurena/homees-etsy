@@ -22,10 +22,11 @@ class Product(db.Model):
     # one-to-many
     user = db.relationship("User", back_populates="products")
     reviews = db.relationship("Review", back_populates="products")
-    product_images = db.relationship("ProductImage", back_populates="products")
+    product_images = db.relationship("ProductImage", back_populates="product", cascade="all, delete-orphan")
     favorites = db.relationship("Favorite", back_populates="products")
     shopping_carts = db.relationship("ShoppingCart", back_populates="products")
     transactions = db.relationship("Transaction", back_populates="products")
+
 
     def to_dict(self):
         avg_rating = None

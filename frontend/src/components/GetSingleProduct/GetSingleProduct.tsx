@@ -5,9 +5,10 @@ import './GetSingleProduct.css';
 import { useParams } from 'react-router-dom';
 import { getSingleProductThunk } from '../../redux/products';
 import { RootState } from '../../redux/store';
+import DeleteProductModal from '../DeleteProductModal';
+import OpenModalButton from '../OpenModalButton';
 import AllReviews from '../AllReviews';
 import { IProduct } from '../../redux/types/products';
-
 
 
 const GetSingleProduct = (): JSX.Element => {
@@ -15,7 +16,10 @@ const GetSingleProduct = (): JSX.Element => {
     const [isLoaded, setIsLoaded] = useState(false);
     const { id } = useParams();
 
-    const product: IProduct = useSelector((state: RootState) => state.products.byId[Number(id)]);
+
+    const product = useSelector((state: RootState) => state.products.byId[Number(id)]);
+    const currentUser = useSelector((state: RootState) => state.session.user);
+    // const product: IProduct = useSelector((state: RootState) => state.products.byId[Number(id)]);
 
     useEffect(() => {
         const singleProduct = async () => {
@@ -28,7 +32,7 @@ const GetSingleProduct = (): JSX.Element => {
         }
     }, [isLoaded, dispatch, id]);
 
-    if (!isLoaded) {
+    if (!isLoaded || !product) {
         return <h1>Loading...</h1>;
     }
 
@@ -81,6 +85,20 @@ const GetSingleProduct = (): JSX.Element => {
                     </div>
                 </div>
             </div>
+
+            {currentUser?.id === product.user_id && (
+                <>
+            <NavLink to={`/products/${Number(id)}/update`}>
+                Update a Product
+            </NavLink>
+                <OpenModalButton
+                    buttonText="Delete"
+                    buttonClassName="delete-btn"
+                modalComponent={<DeleteProductModal productId={Number(id)}/>}
+
+                />
+             </>
+            )}
             <AllReviews reviews={product.reviews}/>
         </div>
 

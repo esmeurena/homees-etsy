@@ -21,7 +21,8 @@ def get_all_reviews(id):
 # Get Single Review Route
 @review_routes.route('/<int:id>')
 def get_review(id):
-    pass
+    single_review = Review.query.get(id)
+    return single_review.to_dict()
 
 
 # Create a Review Route
@@ -39,7 +40,16 @@ def update_review(id):
 
 
 # Delete a Review Route
-@review_routes.route('/<int:id>', methods=['DELETE'])
+@review_routes.route('/<int:id/delete>', methods=['DELETE'])
 @login_required
 def delete_review(id):
-    pass
+    review = Review.query.get(id)
+
+    if review:
+        if review.user_id == current_user.id:
+            db.session.delete(review)
+            db.session.commit()
+            return {'message': 'Deleted'}, 200
+    else:
+        return {'error': 'Forbidden'}, 403
+    return {'error': 'Review not found'}, 404

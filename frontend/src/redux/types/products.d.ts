@@ -27,6 +27,11 @@ export interface ICreateProduct {
     // }[];
 }
 
+export interface IDeleteProduct {
+    id: number;
+}
+
+
 export interface IProductImage {
     id: number;
     product_id: number;

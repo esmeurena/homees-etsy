@@ -22,6 +22,13 @@ export interface IAllReviews {
     reviews: IReview[];
 }
 
+export interface IReviewState {
+    byId: {
+        [id: number]: IReview;
+    };
+    allReviews: IReview[];
+}
+
 export interface IReviewCard {
     review: IReview;
 }
