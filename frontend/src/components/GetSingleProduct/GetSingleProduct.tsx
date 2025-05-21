@@ -9,9 +9,8 @@ import OpenModalButton from '../OpenModalButton';
 import ReviewFormModal from '../AllProducts/ReviewFormModal/ReviewFormModal';
 import { addItemToShoppingCartThunk } from '../../redux/shopping_cart';
 import DeleteProductModal from '../DeleteProductModal';
-import OpenModalButton from '../OpenModalButton';
 import AllReviews from '../AllReviews';
-import { IProduct } from '../../redux/types/products';
+
 
 
 
@@ -19,12 +18,14 @@ const GetSingleProduct = (): JSX.Element => {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
     const { id } = useParams();
+    const productId = Number(id);
 
 
     const product = useSelector((state: RootState) => state.products.byId[Number(id)]);
     const currentUser = useSelector((state: RootState) => state.session.user);
+    const allReviews = useSelector((state: RootState) => state.reviews.allReviews);
     // const product: IProduct = useSelector((state: RootState) => state.products.byId[Number(id)]);
-
+    const reviews = allReviews.filter(review => review.product_id === productId)
     useEffect(() => {
         const singleProduct = async () => {
             await dispatch(getSingleProductThunk(Number(id)));
@@ -45,6 +46,7 @@ const addItemToCart = async () => {
     await dispatch(addItemToShoppingCartThunk(product.id));
 };
 
+const hasReviewed = reviews.find((review) => review.user_id === currentUser?.id) !== undefined
     return (
         <div id='single-product'>
             <div id='single-product-images-text'>
@@ -100,14 +102,6 @@ const addItemToCart = async () => {
             <NavLink to={`/products/${Number(id)}/update`}>
                 Update a Product
             </NavLink>
-
-        
-            <OpenModalButton
-                buttonText="Write a review"
-                modalComponent={<ReviewFormModal productId={product.Id} />}
-            />
-
-
             <button
                 onClick={addItemToCart}>
                 Add to Cart
@@ -121,7 +115,15 @@ const addItemToCart = async () => {
                 />
              </>
             )}
-            <AllReviews reviews={product.reviews}/>
+            {/* make sure its a purchasing customer for the if conditional*/}
+            {currentUser && !hasReviewed && (
+                <OpenModalButton
+                    buttonText="Write a review"
+                    buttonClassName="review-btn"
+                    modalComponent={<ReviewFormModal productId={Number(id)} />}
+                />
+            )}
+            <AllReviews/>
 
 
         </div>

@@ -17,7 +17,7 @@ def get_all_reviews(id):
             Review.product_id == id
             )]
 
-    return all_reviews
+    return {"Reviews": all_reviews}
 
 # Get Single Review Route
 @review_routes.route('/<int:id>')
@@ -75,7 +75,7 @@ def update_review(id):
 
 
 # Delete a Review Route
-@review_routes.route('/<int:id/delete>', methods=['DELETE'])
+@review_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_review(id):
     review = Review.query.get(id)
