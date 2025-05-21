@@ -22,13 +22,16 @@ class Product(db.Model):
     # one-to-many
     user = db.relationship("User", back_populates="products")
     reviews = db.relationship("Review", back_populates="products")
-    product_images = db.relationship("ProductImage", back_populates="products")
+    product_images = db.relationship("ProductImage", back_populates="product", cascade="all, delete-orphan")
     favorites = db.relationship("Favorite", back_populates="products")
     shopping_carts = db.relationship("ShoppingCart", back_populates="products")
     transactions = db.relationship("Transaction", back_populates="products")
+    shopping_cart_items = db.relationship("ShoppingCartItem", back_populates="products")
+
 
     def to_dict(self):
         avg_rating = None
+        ratings = []
         if self.reviews:
             ratings = [review.stars for review in self.reviews
                        if review.stars is not None]
@@ -39,5 +42,6 @@ class Product(db.Model):
             "description": self.description, "price": self.price,
             "item_count": self.item_count,
             "product_images": [img.to_dict() for img in self.product_images],
-            "avg_rating": avg_rating
+            "avg_rating": avg_rating,
+            "reviews": [review.to_dict() for review in self.reviews]
             }

@@ -1,14 +1,53 @@
+import { IReview } from "./reviews";
+
 export interface IProduct {
     id: number;
-    owner_id: number;
+    user_id: number;
     name: string;
     description: string;
     price: number;
     item_count: number;
+    avg_rating: number;
+    product_images: IProductImage[];
+    reviews: IReview[];
     created_at: string;
     updated_at: string;
-
 }
+
+export interface IProductImage {
+  id: number;
+  product_id: number;
+  url: string;
+  preview: boolean;
+}
+
+export interface IProductWithImages {
+  id: number;
+  user_id: number;
+  name: string;
+  description: string;
+  price: number;
+  item_count: number;
+  product_images: IProductImage[];
+}
+
+export interface ICreateProduct {
+    name: string;
+    description: string;
+    price: number;
+    item_count: number;
+
+    product_images: string[];
+    // product_images:{
+    //     id: number;
+    //     image_url: string
+    // }[];
+}
+
+export interface IDeleteProduct {
+    id: number;
+}
+
 
 export interface IProductImage {
     id: number;

@@ -1,0 +1,24 @@
+#review-card {
+    display: flex;
+    flex-direction: column;
+}
+
+#review-card-stars {
+    display: flex;
+    font-size: 1.8rem;
+}
+
+#review-card-review-image {
+    height: 8rem;
+    object-fit: cover;
+}
+
+#review-card-review-user-date-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.review-card-review-user-date {
+    font-size: .9rem;
+    color: #626262
+}

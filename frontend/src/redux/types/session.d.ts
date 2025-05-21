@@ -12,6 +12,12 @@ export interface IUser {
 }
 
 export interface ISignUpUser{
+    first_name: string;
+    last_name: string;
+    address: string;
+    city: string;
+    state: string;
+    country: string;
     email: string;
     username: string;
     password: string;

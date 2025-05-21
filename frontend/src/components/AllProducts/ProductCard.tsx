@@ -13,10 +13,10 @@ interface ProductProps {
     avg_rating: number
 }
 
-const ProductCard = ({name, price, User, product_images, avg_rating}: ProductProps): JSX.Element => {
+const ProductCard = ({id, name, price, User, product_images, avg_rating}: ProductProps): JSX.Element => {
 
     return (
-        <NavLink id='product-card' to=''> {/* FILL THIS IN FOR GET A PRODUCT*/}
+        <NavLink id='product-card' to={`/products/${id}`}> {/* FILL THIS IN FOR GET A PRODUCT*/}
             <img id='product-card-image'src={
                 product_images.find(image => image.preview === true)?.url
                 }
@@ -29,7 +29,10 @@ const ProductCard = ({name, price, User, product_images, avg_rating}: ProductPro
                 <b className='product-card-text'>${price}</b>
                 <p className='product-card-text' style={{color: '#595959'}}>{User.first_name} {User.last_name}</p>
             </div>
+
         </NavLink>
+
+
     )
 }
 
