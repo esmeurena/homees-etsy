@@ -7,6 +7,8 @@ import { getSingleProductThunk } from '../../redux/products';
 import { RootState } from '../../redux/store';
 import DeleteProductModal from '../DeleteProductModal';
 import OpenModalButton from '../OpenModalButton';
+import AllReviews from '../AllReviews';
+import { IProduct } from '../../redux/types/products';
 
 
 const GetSingleProduct = (): JSX.Element => {
@@ -14,8 +16,10 @@ const GetSingleProduct = (): JSX.Element => {
     const [isLoaded, setIsLoaded] = useState(false);
     const { id } = useParams();
 
+
     const product = useSelector((state: RootState) => state.products.byId[Number(id)]);
     const currentUser = useSelector((state: RootState) => state.session.user);
+    // const product: IProduct = useSelector((state: RootState) => state.products.byId[Number(id)]);
 
     useEffect(() => {
         const singleProduct = async () => {
@@ -38,7 +42,7 @@ const GetSingleProduct = (): JSX.Element => {
             <h1>{product.name}</h1>
             <p>{product.price}</p>
             <p>{product.description}</p>
-            <p>⭐️{product.avg_rating}</p>
+            <p>&#9733;{product.avg_rating}</p>
             <div>
                 <img src={product.product_images[0].url} />
             </div>
@@ -54,9 +58,9 @@ const GetSingleProduct = (): JSX.Element => {
                 modalComponent={<DeleteProductModal productId={Number(id)}/>}
 
                 />
-                    </>
+             </>
             )}
-
+            <AllReviews reviews={product.reviews}/>
         </div>
 
     );

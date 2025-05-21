@@ -12,7 +12,7 @@ interface ICreateImageErrors {
     price?: string;
     item_count?: string;
     product_images?: string;
-}
+} 
 
 function CreateProductPage() {
     const counter = useRef(1);
