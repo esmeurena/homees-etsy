@@ -67,11 +67,26 @@ def create_review():
         return review.to_dict(), 201
 
     return {"errors": form.errors, "statusCode": 400}, 400
+
 # Update a Review Route
 @review_routes.route('/<int:id>', methods=['PUT'])
 @login_required
-def update_review(id):
-    pass
+def update_review(productId, reviewId):
+
+    form = ReviewForm()
+    update_a_review = Review.query.get(id)
+
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate_on_submit():
+        data = form.data
+    
+        update_a_review.review = data['review'],
+        update_a_review.stars = data['stars'],
+
+    db.session.update(update_a_review)
+    db.session.commit()
+    return update_a_review.to_dict(), 200
 
 
 # Delete a Review Route
