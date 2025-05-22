@@ -178,6 +178,7 @@ function productsReducer(state = initialState, action: IActionCreator) {
       const products = action.payload.Products;
       newState = { ...state }
       newState.allProducts = products;
+      
       let newByIdGetAllProducts: { [id: number]: IProduct } = {};
       for (let product of products) {
         newByIdGetAllProducts[product.id] = product;

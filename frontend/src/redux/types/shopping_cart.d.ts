@@ -1,5 +1,5 @@
 // import { IProductWithImages, IProductImage } from "./products";
-import { IProductWithImages } from "./products";
+import { IProduct } from "./products";
 
 // export interface IShoppingCart {
 //     id: number;
@@ -13,16 +13,16 @@ export interface IShoppingCartItem {
     product_id: number;
     user_id: number;
     item_count:number;
-    product: IProductWithImages;
-    created_at: string;
-    updated_at: string;
+    product?: IProduct;
+    created_at?: string;
+    updated_at?: string;
 }
 
 export interface IShoppingCartState {
     byId: {
-        [id: number]: IShoppingCart;
+        [id: number]: Item;
     };
-    allShoppingCartItems: IShoppingCart[];
+    allShoppingCartItems: IShoppingCartItem[];
 }
 
 export interface IActionCreator {
