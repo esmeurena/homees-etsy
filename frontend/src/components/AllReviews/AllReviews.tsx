@@ -1,6 +1,8 @@
 import './AllReviews.css';
 import ReviewCard from '../ReviewCard';
 import { IAllReviews } from '../../redux/types/reviews';
+import OpenModalButton from '../OpenModalButton';
+import DeleteReviewModal from '../DeleteReviewModal';
 
 const AllReviews = ({reviews}: IAllReviews) => {
     return (
@@ -9,6 +11,13 @@ const AllReviews = ({reviews}: IAllReviews) => {
                 return (
                     <div key={`${review.id}-${i}`} className='all-reviews-review'>
                         <ReviewCard review={review}/>
+
+                            <OpenModalButton
+                                buttonText="Delete Review"
+                                buttonClassName="delete-btn"
+                                modalComponent={<DeleteReviewModal reviewId={review.id} />}
+                            />       
+                                             
                         <hr id='all-reviews-line'></hr>
                     </div>
                 )
