@@ -72,9 +72,9 @@ def create_review():
 @review_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_review(productId, reviewId):
+    update_a_review = Review.query.get(reviewId)
 
     form = ReviewForm()
-    update_a_review = Review.query.get(id)
 
     form["csrf_token"].data = request.cookies["csrf_token"]
 
@@ -83,9 +83,9 @@ def update_review(productId, reviewId):
     
         update_a_review.review = data['review'],
         update_a_review.stars = data['stars'],
+        db.session.commit()
 
-    db.session.update(update_a_review)
-    db.session.commit()
+    
     return update_a_review.to_dict(), 200
 
 
