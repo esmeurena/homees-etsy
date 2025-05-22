@@ -108,7 +108,7 @@ export const updateAReviewThunk = (reviewId: number, review: ICreateReview): any
 
 export const deleteAReviewThunk = (reviewId: number): any => async (dispatch: any) => {
   try {
-    const res = await fetch(`/api/products/${reviewId}`, {
+    const res = await fetch(`/api/reviews/${reviewId}`, {
       method: "DELETE",
     });
 

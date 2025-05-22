@@ -22,7 +22,7 @@ class Review(db.Model):
                            onupdate=datetime.utcnow)
 
     # one-to-many
-    review_images = db.relationship("ReviewImage", back_populates="reviews")
+    review_images = db.relationship("ReviewImage", back_populates="reviews", cascade="all, delete-orphan")
     user = db.relationship("User", back_populates="reviews")
     products = db.relationship("Product", back_populates="reviews")
 

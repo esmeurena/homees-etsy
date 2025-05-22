@@ -104,11 +104,13 @@ def update_review( reviewId):
 def delete_review(id):
     review = Review.query.get(id)
 
-    if review:
-        if review.user_id == current_user.id:
-            db.session.delete(review)
-            db.session.commit()
-            return {'message': 'Deleted'}, 200
-    else:
-        return {'error': 'Forbidden'}, 403
-    return {'error': 'Review not found'}, 404
+    if not review:
+        return {'error': 'Review not found'}, 404
+
+    if review.user_id != current_user.id:
+        return {'error': 'Unauthorized'}, 403
+
+    db.session.delete(review)
+    db.session.commit()
+
+    return {"message": "Review Deleted successfully"}, 200
