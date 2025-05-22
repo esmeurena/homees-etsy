@@ -5,6 +5,7 @@ import { useAppSelector } from "../../redux/store";
 import { createProductThunk } from "../../redux/products";
 import './CreateProduct.css';
 import { useRef } from 'react';
+import { IProductImage } from "../../redux/types/products";
 
 interface ICreateImageErrors {
     name?: string;
@@ -12,7 +13,7 @@ interface ICreateImageErrors {
     price?: string;
     item_count?: string;
     product_images?: string;
-} 
+}
 
 function CreateProductPage() {
     const counter = useRef(1);
@@ -24,10 +25,10 @@ function CreateProductPage() {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
     const [item_count, setItemCount] = useState(0);
-
+    const [product_images, setProductImages] = useState<IProductImage[]>([]);
     // const [product_images, setProductImages] = useState([]);
-    const [product_images, setProductImages] = useState<string[]>([]);
-    const [additionalImage, setAdditionalImage] = useState("");//placeholder for urls
+    // const [product_images, setProductImages] = useState<string[]>([]);
+    // const [additionalImage, setAdditionalImage] = useState("");//placeholder for urls
 
     const [errors, setErrors] = useState<ICreateImageErrors>({
         name: "",
@@ -60,11 +61,32 @@ function CreateProductPage() {
     };
     const fillValues = () => {
         const count = counter.current;
-        setName("ProductName" + count);
-        setDescription("Very Long Description" + count);
+        setName("Product" + count);
+        setDescription("Long Description" + count);
         setPrice(count);
         setItemCount(count);
-        setProductImages(["https://upload.wikimedia.org/wikipedia/commons/1/1c/6sided_dice_%28cropped%29.jpg"]);
+        setProductImages([{
+            url: "https://cd2.boardgamesmaker.com/AttachFiles/WebsiteImages/Product_Show/FI_8807.jpg",
+            preview: true,
+            product_id: 0,
+        }, {
+            url: "https://www.collinsdictionary.com/images/full/dice_393025615_1000.jpg",
+            preview: false,
+            product_id: 0,
+        }, {
+            url: "https://farm3.staticflickr.com/2573/4144840299_f44aed6ce5_z.jpg",
+            preview: false,
+            product_id: 0,
+        }, {
+            url: "https://www.gastonsanchez.com/intro2cwd/images/simulation/dice4.jpg",
+            preview: false,
+            product_id: 0,
+        }, {
+            url: "https://store.foxtrot.com/cdn/shop/products/mathydice-frontpage.png?v=1652387248",
+            preview: false,
+            product_id: 0,
+        }
+        ]);
 
         counter.current += 1;
     };
@@ -119,11 +141,13 @@ function CreateProductPage() {
                     Preview Product Image
                     <input
                         type="text"
-                        value={product_images[0]}
+                        value={product_images[0]?.url}
                         onChange={(e) => {
-                            const preview_img = e.target.value;
+                            const preview_img: IProductImage = {
+                                url: e.target.value,
+                                preview: false
+                            };
                             let image_array = [preview_img];
-                            //will work for both update and create
                             for (let i = 1; i < product_images.length; i++) {
                                 image_array.push(product_images[i]);
                             }
@@ -135,6 +159,98 @@ function CreateProductPage() {
                 {errors.product_images && <p>{errors.product_images}</p>}
 
                 <label>
+                    Additional Product Image # 1
+                    <input
+                        type="text"
+                        value={product_images[1]?.url}
+                        onChange={(e) => {
+                            const additional_image: IProductImage = {
+                                url: e.target.value,
+                                preview: false
+                            };
+
+                            let image_array = [product_images[0]];
+
+                            for (let i = 1; i < product_images.length; i++) {
+                                image_array.push(product_images[i]);
+                            }
+                            image_array.push(additional_image)
+
+                            setProductImages(image_array);
+                        }}
+                    />
+                </label>
+
+                <label>
+                    Additional Product Image # 2
+                    <input
+                        type="text"
+                        value={product_images[2]?.url}
+                        onChange={(e) => {
+                            const additional_image: IProductImage = {
+                                url: e.target.value,
+                                preview: false
+                            };
+
+                            let image_array = [product_images[0]];
+
+                            for (let i = 1; i < product_images.length; i++) {
+                                image_array.push(product_images[i]);
+                            }
+                            image_array.push(additional_image)
+
+                            setProductImages(image_array);
+                        }}
+                    />
+                </label>
+
+                <label>
+                    Additional Product Image # 3
+                    <input
+                        type="text"
+                        value={product_images[3]?.url}
+                        onChange={(e) => {
+                            const additional_image: IProductImage = {
+                                url: e.target.value,
+                                preview: false
+                            };
+
+                            let image_array = [product_images[0]];
+
+                            for (let i = 1; i < product_images.length; i++) {
+                                image_array.push(product_images[i]);
+                            }
+                            image_array.push(additional_image)
+
+                            setProductImages(image_array);
+                        }}
+                    />
+                </label>
+
+                <label>
+                    Additional Product Image # 4
+                    <input
+                        type="text"
+                        value={product_images[4]?.url}
+                        onChange={(e) => {
+                            const additional_image: IProductImage = {
+                                url: e.target.value,
+                                preview: false
+                            };
+
+                            let image_array = [product_images[0]];
+
+                            for (let i = 1; i < product_images.length; i++) {
+                                image_array.push(product_images[i]);
+                            }
+                            image_array.push(additional_image)
+
+                            setProductImages(image_array);
+                        }}
+                    />
+                </label>
+
+                {/* <label>
                     Additional Image
                     <input
                         type="text"
@@ -154,7 +270,7 @@ function CreateProductPage() {
                             }
                         }}
                     >Add this image</button>
-                </label>
+                </label> */}
                 {/* {errors.additionalImage && <p>{errors.additionalImage}</p>} */}
                 <button type="submit">Create Product</button>
             </form>
@@ -162,7 +278,7 @@ function CreateProductPage() {
             {product_images[0] && (
                 <div>
                     <p>Preview Image</p>
-                    <img src={product_images[0]} />
+                    <img src={product_images[0]?.url} />
                 </div>
             )}
 
@@ -171,7 +287,7 @@ function CreateProductPage() {
                     <p>Additional Images</p>
                     {product_images.slice(1).map((img, idx) => (
                         <div key={idx}>
-                            <img src={img} />
+                            <img src={img?.url} />
                         </div>
                     ))}
                 </div>
