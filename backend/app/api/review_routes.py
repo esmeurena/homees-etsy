@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 # import whatever the Review model class name is below
-from app.models import Review, Product
+from app.models import Review, Product, ReviewImage
 from app.models import db
 from app.forms import ReviewForm
 # import the review form class
@@ -63,15 +63,24 @@ def create_review():
         db.session.add(new_review)
         db.session.commit()
 
+
+        if data.get('image_url'):
+            review_image = ReviewImage(
+                review_id = new_review.id,
+                url = data.get('image_url')
+            )
+            db.session.add(review_image)
+            db.session.commit()
+
         review = Review.query.get(new_review.id)
         return review.to_dict(), 201
 
     return {"errors": form.errors, "statusCode": 400}, 400
 
 # Update a Review Route
-@review_routes.route('/<int:id>', methods=['PUT'])
+@review_routes.route('/<int:reviewId>', methods=['PUT'])
 @login_required
-def update_review(productId, reviewId):
+def update_review( reviewId):
     update_a_review = Review.query.get(reviewId)
 
     form = ReviewForm()
