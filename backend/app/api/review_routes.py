@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 # import whatever the Review model class name is below
-from app.models import Review, Product
+from app.models import Review, Product, ReviewImage
 from app.models import db
 from app.forms import ReviewForm
 # import the review form class
@@ -17,7 +17,7 @@ def get_all_reviews(id):
             Review.product_id == id
             )]
 
-    return all_reviews
+    return {"Reviews": all_reviews}
 
 # Get Single Review Route
 @review_routes.route('/<int:id>')
@@ -63,15 +63,39 @@ def create_review():
         db.session.add(new_review)
         db.session.commit()
 
+
+        if data.get('image_url'):
+            review_image = ReviewImage(
+                review_id = new_review.id,
+                url = data.get('image_url')
+            )
+            db.session.add(review_image)
+            db.session.commit()
+
         review = Review.query.get(new_review.id)
         return review.to_dict(), 201
 
     return {"errors": form.errors, "statusCode": 400}, 400
+
 # Update a Review Route
-@review_routes.route('/<int:id>', methods=['PUT'])
+@review_routes.route('/<int:reviewId>', methods=['PUT'])
 @login_required
-def update_review(id):
-    pass
+def update_review( reviewId):
+    update_a_review = Review.query.get(reviewId)
+
+    form = ReviewForm()
+
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate_on_submit():
+        data = form.data
+    
+        update_a_review.review = data['review'],
+        update_a_review.stars = data['stars'],
+        db.session.commit()
+
+    
+    return update_a_review.to_dict(), 200
 
 
 # Delete a Review Route

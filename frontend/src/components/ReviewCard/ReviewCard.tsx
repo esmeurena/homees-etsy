@@ -1,8 +1,20 @@
 import './ReviewCard.css';
-import { IReviewCard } from '../../redux/types/reviews';
+import { IReview, IReviewCard } from '../../redux/types/reviews';
+import { useModal } from '../../context/Modal'
+import UpdateReviewModal from '../AllProducts/UpdateAReview';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
-const ReviewCard = ({review}: IReviewCard) => {
+interface ReviewCardProps {
+    review: IReview;
+    currentUserId?: number;
+    productId: number;
+}
 
+
+const ReviewCard = ({ review, currentUserId, productId }: ReviewCardProps) => {
+    const { setModalContent } = useModal();
+    const currentUser = useSelector((state: RootState) => state.session.user)
     const reviewDate = (reviewDate: string) => {
         const splReviewDate: string[] = reviewDate.split(' ');
         const constructedReviewDate: string =
@@ -35,7 +47,21 @@ const ReviewCard = ({review}: IReviewCard) => {
                     {reviewDate(review.updated_at)}
                 </span>
             </div>
-
+            { currentUser && currentUser.id === review.user.id && (
+                <button
+                    className='edit-review-button'
+                    onClick={() => 
+                        setModalContent(
+                            <UpdateReviewModal
+                                reviewId={review.id}
+                                productId={productId}
+                            />
+                        )
+                    }
+                >
+                    Edit
+                </button>
+                )}
         </div>
     )
 }
