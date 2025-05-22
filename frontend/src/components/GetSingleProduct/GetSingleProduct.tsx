@@ -17,7 +17,7 @@ const GetSingleProduct = (): JSX.Element => {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
     const { id } = useParams();
-
+    const [image_clicked, set_image_clicked] = useState<string>();
 
     const product = useSelector((state: RootState) => state.products.byId[Number(id)]);
     const currentUser = useSelector((state: RootState) => state.session.user);
@@ -32,6 +32,12 @@ const GetSingleProduct = (): JSX.Element => {
             singleProduct();
         }
     }, [isLoaded, dispatch, id]);
+
+    useEffect (() => { 
+        if(product?.product_images?.length){
+            set_image_clicked(product.product_images[0].url);
+        }
+    },[product]);
 
     if (!isLoaded || !product) {
         return <h1>Loading...</h1>;
@@ -48,14 +54,15 @@ const addItemToCart = async () => {
                 <div>
                     <div id='single-product-images-container'>
                         <div id='single-product-images-list'>
-                            {product.product_images.map((image: { url: string | undefined; }) => {
+                            {product.product_images.map((image: { url: string | undefined }, imageId: number) => {
                                 return (
-                                    <img className='single-product-images-list-image' src={image.url}/>
+                                    <img key={imageId} onClick={() => set_image_clicked(image.url)} className='single-product-images-list-image' src={image.url}/>
                                 )
                             })}
                         </div>
                     <img id='single-product-image'
-                         src={product.product_images[0].url} />
+                        //  src={product.product_images[0].url} />
+                        src = {image_clicked?? ''}/>
                     </div>
                 </div>
                 <div id='single-product-text'>
