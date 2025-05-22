@@ -15,6 +15,7 @@ interface ReviewFormModalProps {
 interface ReviewErrors {
     review?: string;
     stars?: string;
+    image?: string;
 }
 
 const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
@@ -25,6 +26,7 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
     const [errors, setErrors] = useState<ReviewErrors>({})
     const [hoveredStar, setHoveredStar] = useState(0);
     const [serverError, setServerError] = useState("");
+    const [imageUrl, setImageUrl] = useState("")
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -34,7 +36,8 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
         const reviewData = {
             product_id: productId,
             review,
-            stars
+            stars,
+            image_url: imageUrl,
         };
 
         try {
@@ -62,44 +65,61 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
 
 
     return (
+      <>
+        <h1>Leave Feedback</h1>
 
-        <>
-            <h1>Leave Feedback</h1>
-            
-            {serverError && <p>{serverError}</p>}
-            {errors.review && <p>{errors.review}</p>}
+        {serverError && <p>{serverError}</p>}
+        {errors.review && <p>{errors.review}</p>}
+        {errors.stars && <p>{errors.stars}</p>}
+        {errors.image && <p>{errors.image}</p>}
 
-            <form onSubmit={handleSubmit}>
-                <textarea
-                    placeholder="Leave your review here"
-                    value={review}
-                    onChange={(e) => setReview(e.target.value)}
-                    rows={6}
-                />
-                <div className="stars-submit">
-                    {[1, 2, 3, 4, 5].map((num) => (
-                        <FontAwesomeIcon
-                            key={num}
-                            icon={num <= (hoveredStar || stars) ? fasStar : farStar}
-                            className="star-icon"
-                            onClick={() => setStars(num)}
-                            onMouseEnter={() => setHoveredStar(num)}
-                            onMouseLeave={() => setHoveredStar(0)}
-                        />
-                    ))}
-                    <span>Stars</span>
+        <form onSubmit={handleSubmit}>
+          <textarea
+            placeholder="Leave your review here"
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+            rows={6}
+          />
+          <div className="stars-submit">
+            {[1, 2, 3, 4, 5].map((num) => (
+              <FontAwesomeIcon
+                key={num}
+                icon={num <= (hoveredStar || stars) ? fasStar : farStar}
+                className="star-icon"
+                onClick={() => setStars(num)}
+                onMouseEnter={() => setHoveredStar(num)}
+                onMouseLeave={() => setHoveredStar(0)}
+              />
+            ))}
+            <span>Stars</span>
+          </div>
+
+                <div>
+                    <label>
+                        Add Photo
+                        <input
+                            type="text"
+                            value={imageUrl}
+                            onChange={(e) => setImageUrl(e.target.value)}
+                            placeholder="Add photo"
+                        ></input>
+                    </label>
+                    {imageUrl && (
+                        <div className="image-preview">
+                            <img src={imageUrl} alt="Review preview" />
+                            </div>
+                    )}
                 </div>
-
-                <button
-                    type="submit"
-                    disabled={!validReview}
-                    className="submit-review-button"
-                >
-                    Submit Your Review
-                </button>
-            </form>
-        </>
-    )
+          <button
+            type="submit"
+            disabled={!validReview}
+            className="submit-review-button"
+          >
+            Submit Your Review
+          </button>
+        </form>
+      </>
+    );
 }
 
 

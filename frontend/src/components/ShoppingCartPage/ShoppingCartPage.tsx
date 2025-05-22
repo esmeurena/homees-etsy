@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import { IShoppingCart, IShoppingCartItem } from "../../redux/types/shopping_cart";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { getAllShoppingCartItemsThunk } from "../../redux/shopping_cart";
 
 function ShoppingCartPage() {
     const dispatch = useDispatch();
-    const shoppingCart: IShoppingCartItem[] = useSelector((state: RootState) => state.shopping_cart.shopping_cart_items);
-
+    // const shoppingCart: IShoppingCartItem[] = useSelector((state: RootState) => state.shopping_cart.shopping_cart_items);
+    const shoppingCart = useSelector((state:RootState) => state.shopping_cart.allShoppingCartItems);
     useEffect(() => {
         dispatch(getAllShoppingCartItemsThunk());
     }, [dispatch]);

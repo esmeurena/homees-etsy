@@ -10,10 +10,9 @@ import ReviewFormModal from '../AllProducts/ReviewFormModal/ReviewFormModal';
 import { addItemToShoppingCartThunk } from '../../redux/shopping_cart';
 import DeleteProductModal from '../DeleteProductModal';
 import AllReviews from '../AllReviews';
+import { IReview } from '../../redux/types/reviews';
+
 import { getAllReviewsThunk } from '../../redux/reviews';
-
-
-
 
 const GetSingleProduct = (): JSX.Element => {
     const dispatch = useDispatch();
@@ -21,12 +20,12 @@ const GetSingleProduct = (): JSX.Element => {
     const { id } = useParams();
     const productId = Number(id);
 
-
     const product = useSelector((state: RootState) => state.products.byId[Number(id)]);
     const currentUser = useSelector((state: RootState) => state.session.user);
-    const allReviews = useSelector((state: RootState) => state.reviews.allReviews);
+    const reviews = useSelector((state: RootState) => state.reviews.allReviews);
     // const product: IProduct = useSelector((state: RootState) => state.products.byId[Number(id)]);
-    const reviews = allReviews.filter(review => review.product_id === productId)
+    
+    
     useEffect(() => {
         const singleProduct = async () => {
             await dispatch(getSingleProductThunk(Number(id)));
@@ -48,14 +47,16 @@ const addItemToCart = async () => {
     await dispatch(addItemToShoppingCartThunk(product.id));
 };
 
-const hasReviewed = reviews.find((review) => review.user_id === currentUser?.id) !== undefined
+    const hasReviewed = reviews.some(
+    (review: IReview) => review.user?.id === currentUser?.id
+)
     return (
         <div id='single-product'>
             <div id='single-product-images-text'>
                 <div>
                     <div id='single-product-images-container'>
                         <div id='single-product-images-list'>
-                            {product.product_images.map((image, i) => {
+                            {product.product_images.map((image: { url: string | undefined; }) => {
                                 return (
                                     <img className='single-product-images-list-image' src={image.url}/>
                                 )
@@ -73,7 +74,7 @@ const hasReviewed = reviews.find((review) => review.user_id === currentUser?.id)
                                            single-product-buy-it-now'>
                         Buy it now
                         </button>
-                        <button className='single-product-buttons
+                        <button onClick={addItemToCart} className='single-product-buttons
                                            single-product-add-to-cart'>
                         Add to cart
                         </button>
@@ -104,11 +105,6 @@ const hasReviewed = reviews.find((review) => review.user_id === currentUser?.id)
             <NavLink to={`/products/${Number(id)}/update`}>
                 Update a Product
             </NavLink>
-            <button
-                onClick={addItemToCart}>
-                Add to Cart
-            </button>
-
                 <OpenModalButton
                     buttonText="Delete"
                     buttonClassName="delete-btn"
