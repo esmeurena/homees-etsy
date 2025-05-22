@@ -92,14 +92,14 @@ function CreateProductPage() {
     };
 
     return (
-        <>
+        <div className="create-container">
             <button type="button" onClick={fillValues}>AUTO-FILL</button>
             <h1>Create a Product</h1>
 
-            <form onSubmit={handleSubmit}>
+            <form className= "image-container" onSubmit={handleSubmit}>
                 <label>
                     Product Name
-                    <input
+                    <input className="input-container"
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -109,7 +109,7 @@ function CreateProductPage() {
                 {errors.name && <p>{errors.name}</p>}
                 <label>
                     Description
-                    <input
+                    <input className="input-container"
                         type="text"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
@@ -119,7 +119,7 @@ function CreateProductPage() {
                 {errors.description && <p>{errors.description}</p>}
                 <label>
                     Price
-                    <input
+                    <input className="input-container"
                         type="number"
                         value={price}
                         onChange={(e) => setPrice(Number(e.target.value))}
@@ -129,7 +129,7 @@ function CreateProductPage() {
                 {errors.price && <p>{errors.price}</p>}
                 <label>
                     Total Number of Items
-                    <input
+                    <input className="input-container"
                         type="number"
                         value={item_count}
                         onChange={(e) => setItemCount(Number(e.target.value))}
@@ -139,7 +139,7 @@ function CreateProductPage() {
                 {errors.item_count && <p>{errors.item_count}</p>}
                 <label>
                     Preview Product Image
-                    <input
+                    <input className="input-container"
                         type="text"
                         value={product_images[0]?.url}
                         onChange={(e) => {
@@ -160,7 +160,7 @@ function CreateProductPage() {
 
                 <label>
                     Additional Product Image # 1
-                    <input
+                    <input className="input-container"
                         type="text"
                         value={product_images[1]?.url}
                         onChange={(e) => {
@@ -183,7 +183,7 @@ function CreateProductPage() {
 
                 <label>
                     Additional Product Image # 2
-                    <input
+                    <input className="input-container"
                         type="text"
                         value={product_images[2]?.url}
                         onChange={(e) => {
@@ -206,7 +206,7 @@ function CreateProductPage() {
 
                 <label>
                     Additional Product Image # 3
-                    <input
+                    <input className="input-container"
                         type="text"
                         value={product_images[3]?.url}
                         onChange={(e) => {
@@ -229,7 +229,7 @@ function CreateProductPage() {
 
                 <label>
                     Additional Product Image # 4
-                    <input
+                    <input className="input-container"
                         type="text"
                         value={product_images[4]?.url}
                         onChange={(e) => {
@@ -272,7 +272,7 @@ function CreateProductPage() {
                     >Add this image</button>
                 </label> */}
                 {/* {errors.additionalImage && <p>{errors.additionalImage}</p>} */}
-                <button type="submit">Create Product</button>
+                <button className="button-container" type="submit">Create Product</button>
             </form>
 
             {product_images[0] && (
@@ -292,7 +292,7 @@ function CreateProductPage() {
                     ))}
                 </div>
             )}
-        </>
+        </div>
     );
 }
 

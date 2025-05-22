@@ -10,7 +10,7 @@ const AllReviews = ({reviews}: IAllReviews) => {
             {reviews.length && reviews.map((review, i) => {
                 return (
                     <div key={`${review.id}-${i}`} className='all-reviews-review'>
-                        <ReviewCard review={review}/>
+                        <ReviewCard review={review} productId={0}/>
 
                             <OpenModalButton
                                 buttonText="Delete Review"
