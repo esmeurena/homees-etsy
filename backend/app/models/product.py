@@ -13,7 +13,7 @@ class Product(db.Model):
                         db.ForeignKey(add_prefix_for_prod("users.id")),
                         nullable=False)
     name = db.Column(db.String(30), nullable=False, unique=True)
-    description = db.Column(db.String(100), nullable=True)
+    description = db.Column(db.String(500), nullable=True)
     price = db.Column(db.Numeric(10, 2), nullable=False)
     item_count = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.TIMESTAMP, default=datetime.utcnow)
