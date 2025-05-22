@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './GetSingleProduct.css';
@@ -16,6 +16,7 @@ import { getAllReviewsThunk } from '../../redux/reviews';
 
 const GetSingleProduct = (): JSX.Element => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isLoaded, setIsLoaded] = useState(false);
     const { id } = useParams();
     const [image_clicked, set_image_clicked] = useState<string>();
@@ -79,8 +80,8 @@ const addItemToCart = async () => {
                     <p>{product.name}</p>
                     <div id='single-product-buttons-container'>
                         <button className='single-product-buttons
-                                           single-product-buy-it-now'>
-                        Buy it now
+                                           single-product-buy-it-now' onClick={() => navigate(`/singletransaction/${id}`)}>
+                        Buy it Now!
                         </button>
                         <button onClick={addItemToCart} className='single-product-buttons
                                            single-product-add-to-cart'>
