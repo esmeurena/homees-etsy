@@ -56,16 +56,10 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
             }
         }
     };
-
-
-    const validReview = review.length >= 10 && stars > 0; 
-
-
+    const validReview = review.length >= 10 && stars > 0;
     return (
-
-        <>
-            <h1>Leave Feedback</h1>
-            
+        <div id='review-form'>
+            <h2 id='review-form-title'>Leave Feedback</h2>
             {serverError && <p>{serverError}</p>}
             {errors.review && <p>{errors.review}</p>}
 
@@ -98,7 +92,7 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
                     Submit Your Review
                 </button>
             </form>
-        </>
+        </div>
     )
 }
 

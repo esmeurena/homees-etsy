@@ -63,8 +63,9 @@
     color: white;
 }
 
-#single-product-update {
+.single-product-update-delete {
     display: flex;
+    background-color: white;
     align-items: center;
     justify-content: center;
     text-decoration: none;
@@ -76,4 +77,12 @@
     font-weight: bold;
     font-size: .8rem;
     cursor: pointer;
+}
+
+#single-product-update-delete-container {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    width: 15rem;
+    /* margin-left: 5rem; */
 }

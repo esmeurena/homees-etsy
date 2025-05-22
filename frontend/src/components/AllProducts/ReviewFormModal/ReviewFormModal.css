@@ -1,0 +1,12 @@
+#review-form-title {
+    font-size: 2rem;
+}
+
+#review-form {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    height: 25rem;
+    width: 30em;
+}

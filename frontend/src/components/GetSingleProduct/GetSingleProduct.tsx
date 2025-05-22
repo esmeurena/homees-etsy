@@ -24,7 +24,7 @@ const GetSingleProduct = (): JSX.Element => {
     const allReviews = useSelector((state: RootState) => state.reviews.allReviews);
     // const product: IProduct = useSelector((state: RootState) => state.products.byId[Number(id)]);
     const reviews = allReviews.filter(review => review.product_id === productId)
-    
+
     useEffect(() => {
         const singleProduct = async () => {
             await dispatch(getSingleProductThunk(Number(id)));
@@ -40,7 +40,7 @@ const GetSingleProduct = (): JSX.Element => {
     if (!isLoaded || !product) {
         return <h1>Loading...</h1>;
     }
-    
+
 const addItemToCart = async () => {
 
     await dispatch(addItemToShoppingCartThunk(product.id));
@@ -78,13 +78,21 @@ const hasReviewed = reviews.find((review) => review.user_id === currentUser?.id)
                     </div>
                     <h3>Item details</h3>
                     <p>{product.description}</p>
+                {currentUser?.id === product.user_id && (
+                    <div id='single-product-update-delete-container'>
+                    <NavLink to={`/products/${Number(id)}/update`}
+                    className='single-product-update-delete'>
+                        Update Product
+                    </NavLink>
+                    <OpenModalButton
+                        buttonText="Delete Product"
+                        buttonClassName="single-product-update-delete"
+                        modalComponent={<DeleteProductModal productId={Number(id)}/>}
+                    />
+                    </div>
+                )}
                 </div>
-
             </div>
-            <NavLink to={`/products/${Number(id)}/update`}
-                     id='single-product-update'>
-                Update Product
-            </NavLink>
             <div style={{display: 'flex'}}>
                 <h2 style={{marginRight:'.4rem'}}>{product.reviews.length} Reviews -</h2>
                 <div style={{width: '8.4rem', marginTop: '.5rem'}}>
@@ -96,33 +104,16 @@ const hasReviewed = reviews.find((review) => review.user_id === currentUser?.id)
                     </div>
                 </div>
             </div>
-
-            {currentUser?.id === product.user_id && (
-                <>
-            <NavLink to={`/products/${Number(id)}/update`}>
-                Update a Product
-            </NavLink>
-                <OpenModalButton
-                    buttonText="Delete"
-                    buttonClassName="delete-btn"
-                modalComponent={<DeleteProductModal productId={Number(id)}/>}
-
-                />
-             </>
-            )}
             {/* make sure its a purchasing customer for the if conditional*/}
             {currentUser && !hasReviewed && (
                 <OpenModalButton
                     buttonText="Write a review"
-                    buttonClassName="review-btn"
+                    buttonClassName="single-product-write-review"
                     modalComponent={<ReviewFormModal productId={Number(id)} />}
                 />
             )}
             <AllReviews/>
-
-
         </div>
-        
     );
 };
 

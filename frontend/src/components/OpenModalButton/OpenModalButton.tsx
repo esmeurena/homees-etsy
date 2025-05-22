@@ -24,7 +24,7 @@ function OpenModalButton({
     if (typeof onButtonClick === "function") onButtonClick();
   };
 
-  return <button onClick={onClick}>{buttonText}</button>;
+  return <button onClick={onClick} className='single-product-update-delete'>{buttonText}</button>;
 }
 
 export default OpenModalButton;
