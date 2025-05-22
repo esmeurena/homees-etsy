@@ -27,7 +27,7 @@ const getAllReviews = (reviews: IReview[]) => ({
     payload: reviews,
 })
 
-const updateReview = (reviews: IReview[]) => ({
+const updateReview = (reviews: IReview) => ({
     type: UPDATE_A_REVIEW,
     payload: reviews,
 })
@@ -66,14 +66,14 @@ export const createReviewThunk = (review: ICreateReview): any => async (dispatch
 
 export const getAllReviewsThunk = (productId: number): any => async (dispatch: any) => {
     try {
-        const res = await fetch(`/api/reviews/${productId}`);
+        const res = await fetch(`/api/reviews/products/${productId}`);
         if (res.ok) {
             const data = await res.json();
             if (data.errors) {
                 throw res;
             }
             dispatch(getAllReviews(data))
-            return data.Reviews
+            return data;
         } else {
             throw res;
         }
@@ -108,7 +108,7 @@ export const updateAReviewThunk = (reviewId: number, review: ICreateReview): any
 
 export const deleteAReviewThunk = (reviewId: number): any => async (dispatch: any) => {
   try {
-    const res = await fetch(`/api/products/${reviewId}`, {
+    const res = await fetch(`/api/reviews/${reviewId}`, {
       method: "DELETE",
     });
 
@@ -148,9 +148,9 @@ function reviewsReducer(state = initialState, action: IActionCreator) {
             return newState;
         
         case GET_ALL_REVIEWS:
-            const reviews = action.payload.Reviews;
+            const reviews = action.payload.Reviews
             newState = { ...state };
-            newState.allReviews = reviews;
+            newState.allReviews = reviews
             let newByIdGetAllReviews: { [id: number]: IReview } = {};
             for (let review of reviews) {
                 newByIdGetAllReviews[review.id] = review;

@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
 import { useModal } from '../../context/Modal';
-import './DeleteProductModal.css';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { deleteAReviewThunk } from "../../redux/reviews";
