@@ -129,7 +129,7 @@ const addItemToCart = async () => {
                     modalComponent={<ReviewFormModal productId={Number(id)} />}
                 />
             )}
-            <AllReviews/>
+            <AllReviews reviews={[]}/>
 
 
         </div>

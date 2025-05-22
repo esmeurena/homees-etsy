@@ -90,8 +90,8 @@ def update_review( reviewId):
     if form.validate_on_submit():
         data = form.data
     
-        update_a_review.review = data['review'],
-        update_a_review.stars = data['stars'],
+        update_a_review.review = data['review']
+        update_a_review.stars = data['stars']
         db.session.commit()
 
     
