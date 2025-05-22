@@ -10,21 +10,27 @@ import ReviewFormModal from '../AllProducts/ReviewFormModal/ReviewFormModal';
 import { addItemToShoppingCartThunk } from '../../redux/shopping_cart';
 import DeleteProductModal from '../DeleteProductModal';
 import AllReviews from '../AllReviews';
+import { IReview } from '../../redux/types/reviews';
 
-
+import { getAllReviewsThunk } from '../../redux/reviews';
 
 const GetSingleProduct = (): JSX.Element => {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
     const { id } = useParams();
     const [image_clicked, set_image_clicked] = useState<string>();
+    const productId = Number(id);
 
     const product = useSelector((state: RootState) => state.products.byId[Number(id)]);
     const currentUser = useSelector((state: RootState) => state.session.user);
-
+    const reviews = useSelector((state: RootState) => state.reviews.allReviews);
+    // const product: IProduct = useSelector((state: RootState) => state.products.byId[Number(id)]);
+    
+    
     useEffect(() => {
         const singleProduct = async () => {
             await dispatch(getSingleProductThunk(Number(id)));
+            await dispatch(getAllReviewsThunk(Number(id)))
             setIsLoaded(true);
         };
 
@@ -48,6 +54,9 @@ const addItemToCart = async () => {
     await dispatch(addItemToShoppingCartThunk(product.id));
 };
 
+    const hasReviewed = reviews.some(
+    (review: IReview) => review.user?.id === currentUser?.id
+)
     return (
         <div id='single-product'>
             <div id='single-product-images-text'>
@@ -73,7 +82,7 @@ const addItemToCart = async () => {
                                            single-product-buy-it-now'>
                         Buy it now
                         </button>
-                        <button className='single-product-buttons
+                        <button onClick={addItemToCart} className='single-product-buttons
                                            single-product-add-to-cart'>
                         Add to cart
                         </button>
@@ -104,18 +113,6 @@ const addItemToCart = async () => {
             <NavLink to={`/products/${Number(id)}/update`}>
                 Update a Product
             </NavLink>
-
-        
-            <OpenModalButton
-                        buttonText="Write a review"
-                        modalComponent={<ReviewFormModal productId={product.Id} />} buttonClassName={undefined}            />
-
-
-            <button
-                onClick={addItemToCart}>
-                Add to Cart
-            </button>
-
                 <OpenModalButton
                     buttonText="Delete"
                     buttonClassName="delete-btn"
@@ -124,7 +121,15 @@ const addItemToCart = async () => {
                 />
              </>
             )}
-            <AllReviews reviews={product.reviews}/>
+            {/* make sure its a purchasing customer for the if conditional*/}
+            {currentUser && !hasReviewed && (
+                <OpenModalButton
+                    buttonText="Write a review"
+                    buttonClassName="review-btn"
+                    modalComponent={<ReviewFormModal productId={Number(id)} />}
+                />
+            )}
+            <AllReviews/>
 
 
         </div>

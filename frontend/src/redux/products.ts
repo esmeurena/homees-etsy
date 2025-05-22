@@ -8,7 +8,7 @@ import { IProduct, IProductState, IActionCreator } from './types/products';
 ↓↓↓↓↓↓↓↓↓↓ ACTION TYPES ↓↓↓↓↓↓↓↓↓↓
  ********************************/
 
-const CREATE_A_PRODUCT = 'products/createProduct'
+const CREATE_A_PRODUCT = 'products/createProduct';
 const GET_ALL_PRODUCTS = 'products/GET_ALL_PRODUCTS';
 const GET_SINGLE_PRODUCT = 'products/GET_SINGLE_PRODUCT';
 const UPDATE_A_PRODUCT = 'products/UPDATE_A_PRODUCT';
