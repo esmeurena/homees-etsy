@@ -27,7 +27,7 @@ const getAllReviews = (reviews: IReview[]) => ({
     payload: reviews,
 })
 
-const updateReview = (reviews: IReview[]) => ({
+const updateReview = (reviews: IReview) => ({
     type: UPDATE_A_REVIEW,
     payload: reviews,
 })
