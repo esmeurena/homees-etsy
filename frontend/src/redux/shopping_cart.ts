@@ -2,7 +2,9 @@
 ↓↓↓↓↓↓↓↓↓↓ IMPORTS ↓↓↓↓↓↓↓↓↓↓
  ***************************/
 
-import { IShoppingCart, IShoppingCartItem, IActionCreator, IShoppingCartState } from './types/shopping_cart';
+// import { IShoppingCart, IShoppingCartItem, IActionCreator, IShoppingCartState } from './types/shopping_cart';
+import { IShoppingCartItem, IActionCreator, IShoppingCartState } from './types/shopping_cart';
+
 
 /*********************************
 ↓↓↓↓↓↓↓↓↓↓ ACTION TYPES ↓↓↓↓↓↓↓↓↓↓
@@ -130,7 +132,7 @@ function shoppingCartReducer(state = initialState, action: IActionCreator) {
         newByIdItems[item.id] = item;
       }
 
-      return { ...state, byId: newByIdItems, allProducts: shopping_items,};
+      return { ...state, byId: newByIdItems, allShoppingCartItems: shopping_items};
     case ADD_ITEM_TO_SHOPPING_CART:
       newState = { ...state };
       newState.allShoppingCartItems = [...newState.allShoppingCartItems, action.payload];
@@ -140,13 +142,13 @@ function shoppingCartReducer(state = initialState, action: IActionCreator) {
     // return {
     //   ...state,
     //   byId: { ...state.byId, [action.payload.id]: action.payload },
-    //   allProducts: [...state.allShoppingCartItems, action.payload]
+    //   allShoppingCartItems: [...state.allShoppingCartItems, action.payload]
     // };
 
     case DELETE_ITEM_FROM_SHOPPING_CART:
       const newById = { ...state.byId };
       delete newById[action.payload];
-      return { ...state, byId: newById, allProducts: state.allShoppingCartItems.filter(item => item.id !== action.payload) };
+      return { ...state, byId: newById, allShoppingCartItems: state.allShoppingCartItems.filter(item => item.id !== action.payload) };
 
     default:
       return state;
