@@ -11,7 +11,7 @@ const reviews = useSelector((state: RootState) => state.reviews.allReviews);
         reviews.map((review, i) => {
           return (
             <div key={`${review.id}-${i}`} className="all-reviews-review">
-              <ReviewCard review={review} />
+              <ReviewCard review={review} productId={review.product_id} />
               <hr id="all-reviews-line"></hr>
             </div>
           );
