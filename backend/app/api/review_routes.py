@@ -17,7 +17,7 @@ def get_all_reviews(id):
             Review.product_id == id
             )]
 
-    return all_reviews
+    return {"Reviews": all_reviews}
 
 # Get Single Review Route
 @review_routes.route('/<int:id>')
