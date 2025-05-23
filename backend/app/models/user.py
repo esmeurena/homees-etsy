@@ -29,7 +29,9 @@ class User(db.Model, UserMixin):
     shopping_carts = db.relationship("ShoppingCart", back_populates="user")
     transactions = db.relationship("Transaction", back_populates="user")
     reviews = db.relationship("Review", back_populates="user")
-    shopping_cart_items = db.relationship("ShoppingCartItem", back_populates="user", cascade="all, delete-orphan")
+    shopping_cart_items = db.relationship(
+        "ShoppingCartItem", back_populates="user", cascade="all, delete-orphan"
+    )
 
     @property
     def password(self):
@@ -43,4 +45,14 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def to_dict(self):
-        return {"id": self.id, "first_name": self.first_name, "last_name": self.last_name, "address": self.address, "city": self.city, "state": self.state, "country": self.country, "username": self.username, "email": self.email}
+        return {
+            "id": self.id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "address": self.address,
+            "city": self.city,
+            "state": self.state,
+            "country": self.country,
+            "username": self.username,
+            "email": self.email,
+        }
