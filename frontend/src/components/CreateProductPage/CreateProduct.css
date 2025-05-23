@@ -139,3 +139,9 @@ p {
     object-fit: cover;
     border-radius: 6px;
 }
+
+.create-images {
+    height: 30rem;
+    width: 30rem;
+    object-fit: contain;
+}

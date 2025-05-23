@@ -276,14 +276,14 @@ function CreateProductPage() {
             </form>
 
             {product_images[0] && (
-                <div>
+                <div className='create-images'>
                     <p>Preview Image</p>
                     <img src={product_images[0]?.url} />
                 </div>
             )}
 
             {product_images.length > 1 && (
-                <div>
+                <div className='create-images'>
                     <p>Additional Images</p>
                     {product_images.slice(1).map((img, idx) => (
                         <div key={idx}>

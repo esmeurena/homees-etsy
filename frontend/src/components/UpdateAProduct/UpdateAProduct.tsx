@@ -142,7 +142,7 @@ function UpdateAProduct() {
                 {errors.product_images && <p>{errors.product_images}</p>}
 
                 <label className='update-input'>
-                    Additional Product Image # 1
+                    Additional Product Image #1
                     <input className="input-container"
                         type="text"
                         value={product_images[1]?.url}
@@ -165,7 +165,7 @@ function UpdateAProduct() {
                 </label>
 
                 <label className='update-input'>
-                    Additional Product Image # 2
+                    Additional Product Image #2
                     <input className="input-container"
                         type="text"
                         value={product_images[2]?.url}
@@ -188,7 +188,7 @@ function UpdateAProduct() {
                 </label>
 
                 <label className='update-input'>
-                    Additional Product Image # 3
+                    Additional Product Image #3
                     <input className="input-container"
                         type="text"
                         value={product_images[3]?.url}
@@ -211,7 +211,7 @@ function UpdateAProduct() {
                 </label>
 
                 <label className='update-input'>
-                    Additional Product Image # 4
+                    Additional Product Image #4
                     <input className="input-container"
                         type="text"
                         value={product_images[4]?.url}
@@ -236,17 +236,17 @@ function UpdateAProduct() {
 
                 {product_images[0] && (
                     <div>
-                        <p>Preview Image</p>
-                        <img src={product_images[0]?.url} />
+                    <h2>Preview Image</h2>
+                        <img src={product_images[0]?.url} className='update-images'/>
                     </div>
                 )}
 
                 {product_images.length > 1 && (
-                    <div>
-                        <p>Additional Images</p>
+                    <div >
+                        <h2>Additional Images</h2>
                         {product_images.slice(1).map((img, idx) => (
                             <div key={idx}>
-                                <img src={img?.url} />
+                                <img src={img?.url} className='update-images'/>
                             </div>
                         ))}
                     </div>

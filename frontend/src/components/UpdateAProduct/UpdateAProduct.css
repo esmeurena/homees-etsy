@@ -132,10 +132,16 @@ p {
     color: #999;
     overflow: hidden;
 }
-
+/*
 .image-preview-slot img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 6px;
+} */
+
+.update-images {
+    height: 30rem;
+    width: 30rem;
+    object-fit: contain;
 }
