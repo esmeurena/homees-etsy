@@ -10,6 +10,7 @@
 
 #review-card-review-image {
     height: 8rem;
+    width: 10rem;
     object-fit: cover;
 }
 

@@ -15,6 +15,19 @@
     gap: 1rem;
 }
 
+@media (max-width: 75rem) {
+    #single-product-images-text {
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+    }
+    #single-product-image {
+        margin-top: 3rem;
+        border-radius: .5rem;
+        width: 25rem;
+    }
+}
+
 #single-product-images-list {
     display: flex;
     flex-direction: column;
@@ -31,6 +44,7 @@
 #single-product-image {
     margin-top: 3rem;
     border-radius: .5rem;
+    max-width: 40rem;
 }
 
 #single-product-text {
