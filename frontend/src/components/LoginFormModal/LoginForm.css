@@ -18,18 +18,6 @@
     cursor: pointer;
 }
 
-#login-disabled {
-    border: 0;
-    color: white;
-    font-size: 15px;
-    border-radius: 100px;
-    background-color: #F26A27;
-    margin-top: 8px;
-    height: 30px;
-    width: 350px;
-}
-
-
 #login-form-demo-login-button {
     border: 2px solid #F26A27;
     color: black;
@@ -61,8 +49,4 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-#error {
-    margin: 0;
 }
