@@ -22,3 +22,8 @@
     font-size: .9rem;
     color: #626262
 }
+
+#review-card-buttons {
+    display: flex;
+
+}

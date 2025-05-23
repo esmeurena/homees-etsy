@@ -137,12 +137,12 @@ const addItemToCart = async () => {
                 {currentUser?.id === product.user_id && (
                     <div id='single-product-update-delete-container'>
                     <NavLink to={`/products/${Number(id)}/update`}
-                    className='single-product-update-delete'>
+                    className='update-delete-button'>
                         Update Product
                     </NavLink>
                     <OpenModalButton
                         buttonText="Delete Product"
-                        buttonClassName="single-product-update-delete"
+                        // buttonClassName='update-delete-button'
                         modalComponent={<DeleteProductModal productId={Number(id)}/>}
                     />
                     </div>

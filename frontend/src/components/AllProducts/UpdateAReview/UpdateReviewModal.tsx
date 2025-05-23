@@ -27,7 +27,7 @@ const UpdateReviewModal = ({ reviewId, productId }: UpdateReviewModalProps) => {
     const [errors, setErrors] = useState<ReviewErrors>({})
     const [hoveredStar, setHoveredStar] = useState(0)
     const [serverError, setServerError] = useState("");
-    
+
 
     useEffect(() => {
         if (currentReview) {
@@ -46,7 +46,7 @@ const UpdateReviewModal = ({ reviewId, productId }: UpdateReviewModalProps) => {
             review,
             stars: Number(stars),
         };
-    
+
         try {
             const res = await dispatch(updateAReviewThunk(reviewId, reviewData));
             if (res.id) {
@@ -59,28 +59,29 @@ const UpdateReviewModal = ({ reviewId, productId }: UpdateReviewModalProps) => {
             }
         } catch (error: any) {
                 setServerError("An error occurred")
-            
+
         }
     }
-    const validReview = review.length >= 10 && stars > 0; 
-    
-    
+    const validReview = review.length >= 10 && stars > 0;
+
+
         return (
-    
-            <>
-                <h1>Edit Your Review</h1>
-                
+
+            <div id='review-form'>
+                <h1 id='review-form-title'>Edit Your Review</h1>
+                <hr id='review-form-line'></hr>
                 {serverError && <p>{serverError}</p>}
                 {errors.review && <p>{errors.review}</p>}
-    
-                <form onSubmit={handleSubmit}>
+
+                <form onSubmit={handleSubmit} id='review-form-form'>
                     <textarea
                         placeholder="Leave your review here"
                         value={review}
                         onChange={(e) => setReview(e.target.value)}
                         rows={6}
+                         id='review-form-review'
                     />
-                    <div className="stars-submit">
+                    <div id='review-form-stars'>
                         {[1, 2, 3, 4, 5].map((num) => (
                             <FontAwesomeIcon
                                 key={num}
@@ -91,20 +92,19 @@ const UpdateReviewModal = ({ reviewId, productId }: UpdateReviewModalProps) => {
                                 onMouseLeave={() => setHoveredStar(0)}
                             />
                         ))}
-                        <span>Stars</span>
                     </div>
-    
+
                     <button
                         type="submit"
                         disabled={!validReview}
-                        className="submit-review-button"
+                        id='review-form-submit'
                     >
                         Submit Your Review
                     </button>
                 </form>
-            </>
+            </div>
         )
-    
+
 
 }
 

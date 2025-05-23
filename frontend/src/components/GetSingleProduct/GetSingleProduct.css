@@ -63,7 +63,7 @@
     color: white;
 }
 
-.single-product-update-delete {
+.update-delete-button {
     display: flex;
     background-color: white;
     align-items: center;

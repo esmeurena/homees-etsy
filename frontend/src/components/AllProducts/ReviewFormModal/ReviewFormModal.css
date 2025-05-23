@@ -42,7 +42,7 @@
     justify-content: center;
     font-size: 2rem;
     margin: .5rem;
-    /* color: #F1641E; */
+    cursor: pointer;
 }
 
 #review-form-photo {
