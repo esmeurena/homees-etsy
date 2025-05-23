@@ -4,6 +4,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useAppSelector, RootState } from "../../redux/store";
 import { updateAProductThunk } from "../../redux/products";
 import { IProduct, IProductImage } from "../../redux/types/products";
+import './UpdateAProduct.css'
 
 interface IUpdateErrors {
     name?: string;
@@ -75,11 +76,11 @@ function UpdateAProduct() {
     }
 
     return (
-        <div className="create-container">
-            <h1>Update a Product</h1>
+        <div className="update-container">
+            <h2 id='update-title'>Update a Product</h2>
 
             <form className= "image-container" onSubmit={handleSubmit}>
-                <label>
+                <label className='update-input'>
                     Product Name
                     <input className="input-container"
                         type="text"
@@ -89,7 +90,7 @@ function UpdateAProduct() {
                     />
                 </label>
                 {errors.name && <p>{errors.name}</p>}
-                <label>
+                <label className='update-input'>
                     Description
                     <input className="input-container"
                         type="text"
@@ -99,7 +100,7 @@ function UpdateAProduct() {
                     />
                 </label>
                 {errors.description && <p>{errors.description}</p>}
-                <label>
+                <label className='update-input'>
                     Price
                     <input className="input-container"
                         type="number"
@@ -109,7 +110,7 @@ function UpdateAProduct() {
                     />
                 </label>
                 {errors.price && <p>{errors.price}</p>}
-                <label>
+                <label className='update-input'>
                     Total Number of Items
                     <input className="input-container"
                         type="number"
@@ -119,7 +120,7 @@ function UpdateAProduct() {
                     />
                 </label>
                 {errors.item_count && <p>{errors.item_count}</p>}
-                <label>
+                <label className='update-input'>
                     Preview Product Image
                     <input className="input-container"
                         type="text"
@@ -140,7 +141,7 @@ function UpdateAProduct() {
                 </label>
                 {errors.product_images && <p>{errors.product_images}</p>}
 
-                <label>
+                <label className='update-input'>
                     Additional Product Image # 1
                     <input className="input-container"
                         type="text"
@@ -163,7 +164,7 @@ function UpdateAProduct() {
                     />
                 </label>
 
-                <label>
+                <label className='update-input'>
                     Additional Product Image # 2
                     <input className="input-container"
                         type="text"
@@ -186,7 +187,7 @@ function UpdateAProduct() {
                     />
                 </label>
 
-                <label>
+                <label className='update-input'>
                     Additional Product Image # 3
                     <input className="input-container"
                         type="text"
@@ -209,7 +210,7 @@ function UpdateAProduct() {
                     />
                 </label>
 
-                <label>
+                <label className='update-input'>
                     Additional Product Image # 4
                     <input className="input-container"
                         type="text"

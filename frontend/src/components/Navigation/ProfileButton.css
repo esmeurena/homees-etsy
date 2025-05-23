@@ -34,16 +34,21 @@
     flex-direction: column;
     align-items: center;
     padding: 1rem;
+    filter: drop-shadow(0 0 0.2rem rgb(170, 170, 170));
 }
 
 .profile-buttons {
     border: 0;
-    color: black;
+    color: white;
     font-size: 1rem;
     border-radius: 12rem;
-    background-color: white;
+    background-color: #F1641E;
     cursor: pointer;
     margin-top: 1rem;
+    height: 2rem;
+    width: 10rem;
+    font-weight: bold;
+    border: .1rem solid #F1641E;
 }
 
 .button-and-info {

@@ -189,10 +189,7 @@ const addItemToCart = async () => {
                 />
             )}
             <AllReviews />
-
-
         </div>
-
     );
 };
 
