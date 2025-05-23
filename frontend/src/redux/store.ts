@@ -10,12 +10,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import productsReducer from "./products";
 import reviewsReducer from "./reviews";
 import shoppingCartReducer from "./shopping_cart";
+import favoritesReducer from './favorites';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   products: productsReducer,
   reviews: reviewsReducer,
   shopping_cart: shoppingCartReducer,
+  favorites: favoritesReducer,
 });
 
 
