@@ -16,7 +16,8 @@ def get_all_shopping_cart_items():
     user_id = current_user.id
     all_cart_items = db.session.query(ShoppingCartItem).filter_by(user_id=user_id).all()
     
-    return jsonify([individual_item.to_dict() for individual_item in all_cart_items])
+    return jsonify({"shopping_carts": [individual_item.to_dict() for individual_item in all_cart_items]})
+    # return jsonify([individual_item.to_dict() for individual_item in all_cart_items])
 
 # Get Single Shopping Cart Item Route
 @shopping_cart_routes.route('/<int:id>')

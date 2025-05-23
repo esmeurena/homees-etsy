@@ -8,6 +8,8 @@ import CreateProductPage from '../components/CreateProductPage';
 import UpdateAProduct from '../components/UpdateAProduct';
 import ShoppingCartPage from '../components/ShoppingCartPage';
 import FavoritesPage from '../components/FavoritesPage';
+import GetSingleTransaction from '../components/GetSingleTransaction';
+import PurchasedPage from '../components/PurchasedPage';
 
 export const router = createBrowserRouter([
   {
@@ -44,6 +46,13 @@ export const router = createBrowserRouter([
       {
         path: '/favorites',
         element: <FavoritesPage />,
+
+        path: '/singletransaction/:id',
+        element: <GetSingleTransaction />,
+      },
+      {
+        path: '/purchased',
+        element: <PurchasedPage />,
       },
     ],
   },
