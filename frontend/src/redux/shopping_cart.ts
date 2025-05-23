@@ -49,7 +49,7 @@ export const getAllShoppingCartItemsThunk = (): any => async (dispatch: any) => 
     return error;
   }
 };
-//keep as "number" because we're adding a product to shopping cart
+
 export const addItemToShoppingCartThunk = (productId: number): any => async (dispatch: any) => {
   try {
     const res = await fetch("/api/shopping_carts", {
@@ -102,48 +102,26 @@ function shoppingCartReducer(state = initialState, action: IActionCreator) {
   switch (action.type) {
 
     case GET_ALL_SHOPPING_CART_ITEMS:
-      // const shopping_items = action.payload.allShoppingCartItems;
-      // newState = { ...state }
-      // newState.allShoppingCartItems = shopping_items;
-      // let newByIdItems: { [id: number]: IShoppingCart } = {};
-      // for (let item of shopping_items) {
-      //   newByIdItems[item.id] = item;
-      // }
-      // newState.byId = newByIdItems;
-      // newState.allShoppingCartItems = shopping_items;
+      // const shopping_items = action.payload.shopping_cart;
+      const shopping_items = action.payload.shopping_carts;
+      newState = { ...state };
+      newState.allShoppingCartItems = shopping_items;
 
-      // const shopping_items: IShoppingCart[] = action.payload;
-
-      // newState = { ...state };
-      // const newByIdItems: { [id: number]: IShoppingCart } = {};
-      // for (let item of shopping_items) {
-      //   newByIdItems[item.id] = item;
-      // }
-
-      // newState.byId = newByIdItems;
-      // newState.allShoppingCartItems = shopping_items;
-
-      // return newState;
-
-      const shopping_items = action.payload;
       const newByIdItems: { [id: number]: IShoppingCartItem } = {};
 
-      for (const item of shopping_items) {
+      for (let item of shopping_items) {
         newByIdItems[item.id] = item;
       }
+      newState.byId= newByIdItems;
+      newState.allShoppingCartItems= shopping_items;
+      return newState;
 
-      return { ...state, byId: newByIdItems, allShoppingCartItems: shopping_items};
     case ADD_ITEM_TO_SHOPPING_CART:
       newState = { ...state };
       newState.allShoppingCartItems = [...newState.allShoppingCartItems, action.payload];
       newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
 
       return newState;
-    // return {
-    //   ...state,
-    //   byId: { ...state.byId, [action.payload.id]: action.payload },
-    //   allShoppingCartItems: [...state.allShoppingCartItems, action.payload]
-    // };
 
     case DELETE_ITEM_FROM_SHOPPING_CART:
       const newById = { ...state.byId };
@@ -154,8 +132,5 @@ function shoppingCartReducer(state = initialState, action: IActionCreator) {
       return state;
   }
 }
-
-
-
 
 export default shoppingCartReducer;

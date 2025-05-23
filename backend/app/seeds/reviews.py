@@ -3,25 +3,25 @@ from sqlalchemy.sql import text
 
 
 def seed_reviews():
-    review_1 = Review(product_id=1, user_id=1, review='review_1',
+    review_1 = Review(product_id=1, user_id=1, review='A scotch that’s how it is meant to be',
                       stars=1)
-    review_2 = Review(product_id=1, user_id=2, review='review_2',
+    review_2 = Review(product_id=1, user_id=2, review='Smooth. Fast shipping. Excellent all around thanks.',
                       stars=2)
-    review_3 = Review(product_id=2, user_id=2, review='review_2',
+    review_3 = Review(product_id=2, user_id=2, review='Quality product, very happy with my order',
                       stars=5)
-    review_4 = Review(product_id=2, user_id=3, review='review_3',
+    review_4 = Review(product_id=2, user_id=3, review='Perfect fit, true to size. Will buy again!',
                       stars=5)
-    review_5 = Review(product_id=3, user_id=3, review='review_3',
+    review_5 = Review(product_id=3, user_id=3, review='Fake rolex but matches the price lol',
                       stars=4)
-    review_6 = Review(product_id=3, user_id=4, review='review_4',
+    review_6 = Review(product_id=3, user_id=4, review='No one will ever know :)',
                       stars=1)
-    review_7 = Review(product_id=4, user_id=4, review='review_4',
+    review_7 = Review(product_id=4, user_id=4, review='Excellent cutting board, just what I needed',
                       stars=5)
-    review_8 = Review(product_id=4, user_id=5, review='review_5',
+    review_8 = Review(product_id=4, user_id=5, review='Smaller than I thought, looks solid though',
                       stars=5)
-    review_9 = Review(product_id=5, user_id=5, review='review_5',
+    review_9 = Review(product_id=5, user_id=5, review='Love it, fun, custom made to your needs',
                       stars=5)
-    review_10 = Review(product_id=5, user_id=5, review='review_5',
+    review_10 = Review(product_id=5, user_id=5, review="Great light, well made, can't complain",
                        stars=3)
 
     db.session.add(review_1)
