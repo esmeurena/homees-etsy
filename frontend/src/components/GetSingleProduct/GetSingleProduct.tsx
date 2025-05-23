@@ -196,4 +196,4 @@ const addItemToCart = async () => {
     );
 };
 
-export default GetSingleProduct;
+// export default GetSingleProduct;
