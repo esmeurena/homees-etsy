@@ -46,7 +46,8 @@ export const router = createBrowserRouter([
       {
         path: '/favorites',
         element: <FavoritesPage />,
-
+      },
+      {
         path: '/singletransaction/:id',
         element: <GetSingleTransaction />,
       },
