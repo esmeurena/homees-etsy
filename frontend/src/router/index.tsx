@@ -7,7 +7,6 @@ import GetSingleProduct from '../components/GetSingleProduct';
 import CreateProductPage from '../components/CreateProductPage';
 import UpdateAProduct from '../components/UpdateAProduct';
 import ShoppingCartPage from '../components/ShoppingCartPage';
-import FavoritesPage from '../components/FavoritesPage';
 import GetSingleTransaction from '../components/GetSingleTransaction';
 import PurchasedPage from '../components/PurchasedPage';
 
@@ -42,10 +41,6 @@ export const router = createBrowserRouter([
       {
         path: '/shoppingcart',
         element: <ShoppingCartPage />,
-      },
-      {
-        path: '/favorites',
-        element: <FavoritesPage />,
       },
       {
         path: '/singletransaction/:id',
