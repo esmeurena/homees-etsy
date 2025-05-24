@@ -96,7 +96,7 @@ function CreateProductPage() {
             <button type="button" onClick={fillValues} id='create-auto-fill'>AUTO-FILL</button>
             <h2 id='create-title'>Create a Product</h2>
 
-            <form className= "image-container" onSubmit={handleSubmit}>
+            <form className="image-container" onSubmit={handleSubmit}>
                 <label className='create-input'>
                     Product Name
                     <input className="input-container"
@@ -272,22 +272,24 @@ function CreateProductPage() {
                     >Add this image</button>
                 </label> */}
                 {/* {errors.additionalImage && <p>{errors.additionalImage}</p>} */}
-                <button className="button-container" type="submit">Create Product</button>
+                <button className="create-button-container" type="submit">Create Product</button>
             </form>
 
             {product_images[0] && (
                 <div className='create-images'>
-                    <p>Preview Image</p>
+                    <b>Preview Image</b>
                     <img src={product_images[0]?.url} />
                 </div>
             )}
+            <hr></hr>
 
             {product_images.length > 1 && (
                 <div className='create-images'>
-                    <p>Additional Images</p>
+                    <b>Additional Images</b>
                     {product_images.slice(1).map((img, idx) => (
-                        <div key={idx}>
+                        <div key={idx} className='create-images'>
                             <img src={img?.url} />
+                            <hr className='create-line'></hr>
                         </div>
                     ))}
                 </div>

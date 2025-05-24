@@ -10,7 +10,7 @@ function Navigation():JSX.Element {
   return (
     <div id='nav-bar'>
       <div>
-        <NavLink to="/" id='nav-logo'>Etsy</NavLink>
+        <NavLink to="/" id='nav-logo'>Homees</NavLink>
       </div>
 
       <div id='nav-right'>

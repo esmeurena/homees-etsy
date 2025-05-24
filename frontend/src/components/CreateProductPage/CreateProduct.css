@@ -17,15 +17,19 @@
 }
 
 #create-auto-fill {
-   background-color: #e0e0e0;
-    color: #333;
+    display: flex;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    height: 2rem;
+    width: 8rem;
+    border-radius: 10rem;
+    border: .125rem solid #222222;
     font-weight: bold;
-    padding: 12px 16px;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: .9rem;
     cursor: pointer;
-    font-size: 1rem;
 }
 
 /*
@@ -54,7 +58,8 @@ form+div>p {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 50rem;
+    /* width: 30rem; */
+    align-items: center;
 }
 
 /*
@@ -73,6 +78,19 @@ form+div>p {
     border-radius: 6px;
     font-size: 1rem;
     background-color: #fafafa;
+    width: 40rem;
+}
+
+@media (max-width: 40rem) {
+    .input-container {
+        margin-top: 8px;
+        padding: 10px;
+        border: 1px solid #dcdcdc;
+        border-radius: 6px;
+        font-size: 1rem;
+        background-color: #fafafa;
+        width: 20rem;
+    }
 }
 /*
 input:focus {
@@ -90,8 +108,22 @@ p {
 }
 */
 
-.button-container{
-    background-color: #e0e0e0;
+.create-button-container{
+     display: flex;
+    background-color: #222222;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    height: 2rem;
+    width: 8rem;
+    border-radius: 10rem;
+    border: .125rem solid #222222;
+    font-weight: bold;
+    font-size: .9rem;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    /* background-color: black;
     color: #333;
     font-weight: bold;
     padding: 12px 16px;
@@ -100,10 +132,11 @@ p {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     font-size: 1rem;
-    align-self: flex-start;
+    align-self: flex-start; */
 }
-.button-container:hover {
-    background-color: #d5d5d5;
+.create-button-container:hover {
+    transition: .2s ease-in-out;
+    background-color: #3b3b3b;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -144,4 +177,17 @@ p {
     height: 30rem;
     width: 30rem;
     object-fit: contain;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    /* justify-content: center; */
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.create-line {
+    border: 0;
+    height: .1rem;
+    width: 100%;
+    background-color: #cbcbcb;
 }
