@@ -22,11 +22,13 @@ const GetSingleProduct = (): JSX.Element => {
     const [image_clicked, set_image_clicked] = useState<string>();
     const productId = Number(id);
     const [isClicked, setIsClicked] = useState(false);
-    const [textInsideButton, setTextInsideButton] = useState("Add to Cart");
+    const [textInsideButton, setTextInsideButton] = useState("Add to cart");
     const product = useSelector((state: RootState) => state.products.byId[Number(id)]);
     const currentUser = useSelector((state: RootState) => state.session.user);
     const reviews = useSelector((state: RootState) => state.reviews.allReviews);
     // const product: IProduct = useSelector((state: RootState) => state.products.byId[Number(id)]);
+    // const reviews = allReviews.filter(review => review.product_id === productId)
+
 
 
     useEffect(() => {
@@ -50,14 +52,19 @@ const GetSingleProduct = (): JSX.Element => {
     if (!isLoaded || !product) {
         return <h1>Loading...</h1>;
     }
-    
+
+const addItemToCart = async () => {
+
+    await dispatch(addItemToShoppingCartThunk(product.id));
+};
+
     const makeButtonGreen = async () => {
         await dispatch(addItemToShoppingCartThunk(product.id));
         setIsClicked(true);
-        if (textInsideButton === 'Add to Cart') {
-            setTextInsideButton('Added to Cart ✓');
+        if (textInsideButton === 'Add to cart') {
+            setTextInsideButton('Added to cart ✓');
         } else {
-            setTextInsideButton('Add to Cart');
+            setTextInsideButton('Add to cart');
         }
     };
 
@@ -81,13 +88,13 @@ const GetSingleProduct = (): JSX.Element => {
                             src={image_clicked ?? ''} />
                     </div>
                 </div>
-                <div id='single-product-text'>
-                    <h2 style={{ fontSize: '2rem', marginBottom: '0' }}>${product.price}</h2>
+                 {/* <div id='single-product-text'>
+                    <h2 style={{fontSize: '2rem', marginBottom: '0'}}>${product.price}</h2>
                     <p>{product.name}</p>
                     <div id='single-product-buttons-container'>
                         <button className='single-product-buttons
                                            single-product-buy-it-now' onClick={() => navigate(`/singletransaction/${id}`)}>
-                            Buy it Now!
+                        Buy it now
                         </button>
                         <button
                             className='single-product-buttons single-product-buy-it-now'
@@ -98,13 +105,56 @@ const GetSingleProduct = (): JSX.Element => {
                     </div>
                     <h3>Item details</h3>
                     <p>{product.description}</p>
+                {currentUser?.id === product.user_id && (
+                    <div id='single-product-update-delete-container'>
+                    <NavLink to={`/products/${Number(id)}/update`}
+                    className='single-product-update-delete'>
+                        Update Product
+                    </NavLink>
+                    <OpenModalButton
+                        buttonText="Delete Product"
+                        buttonClassName="single-product-update-delete"
+                        modalComponent={<DeleteProductModal productId={Number(id)}/>}
+                    />
+                    </div>
+                )}
+                </div> */}
+                <div id='single-product-text'>
+                    <h2 style={{ fontSize: '2rem', marginBottom: '0' }}>${product.price}</h2>
+                    <p>{product.name}</p>
+                    <div id='single-product-buttons-container'>
+                        <button className='single-product-buttons
+                                           single-product-buy-it-now' onClick={() => navigate(`/singletransaction/${id}`)}>
+                            Buy it now
+                        </button>
+                        <button
+                            className='single-product-buttons single-product-add-to-cart'
+                            onClick={makeButtonGreen}
+                            style={{ backgroundColor: isClicked ? 'green' : '#222222', color: isClicked ? 'black' : 'white'}}>
+                            {textInsideButton}
+                        </button>
+                    </div>
+                    <h3>Item details</h3>
+                    <p>{product.description}</p>
+                {currentUser?.id === product.user_id && (
+                    <div id='single-product-update-delete-container'>
+                    <NavLink to={`/products/${Number(id)}/update`}
+                    className='update-delete-button'>
+                        Update Product
+                    </NavLink>
+                    <OpenModalButton
+                        buttonText="Delete Product"
+                        buttonClassName='update-delete-button'
+                        modalComponent={<DeleteProductModal productId={Number(id)}/>}
+                    />
+                    </div>
+                )}
                 </div>
-
             </div>
-            <NavLink to={`/products/${Number(id)}/update`}
+            {/* <NavLink to={`/products/${Number(id)}/update`}
                 id='single-product-update'>
                 Update Product
-            </NavLink>
+            </NavLink> */}
             <div style={{ display: 'flex' }}>
                 <h2 style={{ marginRight: '.4rem' }}>{product.reviews.length} Reviews -</h2>
                 <div style={{ width: '8.4rem', marginTop: '.5rem' }}>
@@ -119,7 +169,7 @@ const GetSingleProduct = (): JSX.Element => {
                 </div>
             </div>
 
-            {currentUser?.id === product.user_id && (
+            {/* {currentUser?.id === product.user_id && (
                 <>
                     <NavLink to={`/products/${Number(id)}/update`}>
                         Update a Product
@@ -131,20 +181,17 @@ const GetSingleProduct = (): JSX.Element => {
 
                     />
                 </>
-            )}
+            )} */}
             {/* make sure its a purchasing customer for the if conditional*/}
             {currentUser && !hasReviewed &&  currentUser.id !== product.user_id &&(
                 <OpenModalButton
                     buttonText="Write a review"
-                    buttonClassName="review-btn"
+                    buttonClassName="single-product-write-review"
                     modalComponent={<ReviewFormModal productId={Number(id)} />}
                 />
             )}
             <AllReviews />
-
-
         </div>
-
     );
 };
 

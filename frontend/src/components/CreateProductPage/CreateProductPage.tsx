@@ -93,11 +93,11 @@ function CreateProductPage() {
 
     return (
         <div className="create-container">
-            <button type="button" onClick={fillValues}>AUTO-FILL</button>
-            <h1>Create a Product</h1>
+            <button type="button" onClick={fillValues} id='create-auto-fill'>AUTO-FILL</button>
+            <h2 id='create-title'>Create a Product</h2>
 
             <form className= "image-container" onSubmit={handleSubmit}>
-                <label>
+                <label className='create-input'>
                     Product Name
                     <input className="input-container"
                         type="text"
@@ -107,7 +107,7 @@ function CreateProductPage() {
                     />
                 </label>
                 {errors.name && <p>{errors.name}</p>}
-                <label>
+                <label className='create-input'>
                     Description
                     <input className="input-container"
                         type="text"
@@ -117,7 +117,7 @@ function CreateProductPage() {
                     />
                 </label>
                 {errors.description && <p>{errors.description}</p>}
-                <label>
+                <label className='create-input'>
                     Price
                     <input className="input-container"
                         type="number"
@@ -127,7 +127,7 @@ function CreateProductPage() {
                     />
                 </label>
                 {errors.price && <p>{errors.price}</p>}
-                <label>
+                <label className='create-input'>
                     Total Number of Items
                     <input className="input-container"
                         type="number"
@@ -137,7 +137,7 @@ function CreateProductPage() {
                     />
                 </label>
                 {errors.item_count && <p>{errors.item_count}</p>}
-                <label>
+                <label className='create-input'>
                     Preview Product Image
                     <input className="input-container"
                         type="text"
@@ -158,8 +158,8 @@ function CreateProductPage() {
                 </label>
                 {errors.product_images && <p>{errors.product_images}</p>}
 
-                <label>
-                    Additional Product Image # 1
+                <label className='create-input'>
+                    Additional Product Image #1
                     <input className="input-container"
                         type="text"
                         value={product_images[1]?.url}
@@ -181,8 +181,8 @@ function CreateProductPage() {
                     />
                 </label>
 
-                <label>
-                    Additional Product Image # 2
+                <label className='create-input'>
+                    Additional Product Image #2
                     <input className="input-container"
                         type="text"
                         value={product_images[2]?.url}
@@ -204,8 +204,8 @@ function CreateProductPage() {
                     />
                 </label>
 
-                <label>
-                    Additional Product Image # 3
+                <label className='create-input'>
+                    Additional Product Image #3
                     <input className="input-container"
                         type="text"
                         value={product_images[3]?.url}
@@ -227,8 +227,8 @@ function CreateProductPage() {
                     />
                 </label>
 
-                <label>
-                    Additional Product Image # 4
+                <label className='create-input'>
+                    Additional Product Image #4
                     <input className="input-container"
                         type="text"
                         value={product_images[4]?.url}
@@ -276,14 +276,14 @@ function CreateProductPage() {
             </form>
 
             {product_images[0] && (
-                <div>
+                <div className='create-images'>
                     <p>Preview Image</p>
                     <img src={product_images[0]?.url} />
                 </div>
             )}
 
             {product_images.length > 1 && (
-                <div>
+                <div className='create-images'>
                     <p>Additional Images</p>
                     {product_images.slice(1).map((img, idx) => (
                         <div key={idx}>

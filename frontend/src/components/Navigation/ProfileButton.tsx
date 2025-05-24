@@ -64,13 +64,13 @@ function ProfileButton():JSX.Element {
           {user ? (
             <>
               <div className="login-info">
-                {user.username}
+                <b>{user.username}</b>
                 <div>
-                  {user.first_name} {user.last_name}
+                  <b>{user.first_name} {user.last_name}</b>
                 </div>
-                {user.email}
+                <b>{user.email}</b>
                 <button className="profile-buttons" onClick={goToCreateProduct}>
-                  Create a Product
+                  Create Product
                 </button>
                 <div>
                   <button onClick={logout} className="profile-buttons">Log Out</button>
