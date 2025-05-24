@@ -26,7 +26,7 @@ function LoginFormModal(): JSX.Element {
         password,
       })
     );
-
+    
     if (serverResponse.ok) {
       closeModal();
     } else {

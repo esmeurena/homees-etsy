@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useModal } from '../../context/Modal';
 import React from 'react';
-import { useNavigate } from "react-router-dom";
 import { deleteAReviewThunk } from "../../redux/reviews";
 import './DeleteReviewModal.css'
 
@@ -11,14 +10,12 @@ interface DeleteReviewModalProps {
 
 const DeleteReviewModal: React.FC<DeleteReviewModalProps> = ({ reviewId }) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { closeModal } = useModal();
 
     const handleClickDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         await dispatch(deleteAReviewThunk(reviewId));
         closeModal();
-        navigate("/")
     };
 
     return (

@@ -25,7 +25,7 @@ const GetSingleProduct = (): JSX.Element => {
     const [textInsideButton, setTextInsideButton] = useState("Add to cart");
     const product = useSelector((state: RootState) => state.products.byId[Number(id)]);
     const currentUser = useSelector((state: RootState) => state.session.user);
-    const allReviews = useSelector((state: RootState) => state.reviews.allReviews);
+    const reviews = useSelector((state: RootState) => state.reviews.allReviews);
     // const product: IProduct = useSelector((state: RootState) => state.products.byId[Number(id)]);
     const reviews = allReviews.filter(review => review.product_id === productId)
 
@@ -96,9 +96,11 @@ const addItemToCart = async () => {
                                            single-product-buy-it-now' onClick={() => navigate(`/singletransaction/${id}`)}>
                         Buy it now
                         </button>
-                        <button onClick={addItemToCart} className='single-product-buttons
-                                           single-product-add-to-cart'>
-                        Add to cart
+                        <button
+                            className='single-product-buttons single-product-buy-it-now'
+                            onClick={makeButtonGreen}
+                            style={{ backgroundColor: isClicked ? 'green' : 'initial' }}>
+                            {textInsideButton}
                         </button>
                     </div>
                     <h3>Item details</h3>
@@ -181,7 +183,7 @@ const addItemToCart = async () => {
                 </>
             )} */}
             {/* make sure its a purchasing customer for the if conditional*/}
-            {currentUser && !hasReviewed && (
+            {currentUser && !hasReviewed &&  currentUser.id !== product.user_id &&(
                 <OpenModalButton
                     buttonText="Write a review"
                     buttonClassName="single-product-write-review"

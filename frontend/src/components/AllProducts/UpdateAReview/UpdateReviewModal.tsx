@@ -126,3 +126,4 @@ const UpdateReviewModal = ({ reviewId, productId }: UpdateReviewModalProps) => {
 
 
 export default UpdateReviewModal
+

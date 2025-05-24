@@ -12,23 +12,29 @@ review_routes = Blueprint('reviews', __name__)
 # Get All Reviews Route
 @review_routes.route('/products/<int:id>')
 def get_all_reviews(id):
-    all_reviews = [
-        review.to_dict() for review in Review.query.filter(
-            Review.product_id == id
-            )]
+    try:
 
-    return {"Reviews": all_reviews}
+        product = Product.query.get(id)
+        if not product:
+            return {"message": "Product not found", "statusCode": 404}, 404
+        all_reviews = [
+            review.to_dict() for review in Review.query.filter(
+                Review.product_id == id
+            )]
+        return {"Reviews": all_reviews}, 200
+    except Exception as e:
+        return {"message": "Error can not fetch all reviews", "statusCode": 500}, 500
 
 # Get Single Review Route
 @review_routes.route('/<int:id>')
 def get_review(id):
-
-    review = Review.query.get(id)
-    
-    if review:
-        return review.to_dict(), 200
-    
-    return {"message": "Review was not found", "statusCode": 404}, 404
+    try:
+        review = Review.query.get(id)
+        if review:
+            return review.to_dict(), 200
+        return {"message": "Review was not found", "statusCode": 404}, 404
+    except Exception as e:
+        return {"message": "Error can not fetch a review", "statusCode":500}, 500
 
 
 
@@ -46,6 +52,7 @@ def create_review():
     product = Product.query.get(product_id)
     if not product:
         return {"message": "Product was not found", "statusCode": 404}, 404
+
 
 
     form = ReviewForm()
