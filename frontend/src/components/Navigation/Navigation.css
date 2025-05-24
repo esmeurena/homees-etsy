@@ -36,6 +36,27 @@
     margin-top: .2rem;
 }
 
+#heart-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    color: black;
+    font-size: 1.2rem;
+    height: 3rem;
+    width: 3rem;
+    border-radius: 10rem;
+    transition: ease-in .2s;
+    background-color: white;
+    cursor: pointer;
+    margin-top: .2rem;
+}
+
+#heart-button:hover {
+  transition: ease-in .2s;
+  background-color: #CCEBFF;
+}
+
 #shopping-cart-button:hover {
   transition: ease-in .2s;
   background-color: #CCEBFF;

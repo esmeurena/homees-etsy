@@ -11,8 +11,8 @@ import { addItemToShoppingCartThunk } from '../../redux/shopping_cart';
 import DeleteProductModal from '../DeleteProductModal';
 import AllReviews from '../AllReviews';
 import { IReview } from '../../redux/types/reviews';
-
 import { getAllReviewsThunk } from '../../redux/reviews';
+import { addFavoritesThunk } from '../../redux/favorites';
 
 const GetSingleProduct = (): JSX.Element => {
     const dispatch = useDispatch();
@@ -61,6 +61,12 @@ const GetSingleProduct = (): JSX.Element => {
         }
     };
 
+    const handleAddToFavorites = async () => {
+        await dispatch(addFavoritesThunk(product.id));
+        alert('Added to favorites!');
+};
+
+
     const hasReviewed = reviews.some(
         (review: IReview) => review.user?.id === currentUser?.id
     )
@@ -94,6 +100,11 @@ const GetSingleProduct = (): JSX.Element => {
                             onClick={makeButtonGreen}
                             style={{ backgroundColor: isClicked ? 'green' : 'initial' }}>
                             {textInsideButton}
+                        </button>
+                        <button
+                            className='add-to-favorite'
+                            onClick={handleAddToFavorites}>
+                            Add to Favorites
                         </button>
                     </div>
                     <h3>Item details</h3>

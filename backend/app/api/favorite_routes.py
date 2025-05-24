@@ -1,9 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-# import whatever the Review model class name is below
 from app.models import db, Favorite, Product
-# import the review form class
-# from app.forms import
+import datetime
 
 favorite_routes = Blueprint('favorites', __name__)
 
@@ -17,10 +15,24 @@ def get_all_favorites():
 
 
 # Add a Favorite
-@favorite_routes.route('/add', methods=['POST'])
+@favorite_routes.route('/', methods=['POST'])
 @login_required
-def add_favorite():
-    pass
+def add_favorite_product():
+    data = request.get_json()
+    product_id = data.get("product_id")
+    user_id = current_user.id
+
+    favorite_product = Favorite(
+        user_id=user_id,
+        product_id=product_id,
+        created_at=datetime.utcnow(),
+        updated_at=datetime.utcnow()
+    )
+
+    db.session.add(favorite_product)
+    db.session.commit()
+
+    return {"message": "Product added to Favorites"}, 201
 
 
 # Remove a Favorite
