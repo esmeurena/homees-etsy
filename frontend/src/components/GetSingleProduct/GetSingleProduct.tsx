@@ -133,7 +133,7 @@ const GetSingleProduct = (): JSX.Element => {
                 </>
             )}
             {/* make sure its a purchasing customer for the if conditional*/}
-            {currentUser && !hasReviewed && (
+            {currentUser && !hasReviewed &&  currentUser.id !== product.user_id &&(
                 <OpenModalButton
                     buttonText="Write a review"
                     buttonClassName="review-btn"
