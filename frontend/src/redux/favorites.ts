@@ -8,8 +8,8 @@ import { IFavorite, IFavoriteState, IActionCreator } from "./types/favorites";
 /*********************************
 ↓↓↓↓↓↓↓↓↓↓ ACTION TYPES ↓↓↓↓↓↓↓↓↓↓
  ********************************/
-const GET_ALL_FAVORITES = "favorites/GET_ALL_FAVORITES";
-const ADD_FAVORITE = "favorites/ADD_FAVORITE";
+const GET_ALL_FAVORITES = "favorites/getAllFavorites";
+const ADD_FAVORITE = "favorites/addFavorite";
 
 
 /************************************
@@ -46,7 +46,7 @@ export const getAllFavoritesThunk = (): any => async (dispatch: any) => {
   }
 };
 
-export const addFavoritesThunk = (productId: IFavorite): any => async (dispatch: any) => {
+export const addFavoritesThunk = (productId: number): any => async (dispatch: any) => {
   try {
     const res = await fetch("/api/favorites", {
       method: "POST",
@@ -68,8 +68,8 @@ export const addFavoritesThunk = (productId: IFavorite): any => async (dispatch:
 ↓↓↓↓↓↓↓↓↓↓ INITIAL STATE ↓↓↓↓↓↓↓↓↓↓
  *********************************/
 const initialState: IFavoriteState = {
-    allFavorites: [],
     byId: {},
+    allFavorites: []
 };
 
 /****************************
@@ -80,7 +80,7 @@ function favoritesReducer(state = initialState, action: IActionCreator) {
 
     switch (action.type) {
         case GET_ALL_FAVORITES:
-            const favorites = action.payload.Favorites;
+            const favorites = action.payload.favorites;
             newState = { ...state };
             newState.allFavorites = favorites;
             let newByIdGetAllFavorites: { [id: number]: IFavorite } = {};

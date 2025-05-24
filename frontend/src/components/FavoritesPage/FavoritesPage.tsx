@@ -11,7 +11,8 @@ const FavoritesPage: React.FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const favorites = useSelector((state: RootState) => state.favorites?.allFavorites??[]);
+    const favorites = useSelector((state: RootState) => state.favorites.allFavorites);
+    const products = useSelector((state: RootState) => state.products.allProducts);
 
     useEffect(() => {
         dispatch(getAllFavoritesThunk());
@@ -32,8 +33,11 @@ const FavoritesPage: React.FC = () => {
                 {favorites.map((fav: IFavorite) => (
                     <li key={fav.id} className="favorite-item">
                         <div className="favorite-product-info" onClick={() => handleClickProduct(fav.product_id)}>
-                            <h2>Product #{fav.product_id}</h2>
-                            {fav.product?.name && <p>{fav.product.name}</p>}
+                            <h2> Product #{fav.product_id}</h2>
+                            <p> Name: {products[0]?.name}</p>
+                            <p> Description: {products[0]?.description}</p>
+                            <p> Rating: {products[0]?.avg_rating}</p>
+                            {/* {fav.product?.name && <p>{fav.product.name}</p>} */}
                         </div>
                     </li>
                 ))}

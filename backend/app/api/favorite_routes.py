@@ -10,8 +10,8 @@ favorite_routes = Blueprint('favorites', __name__)
 @login_required
 def get_all_favorites():
     favorites = Favorite.query.filter_by(user_id=current_user.id).all()
-    favorite_products = [Product.query.get(fav.product_id) for fav in favorites]
-    return [product.to_dict() for product in favorite_products if product]
+    # favorite_products = [Product.query.get(fav.product_id) for fav in favorites]
+    return jsonify({"favorites": [product.to_dict() for product in favorites]})
 
 
 # Add a Favorite
@@ -21,18 +21,20 @@ def add_favorite_product():
     data = request.get_json()
     product_id = data.get("product_id")
     user_id = current_user.id
+    # single_product = Product.query.get(product_id)
 
     favorite_product = Favorite(
         user_id=user_id,
         product_id=product_id,
-        created_at=datetime.utcnow(),
-        updated_at=datetime.utcnow()
+        # products= single_product
     )
 
     db.session.add(favorite_product)
     db.session.commit()
 
-    return {"message": "Product added to Favorites"}, 201
+    return favorite_product.to_dict(), 201
+
+    # return {"message": "Product added to Favorites"}, 201
 
 
 # Remove a Favorite
