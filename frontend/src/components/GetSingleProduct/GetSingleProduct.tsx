@@ -27,7 +27,7 @@ const GetSingleProduct = (): JSX.Element => {
     const currentUser = useSelector((state: RootState) => state.session.user);
     const reviews = useSelector((state: RootState) => state.reviews.allReviews);
     // const product: IProduct = useSelector((state: RootState) => state.products.byId[Number(id)]);
-    const reviews = allReviews.filter(review => review.product_id === productId)
+    // const reviews = allReviews.filter(review => review.product_id === productId)
 
 
 
@@ -144,7 +144,7 @@ const addItemToCart = async () => {
                     </NavLink>
                     <OpenModalButton
                         buttonText="Delete Product"
-                        // buttonClassName='update-delete-button'
+                        buttonClassName='update-delete-button'
                         modalComponent={<DeleteProductModal productId={Number(id)}/>}
                     />
                     </div>
