@@ -13,10 +13,11 @@
     height: 15rem;
     object-fit: cover;
     transition: filter .1s ease-in;
+    z-index: 0;
 }
 
 #product-card:hover #product-card-image {
-    filter: drop-shadow(0 0 .1rem rgb(177, 177, 177))
+    filter: drop-shadow(0 0 .1rem rgb(177, 177, 177));
 }
 
 #product-card-name-review {

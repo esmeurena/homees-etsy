@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useModal } from "../../../context/Modal"
 import { createReviewThunk, getAllReviewsThunk } from "../../../redux/reviews"
@@ -59,28 +59,26 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
             }
         }
     };
-
-
-    const validReview = review.length >= 10 && stars > 0; 
-
-
+    const validReview = review.length >= 10 && stars > 0;
     return (
-      <>
-        <h1>Leave Feedback</h1>
+      <div id='review-form'>
+        <h1 id='review-form-title'>Leave Feedback</h1>
+        <hr id='review-form-line'></hr>
 
         {serverError && <p>{serverError}</p>}
         {errors.review && <p>{errors.review}</p>}
         {errors.stars && <p>{errors.stars}</p>}
         {errors.image && <p>{errors.image}</p>}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} id='review-form-form'>
           <textarea
+            id='review-form-review'
             placeholder="Leave your review here"
             value={review}
             onChange={(e) => setReview(e.target.value)}
             rows={6}
           />
-          <div className="stars-submit">
+          <div id='review-form-stars'>
             {[1, 2, 3, 4, 5].map((num) => (
               <FontAwesomeIcon
                 key={num}
@@ -91,17 +89,16 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
                 onMouseLeave={() => setHoveredStar(0)}
               />
             ))}
-            <span>Stars</span>
           </div>
-
                 <div>
-                    <label>
-                        Add Photo
+                    <label id='review-form-photo'>
+                        <b>Add Photo</b>
                         <input
                             type="text"
                             value={imageUrl}
                             onChange={(e) => setImageUrl(e.target.value)}
-                            placeholder="Add photo"
+                            placeholder="URL"
+                            id='review-form-photo-url'
                         ></input>
                     </label>
                     {imageUrl && (
@@ -113,12 +110,12 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
           <button
             type="submit"
             disabled={!validReview}
-            className="submit-review-button"
+            id='review-form-submit'
           >
             Submit Your Review
           </button>
         </form>
-      </>
+      </div>
     );
 }
 

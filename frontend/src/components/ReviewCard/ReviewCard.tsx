@@ -4,6 +4,8 @@ import { useModal } from '../../context/Modal'
 import UpdateReviewModal from '../AllProducts/UpdateAReview';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import OpenModalButton from '../OpenModalButton';
+import DeleteReviewModal from '../DeleteReviewModal';
 
 interface ReviewCardProps {
     review: IReview;
@@ -48,9 +50,10 @@ const ReviewCard = ({ review, currentUserId, productId }: ReviewCardProps) => {
                 </span>
             </div>
             { currentUser && currentUser.id === review.user.id && (
+                <div id='review-card-buttons'>
                 <button
-                    className='edit-review-button'
-                    onClick={() => 
+                    className='update-delete-button'
+                    onClick={() =>
                         setModalContent(
                             <UpdateReviewModal
                                 reviewId={review.id}
@@ -61,6 +64,11 @@ const ReviewCard = ({ review, currentUserId, productId }: ReviewCardProps) => {
                 >
                     Edit
                 </button>
+                <OpenModalButton
+                    buttonText="Delete"
+                    modalComponent={<DeleteReviewModal reviewId={review.id} />}
+                />
+               </div>
                 )}
         </div>
     )
