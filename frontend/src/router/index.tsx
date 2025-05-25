@@ -11,6 +11,7 @@ import GetSingleTransaction from '../components/GetSingleTransaction';
 import PurchasedPage from '../components/PurchasedPage';
 import FavoritesPage from '../components/FavoritesPage';
 
+
 export const router = createBrowserRouter([
   {
     element: <Layout />,
