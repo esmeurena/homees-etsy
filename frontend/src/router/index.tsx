@@ -11,6 +11,7 @@ import FavoritesPage from '../components/FavoritesPage';
 import GetSingleTransaction from '../components/GetSingleTransaction';
 import PurchasedPage from '../components/PurchasedPage';
 
+
 export const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -46,6 +47,8 @@ export const router = createBrowserRouter([
       {
         path: '/favorites',
         element: <FavoritesPage />,
+      },
+      {
 
         path: '/singletransaction/:id',
         element: <GetSingleTransaction />,
