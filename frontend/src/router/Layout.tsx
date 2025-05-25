@@ -8,7 +8,7 @@ import FooterLinks from "../components/FooterLinks";
 
 export default function Layout():JSX.Element {
   const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   useEffect(() => {
     dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
