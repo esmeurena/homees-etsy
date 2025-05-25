@@ -8,19 +8,19 @@ import FooterLinks from "../components/FooterLinks";
 
 export default function Layout():JSX.Element {
   const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
   return (
-    <>
-      <ModalProvider>
+    <ModalProvider>
+      <div id="layout-wrapper">
         <Navigation />
-        {isLoaded && <Outlet />}
+        <main>{isLoaded && <Outlet />}</main>
         <FooterLinks />
         <Modal />
-      </ModalProvider>
-    </>
+      </div>
+    </ModalProvider>
   );
 }
