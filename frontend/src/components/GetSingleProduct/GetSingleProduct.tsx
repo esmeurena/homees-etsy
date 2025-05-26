@@ -13,6 +13,9 @@ import AllReviews from '../AllReviews';
 import { IReview } from '../../redux/types/reviews';
 import { getAllReviewsThunk } from '../../redux/reviews';
 import { addFavoritesThunk } from '../../redux/favorites';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar as fasStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 
 const GetSingleProduct = (): JSX.Element => {
     const dispatch = useDispatch();
@@ -166,19 +169,33 @@ const addItemToCart = async () => {
                 id='single-product-update'>
                 Update Product
             </NavLink> */}
-            <div style={{ display: 'flex' }}>
-                <h2 style={{ marginRight: '.4rem' }}>{product.reviews.length} Reviews -</h2>
-                <div style={{ width: '8.4rem', marginTop: '.5rem' }}>
-                    <div style={{
-                        width: `${product.avg_rating * 20}%`,
-                        backgroundColor: 'white', overflow: 'hidden'
-                    }}>
-                        <span style={{ width: '8.4rem', fontSize: '2rem' }}>
-                            &#9733;&#9733;&#9733;&#9733;&#9733;
-                        </span>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+                <h2 style={{ marginRight: '.8rem' }}>{product.reviews.length} Reviews -</h2>
+                <div style={{ width: '8.4rem', marginTop: '.6rem', display: 'flex' }}>
+                    {[1, 2, 3, 4, 5].map((i) => {
+                        if (product.avg_rating >= i) {
+                            return (<FontAwesomeIcon key={i} icon={fasStar} style={{ fontSize: "1.1rem"}}/>);
+                        } else if (product.avg_rating >= i - 0.5) {
+                            return (
+                              <FontAwesomeIcon
+                                key={i}
+                                icon={faStarHalfAlt}
+                                style={{ fontSize: "1.1rem" }}
+                              />
+                            );
+                        } else {
+                            return (
+                              <FontAwesomeIcon
+                                key={i}
+                                icon={farStar}
+                                style={{ fontSize: "1.1rem" }}
+                              />
+                            );
+                        }
+                    })}
                     </div>
                 </div>
-            </div>
+            
 
             {/* {currentUser?.id === product.user_id && (
                 <>
