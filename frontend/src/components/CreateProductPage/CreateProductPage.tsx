@@ -142,7 +142,7 @@ function CreateProductPage() {
                         required
                     />
                 </label>
-                {errors.name && <p>{errors.name}</p>}
+                {errors.name && <p className="error-message">{errors.name}</p>}
                 <label className='create-input'>
                     Description
                     <input className="input-container"
@@ -152,7 +152,7 @@ function CreateProductPage() {
                         required
                     />
                 </label>
-                {errors.description && <p>{errors.description}</p>}
+                {errors.description && <p className="error-message">{errors.description}</p>}
                 <label className='create-input'>
                     Price
                     <input className="input-container"
@@ -162,7 +162,7 @@ function CreateProductPage() {
                         required
                     />
                 </label>
-                {errors.price && <p>{errors.price}</p>}
+                {errors.price && <p className="error-message">{errors.price}</p>}
                 <label className='create-input'>
                     Total Number of Items
                     <input className="input-container"
@@ -172,7 +172,7 @@ function CreateProductPage() {
                         required
                     />
                 </label>
-                {errors.item_count && <p>{errors.item_count}</p>}
+                {errors.item_count && <p className="error-message">{errors.item_count}</p>}
                 <label className='create-input'>
                     Preview Product Image
                     <input className="input-container"
@@ -192,7 +192,7 @@ function CreateProductPage() {
                         required
                     />
                 </label>
-                {errors.product_images && <p>{errors.product_images}</p>}
+                {errors.product_images && <p className="error-message">{errors.product_images}</p>}
 
                 <label className='create-input'>
                     Additional Product Image #1

@@ -88,44 +88,43 @@ const UpdateReviewModal = ({ reviewId, productId }: UpdateReviewModalProps) => {
         stars > 0; 
 
         return (
+          <div id="review-form">
+            <h1 id="review-form-title">Edit Your Review</h1>
+            <hr id="review-form-line"></hr>
+            {serverError && <p className="error-message">{serverError}</p>}
+            {errors.review && <p className="error-message">{errors.review}</p>}
 
-            <div id='review-form'>
-                <h1 id='review-form-title'>Edit Your Review</h1>
-                <hr id='review-form-line'></hr>
-                {serverError && <p>{serverError}</p>}
-                {errors.review && <p>{errors.review}</p>}
+            <form onSubmit={handleSubmit} id="review-form-form">
+              <textarea
+                placeholder="Leave your review here"
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
+                rows={6}
+                id="review-form-review"
+              />
+              <div id="review-form-stars">
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <FontAwesomeIcon
+                    key={num}
+                    icon={num <= (hoveredStar || stars) ? fasStar : farStar}
+                    className="star-icon"
+                    onClick={() => setStars(num)}
+                    onMouseEnter={() => setHoveredStar(num)}
+                    onMouseLeave={() => setHoveredStar(0)}
+                  />
+                ))}
+              </div>
 
-                <form onSubmit={handleSubmit} id='review-form-form'>
-                    <textarea
-                        placeholder="Leave your review here"
-                        value={review}
-                        onChange={(e) => setReview(e.target.value)}
-                        rows={6}
-                         id='review-form-review'
-                    />
-                    <div id='review-form-stars'>
-                        {[1, 2, 3, 4, 5].map((num) => (
-                            <FontAwesomeIcon
-                                key={num}
-                                icon={num <= (hoveredStar || stars) ? fasStar : farStar}
-                                className="star-icon"
-                                onClick={() => setStars(num)}
-                                onMouseEnter={() => setHoveredStar(num)}
-                                onMouseLeave={() => setHoveredStar(0)}
-                            />
-                        ))}
-                    </div>
-
-                    <button
-                        type="submit"
-                        disabled={!validReview}
-                        id='review-form-submit'
-                    >
-                        Submit Your Review
-                    </button>
-                </form>
-            </div>
-        )
+              <button
+                type="submit"
+                disabled={!validReview}
+                id="review-form-submit"
+              >
+                Submit Your Review
+              </button>
+            </form>
+          </div>
+        );
 
 
 }

@@ -72,3 +72,10 @@
     margin: 1rem;
     background-color: #F1641E;
 }
+.error-message {
+    color: #FF385C;
+    font-size: 1rem;
+    margin-top: .25rem;
+    margin-bottom: .5rem;
+    text-align: center;
+}
