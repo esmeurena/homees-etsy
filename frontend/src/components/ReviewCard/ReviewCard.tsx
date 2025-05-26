@@ -65,7 +65,8 @@ const ReviewCard = ({ review, currentUserId, productId }: ReviewCardProps) => {
                     Edit
                 </button>
                 <OpenModalButton
-                    buttonText="Delete"
+                        buttonText="Delete"
+                        buttonClassName="delete-btn"
                     modalComponent={<DeleteReviewModal reviewId={review.id} />}
                 />
                </div>

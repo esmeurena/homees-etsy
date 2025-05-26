@@ -55,7 +55,7 @@ export const addItemToShoppingCartThunk = (productId: number): any => async (dis
     const res = await fetch("/api/shopping_carts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ product_id: productId })
+      body: JSON.stringify({ product_id: productId }),
     });
 
     if (res.ok) {

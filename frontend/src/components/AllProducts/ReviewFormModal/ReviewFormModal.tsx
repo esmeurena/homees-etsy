@@ -27,6 +27,36 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
     const [hoveredStar, setHoveredStar] = useState(0);
     const [serverError, setServerError] = useState("");
     const [imageUrl, setImageUrl] = useState("")
+  
+  useEffect(() => {
+    const newErrors: ReviewErrors = {};
+
+    if (!review.trim()) {
+      newErrors.review = "Review is required";
+    } else if (review.length < 10) {
+      newErrors.review = "Review must be at least 10 characters";
+    } else if (review.length > 500) {
+      newErrors.review = "Review must be less than 500 characters";
+    }
+
+    if (!stars || stars < 1 || stars > 5) {
+      newErrors.stars = "Please select a star rating";
+    }
+
+    if (imageUrl) {
+      if (
+        !imageUrl.toLowerCase().endsWith(".jpg") &&
+        !imageUrl.toLowerCase().endsWith(".jpeg") &&
+        !imageUrl.toLowerCase().endsWith(".png")
+      ) {
+        newErrors.image =
+          "Image can not be submitted. .jpg, .jpeg, or .png required";
+      }
+    }
+
+    setErrors(newErrors);
+  }, [review, stars, imageUrl]);
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -59,7 +89,14 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
             }
         }
     };
-    const validReview = review.length >= 10 && stars > 0;
+    const validReview =
+      review.length >= 10 &&
+      review.length <= 500 &&
+      stars > 0 &&
+      (!imageUrl ||
+        imageUrl.toLowerCase().endsWith(".jpg") ||
+        imageUrl.toLowerCase().endsWith(".jpg") ||
+        imageUrl.toLowerCase().endsWith(".png")); 
     return (
       <div id='review-form'>
         <h1 id='review-form-title'>Leave Feedback</h1>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/store";
@@ -30,13 +30,49 @@ function CreateProductPage() {
     // const [product_images, setProductImages] = useState<string[]>([]);
     // const [additionalImage, setAdditionalImage] = useState("");//placeholder for urls
 
-    const [errors, setErrors] = useState<ICreateImageErrors>({
-        name: "",
-        description: "",
-        price: "",
-        item_count: "",
-        product_images: ""
-    });
+    const [errors, setErrors] = useState<ICreateImageErrors>({});
+
+    useEffect(() => {
+        const newErrors: ICreateImageErrors = {};
+
+        if (!name) {
+            newErrors.name = "Name is required"
+        } else if (name.length < 5) {
+            newErrors.name = "Name must be at least 5 characters"
+        } else if (name.length > 100) {
+            newErrors.name = "Name must be less than 100 characters"
+        }
+
+        if (!description) {
+            newErrors.description = "Description is required"
+        } else if (description.length < 10) {
+            newErrors.description = "Description must be at least 10 characters"
+        } else if (description.length > 1000) {
+            newErrors.description = "Description must be less than 1000 characters"
+        }
+
+        if (!price) {
+            newErrors.price = "Price is required"
+        } else if (price < 0.01) {
+            newErrors.price = "Price must be at least $0.01"
+        } else if (price > 10000) {
+            newErrors.price = "Price must be less than $10,000"
+        }
+
+        if (!item_count) {
+            newErrors.item_count = "Item count is required";
+        } else if (item_count < 1) {
+            newErrors.item_count = "Item count must be at least 1"
+        } else if (item_count > 10000) {
+            newErrors.item_count = "Item count must be less than 10,000"
+        }
+
+        if (!product_images || product_images.length === 0) {
+            newErrors.product_images = "Preview Image is required"
+        }
+
+        setErrors(newErrors)
+    }, [name, description, price, item_count, product_images])
     if (!sessionUser) return <Navigate to="/" replace={true} />;
 
 

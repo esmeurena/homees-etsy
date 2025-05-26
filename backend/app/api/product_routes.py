@@ -17,7 +17,8 @@ def get_all_products():
 
     for product in all_products:
         user = User.query.get(product['user_id'])
-        products.append(user)
+        if user:    
+            products.append(user)
 
     users = [user.to_dict() for user in products]
 
@@ -30,8 +31,13 @@ def get_all_products():
 # Get Single Product Route
 @product_routes.route('/<int:id>')
 def get_single_product(id):
-    single_product = Product.query.get(id)
-    return single_product.to_dict()
+    try:
+        single_product = Product.query.get(id)
+        if not single_product:
+            return {"message": "Product not found", "statusCode": 404}, 404
+        return single_product.to_dict(), 200
+    except Exception as e:
+        return {"message": "can not fetch the product", "statusCode": 500}, 500
 
 
 # Create a Product Route

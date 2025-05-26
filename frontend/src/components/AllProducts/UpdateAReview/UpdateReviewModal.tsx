@@ -15,6 +15,7 @@ interface UpdateReviewModalProps {
 interface ReviewErrors {
     review?: string;
     stars?: string;
+    image?: string;
 }
 
 const UpdateReviewModal = ({ reviewId, productId }: UpdateReviewModalProps) => {
@@ -35,6 +36,25 @@ const UpdateReviewModal = ({ reviewId, productId }: UpdateReviewModalProps) => {
             setStars(currentReview.stars)
         }
     }, [currentReview])
+
+
+    useEffect(() => {
+      const newErrors: ReviewErrors = {};
+
+      if (!review.trim()) {
+        newErrors.review = "Review is required";
+      } else if (review.length < 10) {
+        newErrors.review = "Review must be at least 10 characters";
+      } else if (review.length > 500) {
+        newErrors.review = "Review must be less than 500 characters";
+      }
+
+      if (!stars || stars < 1 || stars > 5) {
+        newErrors.stars = "Please select a star rating";
+      }
+
+      setErrors(newErrors);
+    }, [review, stars]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -62,8 +82,10 @@ const UpdateReviewModal = ({ reviewId, productId }: UpdateReviewModalProps) => {
 
         }
     }
-    const validReview = review.length >= 10 && stars > 0;
-
+    const validReview =
+        review.length >= 10 &&
+        review.length <= 500 &&
+        stars > 0; 
 
         return (
 
