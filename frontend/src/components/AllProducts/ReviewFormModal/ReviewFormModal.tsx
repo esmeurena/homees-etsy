@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar as fasStar } from "@fortawesome/free-solid-svg-icons"
 import { faStar as farStar } from "@fortawesome/free-regular-svg-icons"
 import "./ReviewFormModal.css"
+import { getSingleProductThunk } from "../../../redux/products"
 
 
 interface ReviewFormModalProps {
@@ -73,7 +74,8 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
         try {
             const res = await dispatch(createReviewThunk(reviewData));
             if (!res.errors) {
-                await dispatch(getAllReviewsThunk(productId));
+              await dispatch(getAllReviewsThunk(productId));
+              await dispatch(getSingleProductThunk(productId));
                 closeModal();
             } else {
                 setErrors(res.errors);
