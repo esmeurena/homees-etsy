@@ -19,12 +19,7 @@ const FooterBottomBar = () => {
                 </div>
 
                 <div className="footer-bottom-right">
-                    <span>© 2025 Etsy, Inc.</span>
-                    <a href="https://www.etsy.com/legal/terms-of-use?ref=ftr" className="footer-link">Terms of Use</a>
-                    <a href="https://www.etsy.com/legal/privacy/?ref=ftr" className="footer-link">Privacy</a>
-                    <a href="https://www.etsy.com/legal/cookies/#marketing-services" className="footer-link">Interest-based ads</a>
-                    <a href="https://www.etsy.com/search/shops" className="footer-link">Local Shops</a>
-                    <a href="https://help.etsy.com/hc/en-us/articles/115015306687-How-to-Change-Your-Location-Settings-on-Etsy" className="footer-link">Regions</a>
+                    <span>© 2025 Homees, Inc.</span>
                 </div>
             </div>
         </div>

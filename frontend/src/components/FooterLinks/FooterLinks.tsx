@@ -36,13 +36,6 @@ const FooterLinks = () => {
                 <div className="footer-column">
                     <strong className="footer-heading">Help</strong>
                     <a href="https://github.com/AnthonyBronca">Help Center</a>
-                    <Link to="#">Do not sell or share my personal info</Link>
-                    <div className="social-icons">
-                        <a href="https://www.instagram.com/etsy"><FaInstagram /></a>
-                        <a href="https://www.facebook.com/Etsy"><FaFacebookF /></a>
-                        <a href="https://tr.pinterest.com/etsy/"><FaPinterestP /></a>
-                        <a href="https://www.youtube.com/user/etsy"><FaYoutube /></a>
-                    </div>
                 </div>
             </div>
             <FooterBottomBar />
