@@ -27,6 +27,36 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
     const [hoveredStar, setHoveredStar] = useState(0);
     const [serverError, setServerError] = useState("");
     const [imageUrl, setImageUrl] = useState("")
+  
+  useEffect(() => {
+    const newErrors: ReviewErrors = {};
+
+    if (!review.trim()) {
+      newErrors.review = "Review is required";
+    } else if (review.length < 10) {
+      newErrors.review = "Review must be at least 10 characters";
+    } else if (review.length > 500) {
+      newErrors.review = "Review must be less than 500 characters";
+    }
+
+    if (!stars || stars < 1 || stars > 5) {
+      newErrors.stars = "Please select a star rating";
+    }
+
+    if (imageUrl) {
+      if (
+        !imageUrl.toLowerCase().endsWith(".jpg") &&
+        !imageUrl.toLowerCase().endsWith(".jpeg") &&
+        !imageUrl.toLowerCase().endsWith(".png")
+      ) {
+        newErrors.image =
+          "Image can not be submitted. .jpg, .jpeg, or .png required";
+      }
+    }
+
+    setErrors(newErrors);
+  }, [review, stars, imageUrl]);
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -59,26 +89,33 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
             }
         }
     };
-    const validReview = review.length >= 10 && stars > 0;
+    const validReview =
+      review.length >= 10 &&
+      review.length <= 500 &&
+      stars > 0 &&
+      (!imageUrl ||
+        imageUrl.toLowerCase().endsWith(".jpg") ||
+        imageUrl.toLowerCase().endsWith(".jpg") ||
+        imageUrl.toLowerCase().endsWith(".png")); 
     return (
-      <div id='review-form'>
-        <h1 id='review-form-title'>Leave Feedback</h1>
-        <hr id='review-form-line'></hr>
+      <div id="review-form">
+        <h1 id="review-form-title">Leave Feedback</h1>
+        <hr id="review-form-line"></hr>
 
-        {serverError && <p>{serverError}</p>}
-        {errors.review && <p>{errors.review}</p>}
-        {errors.stars && <p>{errors.stars}</p>}
-        {errors.image && <p>{errors.image}</p>}
+        {serverError && <p className="error-message">{serverError}</p>}
+        {errors.review && <p className="error-message">{errors.review}</p>}
+        {errors.stars && <p className="error-message">{errors.stars}</p>}
+        {errors.image && <p className="error-message">{errors.image}</p>}
 
-        <form onSubmit={handleSubmit} id='review-form-form'>
+        <form onSubmit={handleSubmit} id="review-form-form">
           <textarea
-            id='review-form-review'
+            id="review-form-review"
             placeholder="Leave your review here"
             value={review}
             onChange={(e) => setReview(e.target.value)}
             rows={6}
           />
-          <div id='review-form-stars'>
+          <div id="review-form-stars">
             {[1, 2, 3, 4, 5].map((num) => (
               <FontAwesomeIcon
                 key={num}
@@ -90,28 +127,24 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
               />
             ))}
           </div>
-                <div>
-                    <label id='review-form-photo'>
-                        <b>Add Photo</b>
-                        <input
-                            type="text"
-                            value={imageUrl}
-                            onChange={(e) => setImageUrl(e.target.value)}
-                            placeholder="URL"
-                            id='review-form-photo-url'
-                        ></input>
-                    </label>
-                    {imageUrl && (
-                        <div className="image-preview">
-                            <img src={imageUrl} alt="Review preview" />
-                            </div>
-                    )}
-                </div>
-          <button
-            type="submit"
-            disabled={!validReview}
-            id='review-form-submit'
-          >
+          <div>
+            <label id="review-form-photo">
+              <b>Add Photo</b>
+              <input
+                type="text"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                placeholder="URL"
+                id="review-form-photo-url"
+              ></input>
+            </label>
+            {imageUrl && (
+              <div className="image-preview">
+                <img src={imageUrl} alt="Review preview" />
+              </div>
+            )}
+          </div>
+          <button type="submit" disabled={!validReview} id="review-form-submit">
             Submit Your Review
           </button>
         </form>

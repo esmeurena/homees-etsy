@@ -145,3 +145,9 @@ p {
     width: 30rem;
     object-fit: contain;
 }
+.error-message {
+    color: #FF385C;
+    font-size: 1rem;
+    margin-top: .25rem;
+    margin-bottom: .5rem;
+}
