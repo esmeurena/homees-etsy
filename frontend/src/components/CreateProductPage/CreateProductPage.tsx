@@ -25,12 +25,18 @@ function CreateProductPage() {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
     const [item_count, setItemCount] = useState(0);
-    const [product_images, setProductImages] = useState<IProductImage[]>([]);
+    // const [product_images, setProductImages] = useState<IProductImage[]>([]);
+    const [previewImage, setPreviewImage] = useState({ preview: true, url: '' });
+    const [secondImage, setSecondImage] = useState({ preview: false, url: '' });
+    const [thirdImage, setThirdImage] = useState({ preview: false, url: '' });
+    const [fourthImage, setFourthImage] = useState({ preview: false, url: '' });
+    const [fifthImage, setFifthImage] = useState({ preview: false, url: '' });
     // const [product_images, setProductImages] = useState([]);
     // const [product_images, setProductImages] = useState<string[]>([]);
     // const [additionalImage, setAdditionalImage] = useState("");//placeholder for urls
 
     const [errors, setErrors] = useState<ICreateImageErrors>({});
+    const product_images: IProductImage[] = []
 
     useEffect(() => {
         const newErrors: ICreateImageErrors = {};
@@ -67,7 +73,7 @@ function CreateProductPage() {
             newErrors.item_count = "Item count must be less than 10,000"
         }
 
-        if (!product_images || product_images.length === 0) {
+        if (!previewImage || previewImage.url.length === 0) {
             newErrors.product_images = "Preview Image is required"
         }
 
@@ -78,6 +84,11 @@ function CreateProductPage() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        product_images.push({ url: previewImage.url, preview: true })
+        secondImage.url.length ? product_images.push({ url: secondImage.url, preview: false }) : null
+        thirdImage.url.length ? product_images.push({ url: thirdImage.url, preview: false }) : null
+        fourthImage.url.length ? product_images.push({ url: fourthImage.url, preview: false }) : null
+        fifthImage.url.length ? product_images.push({ url: fifthImage.url, preview: false }) : null
 
         const serverResponse = await dispatch(
             createProductThunk({
@@ -88,6 +99,7 @@ function CreateProductPage() {
                 product_images
             })
         );
+
 
         if (serverResponse) {
             setErrors(serverResponse);
@@ -101,28 +113,33 @@ function CreateProductPage() {
         setDescription("Long Description" + count);
         setPrice(count);
         setItemCount(count);
-        setProductImages([{
-            url: "https://cd2.boardgamesmaker.com/AttachFiles/WebsiteImages/Product_Show/FI_8807.jpg",
-            preview: true,
-            product_id: 0,
-        }, {
-            url: "https://www.collinsdictionary.com/images/full/dice_393025615_1000.jpg",
-            preview: false,
-            product_id: 0,
-        }, {
-            url: "https://farm3.staticflickr.com/2573/4144840299_f44aed6ce5_z.jpg",
-            preview: false,
-            product_id: 0,
-        }, {
-            url: "https://www.gastonsanchez.com/intro2cwd/images/simulation/dice4.jpg",
-            preview: false,
-            product_id: 0,
-        }, {
-            url: "https://store.foxtrot.com/cdn/shop/products/mathydice-frontpage.png?v=1652387248",
-            preview: false,
-            product_id: 0,
-        }
-        ]);
+        setPreviewImage({ preview: true, url: 'https://cd2.boardgamesmaker.com/AttachFiles/WebsiteImages/Product_Show/FI_8807.jpg' })
+        setSecondImage({ preview: false, url: 'https://www.collinsdictionary.com/images/full/dice_393025615_1000.jpg' })
+        setThirdImage({ preview: false, url: 'https://farm3.staticflickr.com/2573/4144840299_f44aed6ce5_z.jpg' })
+        setFourthImage({ preview: false, url: 'https://www.gastonsanchez.com/intro2cwd/images/simulation/dice4.jpg' })
+        setFifthImage({ preview: false, url: 'https://store.foxtrot.com/cdn/shop/products/mathydice-frontpage.png?v=1652387248' })
+        // setProductImages([{
+        //     url: "https://cd2.boardgamesmaker.com/AttachFiles/WebsiteImages/Product_Show/FI_8807.jpg",
+        //     preview: true,
+        //     product_id: 0,
+        // }, {
+        //     url: "https://www.collinsdictionary.com/images/full/dice_393025615_1000.jpg",
+        //     preview: false,
+        //     product_id: 0,
+        // }, {
+        //     url: "https://farm3.staticflickr.com/2573/4144840299_f44aed6ce5_z.jpg",
+        //     preview: false,
+        //     product_id: 0,
+        // }, {
+        //     url: "https://www.gastonsanchez.com/intro2cwd/images/simulation/dice4.jpg",
+        //     preview: false,
+        //     product_id: 0,
+        // }, {
+        //     url: "https://store.foxtrot.com/cdn/shop/products/mathydice-frontpage.png?v=1652387248",
+        //     preview: false,
+        //     product_id: 0,
+        // }
+        // ]);
 
         counter.current += 1;
     };
@@ -132,7 +149,7 @@ function CreateProductPage() {
             <button type="button" onClick={fillValues} id='create-auto-fill'>AUTO-FILL</button>
             <h2 id='create-title'>Create a Product</h2>
 
-            <form className= "image-container" onSubmit={handleSubmit}>
+            <form className="image-container" onSubmit={handleSubmit}>
                 <label className='create-input'>
                     Product Name
                     <input className="input-container"
@@ -175,6 +192,66 @@ function CreateProductPage() {
                 {errors.item_count && <p className="error-message">{errors.item_count}</p>}
                 <label className='create-input'>
                     Preview Product Image
+                    <input className='input-container' placeholder="Preview Image URL" onChange={(e) => {
+                        setPreviewImage({ preview: true, url: e.target.value })
+                        // e.target.value.length ? setPreviewDisabled(false) : setPreviewDisabled(true)
+                    }}
+                        value={previewImage.url}
+                        required
+                    />
+                </label>
+                {errors.product_images && <p className="error-message">{errors.product_images}</p>}
+                <label className='create-input'>
+                    Image #2
+                    <input className='input-container' placeholder="Image URL" onChange={(e) => {
+                        setSecondImage({ preview: false, url: e.target.value })
+                    }}
+                        value={secondImage.url}
+                    />
+                </label>
+                <label className='create-input'>
+                    Image #3
+                    <input className='input-container' placeholder="Image URL" onChange={(e) => {
+                        setThirdImage({ preview: false, url: e.target.value })
+                    }}
+                        value={thirdImage.url}
+                    />
+                </label>
+                <label className='create-input'>
+                    Image #4
+                    <input className='input-container' placeholder="Image URL" onChange={(e) => {
+                        setFourthImage({ preview: false, url: e.target.value })
+                    }}
+                        value={fourthImage.url}
+                    />
+                </label>
+                <label className='create-input'>
+                    Image #5
+                    <input className='input-container' placeholder="Image URL" onChange={(e) => {
+                        setFifthImage({ preview: false, url: e.target.value })
+                    }}
+                        value={fifthImage.url}
+                    />
+                </label>
+
+                {[previewImage, secondImage, thirdImage, fourthImage, fifthImage].map((image, i) => {
+                    return (
+                        <div key={`${image.url}-${i}`}>
+                            <b>{image.url.length ? image.preview == true ? 'Preview Image' : `Image #${i + 1}` : ''}</b>
+                            {image.url.length ? <img src={image.url} className="create-images"></img> : ''}
+                            <hr className="create-line"></hr>
+                        </div>
+                    )
+                })}
+
+
+                {/* <input placeholder="Image URL" onChange={(e) => setThirdImage({ preview: false, url: e.target.value })} value={thirdImage.url} /> */}
+                {/* <input placeholder="Image URL" onChange={(e) => setFourthImage({ preview: false, url: e.target.value })} value={fourthImage.url} /> */}
+                {/* <input placeholder="Image URL" onChange={(e) => setFifthImage({ preview: false, url: e.target.value })} value={fifthImage.url} /> */}
+
+
+                {/* <label className='create-input'>
+                    Preview Product Image
                     <input className="input-container"
                         type="text"
                         value={product_images[0]?.url}
@@ -191,10 +268,10 @@ function CreateProductPage() {
                         }}
                         required
                     />
-                </label>
-                {errors.product_images && <p className="error-message">{errors.product_images}</p>}
+                </label> */}
+                {/* {errors.product_images && <p className="error-message">{errors.product_images}</p>} */}
 
-                <label className='create-input'>
+                {/* <label className='create-input'>
                     Additional Product Image #1
                     <input className="input-container"
                         type="text"
@@ -284,7 +361,7 @@ function CreateProductPage() {
                             setProductImages(image_array);
                         }}
                     />
-                </label>
+                </label> */}
 
                 {/* <label>
                     Additional Image
@@ -308,26 +385,29 @@ function CreateProductPage() {
                     >Add this image</button>
                 </label> */}
                 {/* {errors.additionalImage && <p>{errors.additionalImage}</p>} */}
-                <button className="button-container" type="submit">Create Product</button>
+                <button className="create-button-container" type="submit">Create Product</button>
             </form>
 
-            {product_images[0] && (
+            {/* {product_images[0] && (
                 <div className='create-images'>
-                    <p>Preview Image</p>
+                    <b>Preview Image</b>
                     <img src={product_images[0]?.url} />
                 </div>
             )}
+            <hr></hr>
 
             {product_images.length > 1 && (
                 <div className='create-images'>
-                    <p>Additional Images</p>
+                    <b>Additional Images</b>
                     {product_images.slice(1).map((img, idx) => (
-                        <div key={idx}>
+                        <div key={idx} className='create-images'>
                             <img src={img?.url} />
+                            <hr className='create-line'></hr>
                         </div>
                     ))}
                 </div>
-            )}
+            )} */}
+
         </div>
     );
 }

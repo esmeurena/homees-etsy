@@ -6,7 +6,7 @@ import { thunkAuthenticate } from "../redux/session";
 import Navigation from "../components/Navigation/Navigation";
 import FooterLinks from "../components/FooterLinks";
 
-export default function Layout():JSX.Element {
+export default function Layout(): JSX.Element {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(true);
   useEffect(() => {

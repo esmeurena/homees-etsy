@@ -5,6 +5,7 @@ import { IProductImage } from '../../redux/types/products';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavoritesThunk } from '../../redux/favorites';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
@@ -43,6 +44,7 @@ const ProductCard = ({id, name, price, User, product_images, avg_rating}: Produc
                     icon={heartFill ? faHeartSolid : faHeartRegular}
                     style={{ color: "#F1641E"}}
                 />
+                {heartFill}
             </button>
             <NavLink id='product-card' to={`/products/${id}`}>
                 <img id='product-card-image' src={

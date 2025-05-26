@@ -32,7 +32,7 @@ const GetSingleTransaction = (): JSX.Element => {
 
     const makeButtonGreen = () => {
         setIsClicked(true);
-        if(textInsideButton === 'Confirm Address') {
+        if (textInsideButton === 'Confirm Address') {
             setTextInsideButton('Address Confirmed ✓');
         } else {
             setTextInsideButton('Confirm Address');
@@ -60,7 +60,7 @@ const GetSingleTransaction = (): JSX.Element => {
                         <button
                             className='single-product-buttons single-product-buy-it-now'
                             onClick={makeButtonGreen}
-                            style={{ backgroundColor: isClicked ? 'green' : 'initial' }}>
+                            style={{ backgroundColor: isClicked ? 'green' : 'initial', color: 'white' }}>
                             {textInsideButton}
                         </button>
                         <p>123 3rd st. San Francisco, California</p>
