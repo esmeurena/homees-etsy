@@ -190,10 +190,6 @@ function CreateProductPage() {
                     />
                 </label>
                 {errors.item_count && <p className="error-message">{errors.item_count}</p>}
-
-
-
-
                 <label className='create-input'>
                     Preview Product Image
                     <input className='input-container' placeholder="Preview Image URL" onChange={(e) => {

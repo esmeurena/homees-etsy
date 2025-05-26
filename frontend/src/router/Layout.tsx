@@ -18,7 +18,7 @@ export default function Layout(): JSX.Element {
       <div id="layout-wrapper">
         <Navigation />
         <main>{isLoaded && <Outlet />}</main>
-        <div><FooterLinks /></div>
+        <FooterLinks />
         <Modal />
       </div>
     </ModalProvider>
