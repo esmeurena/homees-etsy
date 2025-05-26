@@ -211,7 +211,6 @@ function CreateProductPage() {
                         setSecondImage({ preview: false, url: e.target.value })
                     }}
                         value={secondImage.url}
-                        required
                     />
                 </label>
                 <label className='create-input'>
@@ -220,7 +219,6 @@ function CreateProductPage() {
                         setThirdImage({ preview: false, url: e.target.value })
                     }}
                         value={thirdImage.url}
-                        required
                     />
                 </label>
                 <label className='create-input'>
@@ -229,7 +227,6 @@ function CreateProductPage() {
                         setFourthImage({ preview: false, url: e.target.value })
                     }}
                         value={fourthImage.url}
-                        required
                     />
                 </label>
                 <label className='create-input'>
@@ -238,7 +235,6 @@ function CreateProductPage() {
                         setFifthImage({ preview: false, url: e.target.value })
                     }}
                         value={fifthImage.url}
-                        required
                     />
                 </label>
 

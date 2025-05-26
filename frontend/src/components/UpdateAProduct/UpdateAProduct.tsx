@@ -49,15 +49,15 @@ function UpdateAProduct() {
             // thirdImage.url.length ? product_images.push({ url: thirdImage.url, preview: false }) : null
             // fourthImage.url.length ? product_images.push({ url: fourthImage.url, preview: false }) : null
             // fifthImage.url.length ? product_images.push({ url: fifthImage.url, preview: false }) : null
-            setPreviewImage({ preview: true, url: product.product_images[0].url })
-            setSecondImage({ preview: false, url: product.product_images[1].url })
-            setThirdImage({ preview: false, url: product.product_images[2].url })
-            setFourthImage({ preview: false, url: product.product_images[3].url })
-            setFifthImage({ preview: false, url: product.product_images[4].url })
+            setPreviewImage({ preview: true, url: product.product_images ? product.product_images[0].url : '' })
+            // setSecondImage({ preview: false, url: product.product_images[1].url })
+            // setThirdImage({ preview: false, url: product.product_images[2].url })
+            // setFourthImage({ preview: false, url: product.product_images[3].url })
+            // setFifthImage({ preview: false, url: product.product_images[4].url })
             // setProductImages(product.product_images ?? []);
 
         }
-    }, [product, product_images]);
+    }, [product]);
 
     const [errors, setErrors] = useState<IUpdateErrors>({});
 
@@ -97,15 +97,16 @@ function UpdateAProduct() {
         }
 
         if (
-            !product_images ||
-            product_images.length === 0 ||
-            !product_images[0]?.url
+            // !product_images ||
+            // product_images.length === 0 ||
+            // !product_images[0]?.url ||
+            previewImage.url.length === 0
         ) {
             newErrors.product_images = "Preview Image is required";
         }
 
         setErrors(newErrors)
-    }, [name, description, price, item_count])
+    }, [name, description, price, item_count, previewImage])
 
     if (!sessionUser) return <Navigate to="/" replace={true} />;
 
@@ -295,9 +296,8 @@ function UpdateAProduct() {
                             setProductImages(image_array);
                         }}
                     />
-                </label>
-                <button className="button-container" type="submit">Update Product</button>
-
+                </label> */}
+                {/*
                 {product_images[0] && (
                     <div>
                         <h2>Preview Image</h2>
@@ -315,7 +315,7 @@ function UpdateAProduct() {
                         ))}
                     </div>
                 )} */}
-                 <label className='create-input'>
+                <label className='create-input'>
                     Preview Product Image
                     <input className='input-container' placeholder="Preview Image URL" onChange={(e) => {
                         setPreviewImage({ preview: true, url: e.target.value })
@@ -332,7 +332,6 @@ function UpdateAProduct() {
                         setSecondImage({ preview: false, url: e.target.value })
                     }}
                         value={secondImage.url}
-                        required
                     />
                 </label>
                 <label className='create-input'>
@@ -341,7 +340,6 @@ function UpdateAProduct() {
                         setThirdImage({ preview: false, url: e.target.value })
                     }}
                         value={thirdImage.url}
-                        required
                     />
                 </label>
                 <label className='create-input'>
@@ -350,7 +348,6 @@ function UpdateAProduct() {
                         setFourthImage({ preview: false, url: e.target.value })
                     }}
                         value={fourthImage.url}
-                        required
                     />
                 </label>
                 <label className='create-input'>
@@ -359,7 +356,6 @@ function UpdateAProduct() {
                         setFifthImage({ preview: false, url: e.target.value })
                     }}
                         value={fifthImage.url}
-                        required
                     />
                 </label>
 
@@ -372,6 +368,7 @@ function UpdateAProduct() {
                         </div>
                     )
                 })}
+                <button className="button-container" type="submit">Update Product</button>
 
 
             </form>
