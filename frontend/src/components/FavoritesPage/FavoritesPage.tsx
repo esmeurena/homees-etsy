@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllFavoritesThunk } from '../../redux/favorites';
 import { IFavorite } from '../../redux/types/favorites';
-import { RootState } from '../../redux/store';
+import { RootState, useAppSelector } from '../../redux/store';
 import { useNavigate } from 'react-router-dom';
 import './FavoritesPage.css';
 
@@ -10,7 +10,7 @@ import './FavoritesPage.css';
 const FavoritesPage: React.FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const sessionUser = useAppSelector((state) => state.session.user);
     const favorites = useSelector((state: RootState) => state.favorites.allFavorites);
     const products = useSelector((state: RootState) => state.products.allProducts);
 
@@ -22,7 +22,9 @@ const FavoritesPage: React.FC = () => {
         navigate(`/products/${productId}`);
     };
 
-    if (!favorites || favorites.length === 0) {
+    if(!sessionUser){
+        return <h2>Log in to add to your favorites!!</h2>;
+    }else if (!favorites || favorites.length === 0) {
         return <div>No favorites yet!</div>;
     }
 

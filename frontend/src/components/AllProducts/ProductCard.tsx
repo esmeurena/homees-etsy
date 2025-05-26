@@ -18,16 +18,7 @@ interface ProductProps {
 
 const ProductCard = ({id, name, price, User, product_images, avg_rating}: ProductProps): JSX.Element => {
     const dispatch = useDispatch();
-    // const favorites = useSelector((state: RootState) => state.favorites.allFavorites);
     const [heartFill, setheartFill] = useState("♡");
-
-
-    // for(let i = 0; i < favorites.length; i++){
-    //     // console.log("inside loop = ", favorites[i].product_id, " == ",id, " is ", (favorites[i].product_id == id));
-    //     if(favorites[i].product_id == id){
-    //         setheartFill('♥︎');
-    //     }
-    // }
 
     const AddToFavoritesHeart = async () => {
 
@@ -42,7 +33,7 @@ const ProductCard = ({id, name, price, User, product_images, avg_rating}: Produc
     };
 
     return (
-        <div>
+        <div className="product-and-heart">
             <button
                 className='heart'
                 onClick={AddToFavoritesHeart}

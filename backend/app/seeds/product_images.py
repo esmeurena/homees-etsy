@@ -18,12 +18,23 @@ def seed_product_images():
     product_image_5 = ProductImage(
         product_id=5, url='/images/exampleimage5.png', preview=True
         )
+    more_product_images = []
+    for i in range(6,26):
+        img_i = i
+        if i >= 16:
+            img_i = img_i-10
+        # img_i =  (i % 5)+1
+        new_product_image = ProductImage(
+        product_id=i, url=f'/images/exampleimage{img_i}.png', preview=True
+        )
+        more_product_images.append(new_product_image)
 
     db.session.add(product_image_1)
     db.session.add(product_image_2)
     db.session.add(product_image_3)
     db.session.add(product_image_4)
     db.session.add(product_image_5)
+    db.session.add_all(more_product_images)
     db.session.commit()
 
 
