@@ -5,11 +5,12 @@
 
 #review-card-stars {
     display: flex;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
 }
 
 #review-card-review-image {
     height: 8rem;
+    width: 10rem;
     object-fit: cover;
 }
 
@@ -21,4 +22,9 @@
 .review-card-review-user-date {
     font-size: .9rem;
     color: #626262
+}
+
+#review-card-buttons {
+    display: flex;
+
 }

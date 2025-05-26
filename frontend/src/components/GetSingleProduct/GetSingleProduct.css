@@ -15,6 +15,19 @@
     gap: 1rem;
 }
 
+@media (max-width: 75rem) {
+    #single-product-images-text {
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+    }
+    #single-product-image {
+        margin-top: 3rem;
+        border-radius: .5rem;
+        width: 25rem;
+    }
+}
+
 #single-product-images-list {
     display: flex;
     flex-direction: column;
@@ -31,6 +44,7 @@
 #single-product-image {
     margin-top: 3rem;
     border-radius: .5rem;
+    max-width: 40rem;
 }
 
 #single-product-text {
@@ -63,8 +77,9 @@
     color: white;
 }
 
-#single-product-update {
+.update-delete-button {
     display: flex;
+    background-color: white;
     align-items: center;
     justify-content: center;
     text-decoration: none;
@@ -76,4 +91,15 @@
     font-weight: bold;
     font-size: .8rem;
     cursor: pointer;
+}
+
+.add-to-favorite {
+    height: 3rem;
+    width: 25rem;
+    border-radius: 10rem;
+    border: .125rem solid #222222;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: white;
 }

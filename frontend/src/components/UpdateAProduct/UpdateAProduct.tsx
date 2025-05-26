@@ -4,6 +4,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useAppSelector, RootState } from "../../redux/store";
 import { updateAProductThunk } from "../../redux/products";
 import { IProduct, IProductImage } from "../../redux/types/products";
+import './UpdateAProduct.css'
 
 interface IUpdateErrors {
     name?: string;
@@ -39,13 +40,53 @@ function UpdateAProduct() {
         }
     }, [product]);
 
-    const [errors, setErrors] = useState<IUpdateErrors>({
-        name: "",
-        description: "",
-        price: "",
-        item_count: "",
-        product_images: ""
-    });
+    const [errors, setErrors] = useState<IUpdateErrors>({});
+
+    useEffect(() => {
+            const newErrors: IUpdateErrors = {};
+    
+            if (!name) {
+                newErrors.name = "Name is required"
+            } else if (name.length < 5) {
+                newErrors.name = "Name must be at least 5 characters"
+            } else if (name.length > 100) {
+                newErrors.name = "Name must be less than 100 characters"
+            }
+    
+            if (!description) {
+                newErrors.description = "Description is required"
+            } else if (description.length < 10) {
+                newErrors.description = "Description must be at least 10 characters"
+            } else if (description.length > 1000) {
+                newErrors.description = "Description must be less than 1000 characters"
+            }
+    
+            if (!price) {
+                newErrors.price = "Price is required"
+            } else if (price < 0.01) {
+                newErrors.price = "Price must be at least $0.01"
+            } else if (price > 10000) {
+                newErrors.price = "Price must be less than $10,000"
+            }
+    
+            if (!item_count) {
+                newErrors.item_count = "Item count is required";
+            } else if (item_count < 1) {
+                newErrors.item_count = "Item count must be at least 1"
+            } else if (item_count > 10000) {
+                newErrors.item_count = "Item count must be less than 10,000"
+            }
+    
+        if (
+            !product_images ||
+            product_images.length === 0 ||
+            !product_images[0]?.url
+        ) {
+            newErrors.product_images = "Preview Image is required";
+        }
+    
+            setErrors(newErrors)
+        }, [name, description, price, item_count, product_images])
 
     if (!sessionUser) return <Navigate to="/" replace={true} />;
 
@@ -75,11 +116,11 @@ function UpdateAProduct() {
     }
 
     return (
-        <div className="create-container">
-            <h1>Update a Product</h1>
+        <div className="update-container">
+            <h2 id='update-title'>Update a Product</h2>
 
             <form className= "image-container" onSubmit={handleSubmit}>
-                <label>
+                <label className='update-input'>
                     Product Name
                     <input className="input-container"
                         type="text"
@@ -88,8 +129,8 @@ function UpdateAProduct() {
                         required
                     />
                 </label>
-                {errors.name && <p>{errors.name}</p>}
-                <label>
+                {errors.name && <p className="error-message">{errors.name}</p>}
+                <label className='update-input'>
                     Description
                     <input className="input-container"
                         type="text"
@@ -98,8 +139,8 @@ function UpdateAProduct() {
                         required
                     />
                 </label>
-                {errors.description && <p>{errors.description}</p>}
-                <label>
+                {errors.description && <p className="error-message">{errors.description}</p>}
+                <label className='update-input'>
                     Price
                     <input className="input-container"
                         type="number"
@@ -108,8 +149,8 @@ function UpdateAProduct() {
                         required
                     />
                 </label>
-                {errors.price && <p>{errors.price}</p>}
-                <label>
+                {errors.price && <p className="error-message">{errors.price}</p>}
+                <label className='update-input'>
                     Total Number of Items
                     <input className="input-container"
                         type="number"
@@ -118,8 +159,8 @@ function UpdateAProduct() {
                         required
                     />
                 </label>
-                {errors.item_count && <p>{errors.item_count}</p>}
-                <label>
+                {errors.item_count && <p className="error-message">{errors.item_count}</p>}
+                <label className='update-input'>
                     Preview Product Image
                     <input className="input-container"
                         type="text"
@@ -138,10 +179,10 @@ function UpdateAProduct() {
                         required
                     />
                 </label>
-                {errors.product_images && <p>{errors.product_images}</p>}
+                {errors.product_images && <p className="error-message">{errors.product_images}</p>}
 
-                <label>
-                    Additional Product Image # 1
+                <label className='update-input'>
+                    Additional Product Image #1
                     <input className="input-container"
                         type="text"
                         value={product_images[1]?.url}
@@ -163,8 +204,8 @@ function UpdateAProduct() {
                     />
                 </label>
 
-                <label>
-                    Additional Product Image # 2
+                <label className='update-input'>
+                    Additional Product Image #2
                     <input className="input-container"
                         type="text"
                         value={product_images[2]?.url}
@@ -186,8 +227,8 @@ function UpdateAProduct() {
                     />
                 </label>
 
-                <label>
-                    Additional Product Image # 3
+                <label className='update-input'>
+                    Additional Product Image #3
                     <input className="input-container"
                         type="text"
                         value={product_images[3]?.url}
@@ -209,8 +250,8 @@ function UpdateAProduct() {
                     />
                 </label>
 
-                <label>
-                    Additional Product Image # 4
+                <label className='update-input'>
+                    Additional Product Image #4
                     <input className="input-container"
                         type="text"
                         value={product_images[4]?.url}
@@ -235,17 +276,17 @@ function UpdateAProduct() {
 
                 {product_images[0] && (
                     <div>
-                        <p>Preview Image</p>
-                        <img src={product_images[0]?.url} />
+                    <h2>Preview Image</h2>
+                        <img src={product_images[0]?.url} className='update-images'/>
                     </div>
                 )}
 
                 {product_images.length > 1 && (
-                    <div>
-                        <p>Additional Images</p>
+                    <div >
+                        <h2>Additional Images</h2>
                         {product_images.slice(1).map((img, idx) => (
                             <div key={idx}>
-                                <img src={img?.url} />
+                                <img src={img?.url} className='update-images'/>
                             </div>
                         ))}
                     </div>

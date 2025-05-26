@@ -55,8 +55,12 @@ function ProfileButton():JSX.Element {
       <div className="button-and-info">
         <div id='nav-right'>
         <button onClick={toggleMenu} id="profile-button">
-          <div style={{fontSize: '1.5rem', marginTop: '.4rem'}}><FaUserCircle /></div>
-          <p style={{fontSize: '.8rem', margin: '.4rem 0 .5rem .2rem'}}>&#11206;</p>
+          {/* <div style={{fontSize: '1.5rem'}}><FaUserCircle /></div> */}
+          {/* <p style={{fontSize: '.8rem', margin: '.4rem 0 .5rem .2rem'}}>&#11206;</p> */}
+          {/* <p style={{marginBottom: '1rem'}}>▼</p> */}
+          <button id='heart-button' onClick={() => navigate('/favorites')}>
+            <img src="/images/profile_pic.png" style={{ width: "35px", height: "35px", marginTop: '.5rem' }} />
+          </button>
         </button>
 
         </div>
@@ -64,13 +68,13 @@ function ProfileButton():JSX.Element {
           {user ? (
             <>
               <div className="login-info">
-                {user.username}
+                <b>{user.username}</b>
                 <div>
-                  {user.first_name} {user.last_name}
+                  <b>{user.first_name} {user.last_name}</b>
                 </div>
-                {user.email}
+                <b>{user.email}</b>
                 <button className="profile-buttons" onClick={goToCreateProduct}>
-                  Create a Product
+                  Create Product
                 </button>
                 <div>
                   <button onClick={logout} className="profile-buttons">Log Out</button>
