@@ -56,7 +56,7 @@ function ProfileButton():JSX.Element {
         <div id='nav-right'>
         <button onClick={toggleMenu} id="profile-button">
           <div style={{fontSize: '1.5rem', marginTop: '.4rem'}}><FaUserCircle /></div>
-          <p style={{fontSize: '.8rem', margin: '.4rem 0 .5rem .2rem'}}>&#11206;</p>
+          {/* <p style={{fontSize: '.8rem', margin: '.4rem 0 .5rem .2rem'}}>&#11206;</p> */}
         </button>
 
         </div>

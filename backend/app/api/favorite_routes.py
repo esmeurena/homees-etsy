@@ -21,20 +21,16 @@ def add_favorite_product():
     data = request.get_json()
     product_id = data.get("product_id")
     user_id = current_user.id
-    # single_product = Product.query.get(product_id)
 
     favorite_product = Favorite(
         user_id=user_id,
         product_id=product_id,
-        # products= single_product
     )
 
     db.session.add(favorite_product)
     db.session.commit()
 
     return favorite_product.to_dict(), 201
-
-    # return {"message": "Product added to Favorites"}, 201
 
 
 # Remove a Favorite

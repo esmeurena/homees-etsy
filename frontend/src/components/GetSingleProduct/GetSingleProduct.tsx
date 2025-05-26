@@ -53,10 +53,10 @@ const GetSingleProduct = (): JSX.Element => {
         return <h1>Loading...</h1>;
     }
 
-const addItemToCart = async () => {
+// const addItemToCart = async () => {
 
-    await dispatch(addItemToShoppingCartThunk(product.id));
-};
+//     await dispatch(addItemToShoppingCartThunk(product.id));
+// };
 
     const makeButtonGreen = async () => {
         await dispatch(addItemToShoppingCartThunk(product.id));
@@ -70,7 +70,7 @@ const addItemToCart = async () => {
 
     const handleAddToFavorites = async () => {
         await dispatch(addFavoritesThunk(product.id));
-        alert('Added to favorites!');
+        // alert('Added to favorites!');
 };
 
 
@@ -94,42 +94,6 @@ const addItemToCart = async () => {
                             src={image_clicked ?? ''} />
                     </div>
                 </div>
-                 {/* <div id='single-product-text'>
-                    <h2 style={{fontSize: '2rem', marginBottom: '0'}}>${product.price}</h2>
-                    <p>{product.name}</p>
-                    <div id='single-product-buttons-container'>
-                        <button className='single-product-buttons
-                                           single-product-buy-it-now' onClick={() => navigate(`/singletransaction/${id}`)}>
-                        Buy it now
-                        </button>
-                        <button
-                            className='single-product-buttons single-product-buy-it-now'
-                            onClick={makeButtonGreen}
-                            style={{ backgroundColor: isClicked ? 'green' : 'initial' }}>
-                            {textInsideButton}
-                        </button>
-                        <button
-                            className='add-to-favorite'
-                            onClick={handleAddToFavorites}>
-                            Add to Favorites
-                        </button>
-                    </div>
-                    <h3>Item details</h3>
-                    <p>{product.description}</p>
-                {currentUser?.id === product.user_id && (
-                    <div id='single-product-update-delete-container'>
-                    <NavLink to={`/products/${Number(id)}/update`}
-                    className='single-product-update-delete'>
-                        Update Product
-                    </NavLink>
-                    <OpenModalButton
-                        buttonText="Delete Product"
-                        buttonClassName="single-product-update-delete"
-                        modalComponent={<DeleteProductModal productId={Number(id)}/>}
-                    />
-                    </div>
-                )}
-                </div> */}
                 <div id='single-product-text'>
                     <h2 style={{ fontSize: '2rem', marginBottom: '0' }}>${product.price}</h2>
                     <p>{product.name}</p>
@@ -143,6 +107,11 @@ const addItemToCart = async () => {
                             onClick={makeButtonGreen}
                             style={{ backgroundColor: isClicked ? 'green' : '#222222', color: isClicked ? 'black' : 'white'}}>
                             {textInsideButton}
+                        </button>
+                        <button
+                            className='add-to-favorite'
+                            onClick={handleAddToFavorites}>
+                            Add to Favorites
                         </button>
                     </div>
                     <h3>Item details</h3>
@@ -162,10 +131,6 @@ const addItemToCart = async () => {
                 )}
                 </div>
             </div>
-            {/* <NavLink to={`/products/${Number(id)}/update`}
-                id='single-product-update'>
-                Update Product
-            </NavLink> */}
             <div style={{ display: 'flex' }}>
                 <h2 style={{ marginRight: '.4rem' }}>{product.reviews.length} Reviews -</h2>
                 <div style={{ width: '8.4rem', marginTop: '.5rem' }}>
@@ -180,19 +145,6 @@ const addItemToCart = async () => {
                 </div>
             </div>
 
-            {/* {currentUser?.id === product.user_id && (
-                <>
-                    <NavLink to={`/products/${Number(id)}/update`}>
-                        Update a Product
-                    </NavLink>
-                    <OpenModalButton
-                        buttonText="Delete"
-                        buttonClassName="delete-btn"
-                        modalComponent={<DeleteProductModal productId={Number(id)} />}
-
-                    />
-                </>
-            )} */}
             {/* make sure its a purchasing customer for the if conditional*/}
             {currentUser && !hasReviewed &&  currentUser.id !== product.user_id &&(
                 <OpenModalButton
