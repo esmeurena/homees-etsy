@@ -13,6 +13,7 @@ import { IShoppingCartItem, IActionCreator, IShoppingCartState } from './types/s
 const ADD_ITEM_TO_SHOPPING_CART = "shopping_cart/addItemToShoppingCart";
 const GET_ALL_SHOPPING_CART_ITEMS = "shopping_cart/getAllShoppingCartItems";
 const DELETE_ITEM_FROM_SHOPPING_CART = "shopping_cart/deleteItemFromShoppingCart";
+const UPDATE_ITEM_IN_SHOPPING_CART = "shopping_cart/updateItemInShoppingCart";
 
 /************************************
 ↓↓↓↓↓↓↓↓↓↓ ACTION CREATORS ↓↓↓↓↓↓↓↓↓↓
@@ -26,12 +27,17 @@ const addItemToShoppingCart = (shopping_cart: IShoppingCartItem) => ({
 const getAllShoppingCartItems = (shopping_cart: IShoppingCartItem[]) => ({
   type: GET_ALL_SHOPPING_CART_ITEMS,
   payload: shopping_cart
-})
+});
 
 const deleteItemFromShoppingCart = (shopping_cart: number) => ({
   type: DELETE_ITEM_FROM_SHOPPING_CART,
   payload: shopping_cart
-})
+});
+
+const updateItemInShoppingCart = (shopping_cart: IShoppingCartItem) => ({
+  type: UPDATE_ITEM_IN_SHOPPING_CART,
+  payload: shopping_cart
+});
 
 /***************************
 ↓↓↓↓↓↓↓↓↓↓ THUNKS ↓↓↓↓↓↓↓↓↓↓
@@ -81,6 +87,23 @@ export const deleteItemFromShoppingCartThunk = (itemId: number): any => async (d
   }
 };
 
+export const updateItemInShoppingCartThunk = (itemId: number, item_count_update: number): any => async (dispatch: any) => {
+  try{
+    const res = await fetch(`/api/shopping_carts/${itemId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ item_count: item_count_update })
+    });
+    if(res.ok){
+      const updatedItem = await res.json();
+      dispatch(updateItemInShoppingCart(updatedItem))
+    }
+  } catch(error){
+    return error;
+  }
+
+};
+
 
 /**********************************
 ↓↓↓↓↓↓↓↓↓↓ INITIAL STATE ↓↓↓↓↓↓↓↓↓↓
@@ -127,6 +150,13 @@ function shoppingCartReducer(state = initialState, action: IActionCreator) {
       const newById = { ...state.byId };
       delete newById[action.payload];
       return { ...state, byId: newById, allShoppingCartItems: state.allShoppingCartItems.filter(item => item.id !== action.payload) };
+
+    case UPDATE_ITEM_IN_SHOPPING_CART:
+      newState = {...state};
+      newState.allShoppingCartItems = [...newState.allShoppingCartItems, action.payload];
+      newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
+
+      return newState;
 
     default:
       return state;

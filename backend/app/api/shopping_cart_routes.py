@@ -47,8 +47,16 @@ def add_shopping_cart_item():
 # Update a Shopping Cart Item Route
 @shopping_cart_routes.route('/<int:id>', methods=['PUT'])
 @login_required
-def update_shoppingcart(id):
-    pass
+def update_shopping_cart_item(id):
+    # user_id = current_user.id
+    data = request.get_json()
+    item_count_update = data.get('item_count')
+    cart_item = db.session.query(ShoppingCartItem).filter_by(user_id=current_user.id, product_id=id).first()
+    
+    cart_item.item_count = item_count_update
+    db.session.commit()
+
+    return cart_item.to_dict()
 
 # Delete a Shopping Cart Item Route
 @shopping_cart_routes.route('/<int:id>', methods=['DELETE'])
