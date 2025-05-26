@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useModal } from '../../../context/Modal'
 import { getAllReviewsThunk, updateAReviewThunk } from '../../../redux/reviews'
+import { getSingleProductThunk } from '../../../redux/products'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons'
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons'
@@ -70,7 +71,8 @@ const UpdateReviewModal = ({ reviewId, productId }: UpdateReviewModalProps) => {
         try {
             const res = await dispatch(updateAReviewThunk(reviewId, reviewData));
             if (res.id) {
-                dispatch(getAllReviewsThunk(productId))
+                await dispatch(getAllReviewsThunk(productId))
+                await dispatch(getSingleProductThunk(productId))
                 closeModal();
             } else if (res.errors) {
                 setErrors(res.errors)
