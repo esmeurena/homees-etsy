@@ -10,7 +10,7 @@ import { useAppSelector } from "../../redux/store";
 // import CreateProductPage from "../CreateProductPage";
 import { useNavigate } from "react-router-dom";
 
-function ProfileButton():JSX.Element {
+function ProfileButton(): JSX.Element {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
@@ -25,7 +25,7 @@ function ProfileButton():JSX.Element {
   useEffect(() => {
     if (!showMenu) return;
 
-    const closeMenu = (e:any) => {
+    const closeMenu = (e: any) => {
       if (ulRef.current && !ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
@@ -44,9 +44,9 @@ function ProfileButton():JSX.Element {
     closeMenu();
   };
 
-    const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
-    const goToCreateProduct = () => {
+  const goToCreateProduct = () => {
     navigate('/products/create');
   };
 
@@ -54,14 +54,24 @@ function ProfileButton():JSX.Element {
     <>
       <div className="button-and-info">
         <div id='nav-right'>
-        <button onClick={toggleMenu} id="profile-button">
+
+        {/* <button onClick={toggleMenu} id="profile-button"> */}
           {/* <div style={{fontSize: '1.5rem'}}><FaUserCircle /></div> */}
           {/* <p style={{fontSize: '.8rem', margin: '.4rem 0 .5rem .2rem'}}>&#11206;</p> */}
           {/* <p style={{marginBottom: '1rem'}}>▼</p> */}
-          <button id='heart-button' onClick={() => navigate('/favorites')}>
+          {/* <button id='heart-button' onClick={() => navigate('/favorites')}>
             <img src="/images/profile_pic.png" style={{ width: "35px", height: "35px", marginTop: '.5rem' }} />
           </button>
-        </button>
+        </button> */}
+
+          <button onClick={toggleMenu} id="profile-button">
+            {/* <div style={{fontSize: '1.5rem'}}><FaUserCircle /></div> */}
+            {/* <p style={{fontSize: '.8rem', margin: '.4rem 0 .5rem .2rem'}}>&#11206;</p> */}
+            {/* <p style={{marginBottom: '1rem'}}>▼</p> */}
+            {/* <button id='heart-button' onClick={() => navigate('/favorites')}> */}
+            <img src="/images/profile.svg" className="navigation-icon" />
+            {/* </button> */}
+          </button>
 
         </div>
         <div className={ulClassName} ref={ulRef}>

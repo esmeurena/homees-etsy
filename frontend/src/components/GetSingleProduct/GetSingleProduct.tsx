@@ -141,7 +141,7 @@ const GetSingleProduct = (): JSX.Element => {
                         <button
                             className='single-product-buttons single-product-add-to-cart'
                             onClick={makeButtonGreen}
-                            style={{ backgroundColor: isClicked ? 'green' : '#222222', color: isClicked ? 'black' : 'white'}}>
+                            style={{ backgroundColor: isClicked ? 'green' : '#222222', color: isClicked ? 'white' : 'white'}}>
                             {textInsideButton}
                         </button>
                     </div>

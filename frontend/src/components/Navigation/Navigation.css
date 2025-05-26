@@ -56,8 +56,36 @@
   margin-bottom: 1rem;
 }
 
+#search-bar-test {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
 
-#shopping-cart-button {
+#search {
+  width: 300%;
+  max-width: 800px;
+  margin-top: .5rem;
+  padding: 1rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 2rem;
+  font-size: 1rem;
+}
+
+.line-to-divide{
+  border: none;
+  height: 2px;
+  background-color: rgb(190, 190, 190);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.navigation-button:hover {
+  transition: ease-in .2s;
+  background-color: #CCEBFF;
+}
+
+.navigation-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -98,4 +126,8 @@
 #shopping-cart-button:hover {
   transition: ease-in .2s;
   background-color: #CCEBFF;
+}
+
+.navigation-icon {
+  height: 1.5rem;
 }
