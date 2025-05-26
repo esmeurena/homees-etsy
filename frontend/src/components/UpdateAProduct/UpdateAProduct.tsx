@@ -368,7 +368,7 @@ function UpdateAProduct() {
                         </div>
                     )
                 })}
-                <button className="button-container" type="submit">Update Product</button>
+                <button className="update-button-container" type="submit">Update Product</button>
 
 
             </form>

@@ -1,7 +1,7 @@
 .footer {
     background-color: #f6f6f6;
-    padding: 2rem;
     font-family: Arial, sans-serif;
+    max-width: 95.8%;
 }
 
 .footer-grid {

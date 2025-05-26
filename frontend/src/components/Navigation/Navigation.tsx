@@ -22,7 +22,7 @@ function Navigation(): JSX.Element {
         <div id="search-bar-test">
           <input
             type="text"
-            placeholder="Search here!"
+            placeholder="Search for anything"
             id="search"
           />
         </div>
