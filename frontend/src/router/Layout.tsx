@@ -14,13 +14,13 @@ export default function Layout():JSX.Element {
   }, [dispatch]);
 
   return (
-    <>
-      <ModalProvider>
+    <ModalProvider>
+      <div id="layout-wrapper">
         <Navigation />
-        {isLoaded && <Outlet />}
+        <main>{isLoaded && <Outlet />}</main>
         <FooterLinks />
         <Modal />
-      </ModalProvider>
-    </>
+      </div>
+    </ModalProvider>
   );
 }
