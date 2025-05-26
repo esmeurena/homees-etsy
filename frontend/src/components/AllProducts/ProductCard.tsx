@@ -5,6 +5,9 @@ import { IProductImage } from '../../redux/types/products';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavoritesThunk } from '../../redux/favorites';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
 
 interface ProductProps {
     id: number,
@@ -18,17 +21,15 @@ interface ProductProps {
 
 const ProductCard = ({id, name, price, User, product_images, avg_rating}: ProductProps): JSX.Element => {
     const dispatch = useDispatch();
-    const [heartFill, setheartFill] = useState("♡");
+    const [heartFill, setheartFill] = useState(false);
 
     const AddToFavoritesHeart = async () => {
 
-        if (heartFill == '♡') {
+        if (!heartFill) {
             await dispatch(addFavoritesThunk(id));
-            alert('Added to favorites!');
-            setheartFill('♥︎');
+            setheartFill(true);
         } else {
-            setheartFill('♡');
-            alert('Removed from favorites!');
+            setheartFill(false);
         }
     };
 
@@ -38,7 +39,10 @@ const ProductCard = ({id, name, price, User, product_images, avg_rating}: Produc
                 className='heart'
                 onClick={AddToFavoritesHeart}
             >
-                {heartFill}
+                <FontAwesomeIcon
+                    icon={heartFill ? faHeartSolid : faHeartRegular}
+                    style={{ color: "#F1641E"}}
+                />
             </button>
             <NavLink id='product-card' to={`/products/${id}`}>
                 <img id='product-card-image' src={
