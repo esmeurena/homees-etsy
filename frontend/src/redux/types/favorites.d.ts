@@ -3,7 +3,7 @@ export interface IFavorite {
     id: number;
     user_id: number;
     product_id: number;
-    product?: IProduct;
+    product: IProduct;
     created_at?: string;
 }
 

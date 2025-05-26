@@ -36,9 +36,9 @@ const FavoritesPage: React.FC = () => {
                     <li key={fav.id} className="favorite-item">
                         <div className="favorite-product-info" onClick={() => handleClickProduct(fav.product_id)}>
                             <h2> Product #{fav.product_id}</h2>
-                            <p> Name: {products[0]?.name}</p>
-                            <p> Description: {products[0]?.description}</p>
-                            <p> Rating: {products[0]?.avg_rating}</p>
+                            <p> Name: {fav.product?.name}</p>
+                            <p> Description: {fav.product?.description}</p>
+                            <p> Rating: {fav.product?.avg_rating}</p>
                             {/* {fav.product?.name && <p>{fav.product.name}</p>} */}
                         </div>
                     </li>
