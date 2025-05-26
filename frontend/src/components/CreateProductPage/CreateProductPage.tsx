@@ -97,7 +97,6 @@ function CreateProductPage() {
                 price,
                 item_count,
                 product_images
-                // product_images
             })
         );
 
