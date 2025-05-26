@@ -40,13 +40,53 @@ function UpdateAProduct() {
         }
     }, [product]);
 
-    const [errors, setErrors] = useState<IUpdateErrors>({
-        name: "",
-        description: "",
-        price: "",
-        item_count: "",
-        product_images: ""
-    });
+    const [errors, setErrors] = useState<IUpdateErrors>({});
+
+    useEffect(() => {
+            const newErrors: IUpdateErrors = {};
+    
+            if (!name) {
+                newErrors.name = "Name is required"
+            } else if (name.length < 5) {
+                newErrors.name = "Name must be at least 5 characters"
+            } else if (name.length > 100) {
+                newErrors.name = "Name must be less than 100 characters"
+            }
+    
+            if (!description) {
+                newErrors.description = "Description is required"
+            } else if (description.length < 10) {
+                newErrors.description = "Description must be at least 10 characters"
+            } else if (description.length > 1000) {
+                newErrors.description = "Description must be less than 1000 characters"
+            }
+    
+            if (!price) {
+                newErrors.price = "Price is required"
+            } else if (price < 0.01) {
+                newErrors.price = "Price must be at least $0.01"
+            } else if (price > 10000) {
+                newErrors.price = "Price must be less than $10,000"
+            }
+    
+            if (!item_count) {
+                newErrors.item_count = "Item count is required";
+            } else if (item_count < 1) {
+                newErrors.item_count = "Item count must be at least 1"
+            } else if (item_count > 10000) {
+                newErrors.item_count = "Item count must be less than 10,000"
+            }
+    
+        if (
+            !product_images ||
+            product_images.length === 0 ||
+            !product_images[0]?.url
+        ) {
+            newErrors.product_images = "Preview Image is required";
+        }
+    
+            setErrors(newErrors)
+        }, [name, description, price, item_count, product_images])
 
     if (!sessionUser) return <Navigate to="/" replace={true} />;
 
@@ -89,7 +129,7 @@ function UpdateAProduct() {
                         required
                     />
                 </label>
-                {errors.name && <p>{errors.name}</p>}
+                {errors.name && <p className="error-message">{errors.name}</p>}
                 <label className='update-input'>
                     Description
                     <input className="input-container"
@@ -99,7 +139,7 @@ function UpdateAProduct() {
                         required
                     />
                 </label>
-                {errors.description && <p>{errors.description}</p>}
+                {errors.description && <p className="error-message">{errors.description}</p>}
                 <label className='update-input'>
                     Price
                     <input className="input-container"
@@ -109,7 +149,7 @@ function UpdateAProduct() {
                         required
                     />
                 </label>
-                {errors.price && <p>{errors.price}</p>}
+                {errors.price && <p className="error-message">{errors.price}</p>}
                 <label className='update-input'>
                     Total Number of Items
                     <input className="input-container"
@@ -119,7 +159,7 @@ function UpdateAProduct() {
                         required
                     />
                 </label>
-                {errors.item_count && <p>{errors.item_count}</p>}
+                {errors.item_count && <p className="error-message">{errors.item_count}</p>}
                 <label className='update-input'>
                     Preview Product Image
                     <input className="input-container"
@@ -139,7 +179,7 @@ function UpdateAProduct() {
                         required
                     />
                 </label>
-                {errors.product_images && <p>{errors.product_images}</p>}
+                {errors.product_images && <p className="error-message">{errors.product_images}</p>}
 
                 <label className='update-input'>
                     Additional Product Image #1

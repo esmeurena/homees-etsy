@@ -191,3 +191,9 @@ p {
     width: 100%;
     background-color: #cbcbcb;
 }
+.error-message {
+    color: #FF385C;
+    font-size: 1rem;
+    margin-top: .25rem;
+    margin-bottom: .5rem;
+}

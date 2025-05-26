@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import OpenModalButton from '../OpenModalButton';
 import DeleteReviewModal from '../DeleteReviewModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 interface ReviewCardProps {
     review: IReview;
@@ -27,11 +29,13 @@ const ReviewCard = ({ review, currentUserId, productId }: ReviewCardProps) => {
     return (
         <div id='review-card'>
             <div id='review-card-stars'>
-                {Array(review.stars).fill(0).map((star, i) => {
-                    return (
-                        <span key={`${star}-${i}`}>&#9733;</span>
-                    )
-                })}
+                {Array(review.stars).fill(0).map((_, i) => (
+                    <FontAwesomeIcon
+                        key={i}
+                        icon={faStar}
+                        style={{marginRight: "2px"}}
+                    />
+                ))}
             </div>
             <span style={{fontSize: '1.1rem'}}>{review.review}</span>
                 {review.review_images.map((image, i) => {
@@ -65,7 +69,8 @@ const ReviewCard = ({ review, currentUserId, productId }: ReviewCardProps) => {
                     Edit
                 </button>
                 <OpenModalButton
-                    buttonText="Delete"
+                        buttonText="Delete"
+                        buttonClassName="delete-btn"
                     modalComponent={<DeleteReviewModal reviewId={review.id} />}
                 />
                </div>

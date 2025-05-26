@@ -3,4 +3,7 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
+    align-items: center;
+    max-width: 1800px;
+    margin: 0 auto;
 }

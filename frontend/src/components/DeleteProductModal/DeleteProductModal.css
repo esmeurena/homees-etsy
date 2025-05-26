@@ -30,7 +30,7 @@
 
 
 .delete-review-button {
-    background-color: #cc2c2c;
+    background-color: #F1641E;
     color: #fff;
     font-weight: bold;
     padding: 12px 20px;
@@ -43,7 +43,7 @@
 }
 
 .delete-review-button:hover {
-    background-color: #a52828;
+    background-color: #d81c1c;
 }
 
 

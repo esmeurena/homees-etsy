@@ -1,14 +1,17 @@
+import { IProduct } from "./products";
 export interface IFavorite {
     id: number;
     user_id: number;
     product_id: number;
-    product?: any;
+    product?: IProduct;
     created_at?: string;
 }
 
 export interface IFavoriteState {
+    byId: {
+            [id: number]: Item;
+        };
     allFavorites: IFavorite[];
-    byId: { [productId: number]: IFavorite };
 }
 
 export interface IActionCreator {
