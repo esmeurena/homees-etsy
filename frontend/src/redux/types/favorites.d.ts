@@ -9,7 +9,7 @@ export interface IFavorite {
 
 export interface IFavoriteState {
     byId: {
-            [id: number]: Item;
+            [id: number]: IFavorite;
         };
     allFavorites: IFavorite[];
 }

@@ -1,18 +1,18 @@
-#review-form {
+.review-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 30rem;
+    height: auto;
     width: 25em;
 }
 
-#review-form-form {
+/* #review-form-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
+} */
 
 #review-form-title {
     font-size: 2rem;
@@ -71,9 +71,11 @@
     color: white;
     margin: 1rem;
     background-color: #F1641E;
+    transition: .2s ease-in-out;
 }
 #review-form-submit:hover {
-    background-color: #d81c1c;
+    background-color: #ff7936;
+    transition: .2s ease-in-out;
 }
 .error-message {
     color: #FF385C;

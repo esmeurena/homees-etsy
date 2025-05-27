@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: 1rem;
     width: 100%;
+    margin-left: 1rem;
 }
 
 #single-product-images-text {
@@ -45,7 +46,7 @@
 #single-product-image {
     margin-top: 3rem;
     border-radius: .5rem;
-    max-width: 40rem;
+    max-width: 30rem;
 }
 
 #single-product-text {
@@ -76,6 +77,12 @@
 .single-product-add-to-cart {
     background-color: #222222;
     color: white;
+}
+
+#single-product-update-delete-container {
+    display: flex;
+    flex-direction: column;
+    gap: .1rem;
 }
 
 .update-delete-button {

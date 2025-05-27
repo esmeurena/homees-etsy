@@ -1,0 +1,22 @@
+.delete-review-modal-button {
+    display: flex;
+    background-color: #222222;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    height: 3rem;
+    width: 12rem;
+    border-radius: 10rem;
+    border: .125rem solid #222222;
+    font-weight: bold;
+    font-size: .8rem;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+
+}
+
+.delete-review-modal-button:hover {
+    transition: .2s ease-in-out;
+    background-color: #3b3b3b;
+}

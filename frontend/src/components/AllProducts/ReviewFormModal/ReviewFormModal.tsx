@@ -100,7 +100,7 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
         imageUrl.toLowerCase().endsWith(".jpg") ||
         imageUrl.toLowerCase().endsWith(".png")); 
     return (
-      <div id="review-form">
+      <div className="review-form">
         <h1 id="review-form-title">Leave Feedback</h1>
         <hr id="review-form-line"></hr>
 
@@ -142,7 +142,7 @@ const ReviewFormModal = ({ productId }: ReviewFormModalProps) => {
             </label>
             {imageUrl && (
               <div className="image-preview">
-                <img src={imageUrl} alt="Review preview" />
+                <img src={imageUrl} alt="Review preview" style={{maxWidth: "20rem", maxHeight: "20rem"}}/>
               </div>
             )}
           </div>

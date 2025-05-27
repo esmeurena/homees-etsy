@@ -65,6 +65,7 @@ const ReviewCard = ({ review, currentUserId, productId }: ReviewCardProps) => {
                             />
                         )
                     }
+                    style={{height: '2.2rem'}}
                 >
                     Edit
                 </button>
