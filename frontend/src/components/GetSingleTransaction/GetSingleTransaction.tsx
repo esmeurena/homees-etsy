@@ -60,7 +60,8 @@ const GetSingleTransaction = (): JSX.Element => {
                         <button
                             className='single-product-buttons single-product-buy-it-now'
                             onClick={makeButtonGreen}
-                            style={{ backgroundColor: isClicked ? 'green' : 'initial', color: 'white' }}>
+                            style={{ backgroundColor: isClicked ? 'green' : 'initial', color: isClicked ? 'white': 'initial' }}
+                            >
                             {textInsideButton}
                         </button>
                         <p>123 3rd st. San Francisco, California</p>
