@@ -8,7 +8,8 @@ export interface IProduct {
     price: number;
     item_count: number;
     avg_rating?: number;
-    product_images?: IProductImage[];
+    product_images: IProductImage[];
+    // product_images?: IProductImage[];
     reviews?: IReview[];
     created_at?: string;
     updated_at?: string;
