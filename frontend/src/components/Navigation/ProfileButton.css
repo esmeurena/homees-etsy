@@ -15,7 +15,7 @@
     background-color: white;
     cursor: pointer;
     /* margin: .3rem 0 .8rem 0; */
-    /* z-index: 10000; */
+    /* z-index: 0; */
 }
 
 #profile-button:hover {
@@ -25,7 +25,7 @@
 
 .login-info {
     border: 0;
-    margin: 3.5rem 0 0 -2rem;
+    /* margin: 3.5rem 0 0 -2rem; */
     color: black;
     font-size: 1rem;
     border-radius: 1rem;
@@ -35,6 +35,8 @@
     align-items: center;
     padding: 1rem;
     filter: drop-shadow(0 0 0.2rem rgb(170, 170, 170));
+    z-index: 0;
+    width: 9rem;
 }
 
 .profile-buttons {

@@ -1,9 +1,8 @@
 .profile-dropdown {
   position: absolute;
-  margin-right: 2rem;
+  margin: 4rem 9rem 0 0;
   height: 2rem;
-  width: 9rem;
-  z-index: 1;
+  width: 2rem;
 }
 
 #nav-logo {
@@ -98,8 +97,6 @@
     transition: ease-in .2s;
     background-color: white;
     cursor: pointer;
-    margin-top: .2rem;
-    z-index: 0;
 }
 
 /* #heart-button {
