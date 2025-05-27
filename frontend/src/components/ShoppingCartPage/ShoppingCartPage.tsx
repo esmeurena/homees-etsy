@@ -22,6 +22,10 @@ function ShoppingCartPage() {
         navigate("/shoppingcart")
     };
 
+    const handleCompletePurchase = () => {
+        navigate("/transaction")
+    };
+
     return (
         <div className="shopping-container">
             <h1>Shopping Cart</h1>
@@ -74,6 +78,13 @@ function ShoppingCartPage() {
 
                                 <hr className="shopping-line" />
                                 <p className="shopping-ship-message">Shipping: $5.00 (Get it by May 31-Jun 9)</p>
+
+                                    <div className="complete-purchase">
+
+                                        <button onClick={handleCompletePurchase} className="complete-purchase-button">
+                                            Complete Purchase
+                                        </button>
+                                    </div>
                             </div>
 
                         );

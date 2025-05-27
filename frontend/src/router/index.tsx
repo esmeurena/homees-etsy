@@ -10,6 +10,7 @@ import ShoppingCartPage from '../components/ShoppingCartPage';
 import GetSingleTransaction from '../components/GetSingleTransaction';
 import PurchasedPage from '../components/PurchasedPage';
 import FavoritesPage from '../components/FavoritesPage';
+import TransactionReceipt from '../components/TransactionReceipt';
 
 
 export const router = createBrowserRouter([
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
       {
         path: '/favorites',
         element: <FavoritesPage />,
+      },
+      {
+        path: '/transaction',
+        element: <TransactionReceipt />,
       },
     ],
   },

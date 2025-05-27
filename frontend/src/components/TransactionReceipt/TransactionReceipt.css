@@ -1,0 +1,8 @@
+.receipt-container {
+    max-width: 500px;
+    margin-left: -20px auto;
+    margin-right: auto;
+    margin: 20px auto;
+    background-color: rgb(241, 239, 239);
+    border-radius: 5%;
+}
