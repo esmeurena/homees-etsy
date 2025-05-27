@@ -41,4 +41,16 @@ def add_favorite_product():
 @favorite_routes.route('/<int:product_id>', methods=['DELETE'])
 @login_required
 def remove_favorite(product_id):
-    pass
+    favorite = Favorite.query.get(product_id)
+
+
+    if not favorite:
+        return {"error": "Favorite not found"}, 404
+
+    if favorite.user_id != current_user.id:
+        return {"error": "Unauthorized"}, 403
+
+    db.session.delete(favorite)
+    db.session.commit()
+
+    return {"message": "Favorite deleted successfully"}, 200
