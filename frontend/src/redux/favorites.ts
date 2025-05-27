@@ -10,6 +10,7 @@ import { IFavorite, IFavoriteState, IActionCreator } from "./types/favorites";
  ********************************/
 const GET_ALL_FAVORITES = "favorites/getAllFavorites";
 const ADD_FAVORITE = "favorites/addFavorite";
+const DELETE_FAVORITE = "favorites/deleteFavorite";
 
 
 /************************************
@@ -25,6 +26,10 @@ const addFavorite = (favorites: IFavorite) => ({
     payload: favorites,
 });
 
+const deleteFavorite = (favorite: number) => ({
+    type: DELETE_FAVORITE,
+    payload: favorite,
+});
 
 
 /***************************
@@ -63,6 +68,21 @@ export const addFavoritesThunk = (productId: number): any => async (dispatch: an
   }
 };
 
+export const deleteFavoriteThunk = (productId: number): any => async (dispatch: any) => {
+  try {
+    const res = await fetch(`/api/favorites/${productId}`, {
+      method: "DELETE"
+    });
+
+    if (res.ok) {
+      // const data: IFavorite = await res.json();
+      dispatch(deleteFavorite(productId));
+    }
+  } catch (error) {
+    return error;
+  }
+};
+
 
 /**********************************
 ↓↓↓↓↓↓↓↓↓↓ INITIAL STATE ↓↓↓↓↓↓↓↓↓↓
@@ -78,28 +98,32 @@ const initialState: IFavoriteState = {
 function favoritesReducer(state = initialState, action: IActionCreator) {
     let newState;
 
-    switch (action.type) {
-        case GET_ALL_FAVORITES:
-            const favorites = action.payload.favorites;
-            newState = { ...state };
-            newState.allFavorites = favorites;
-            let newByIdGetAllFavorites: { [id: number]: IFavorite } = {};
-            for (let favorite of favorites) {
-                newByIdGetAllFavorites[favorite.id] = favorite;
-            }
-            newState.byId = newByIdGetAllFavorites;
-            newState.allFavorites = favorites;
-            return newState;
+  switch (action.type) {
+    case GET_ALL_FAVORITES:
+      const favorites = action.payload.favorites;
+      newState = { ...state };
+      newState.allFavorites = favorites;
+      let newByIdGetAllFavorites: { [id: number]: IFavorite } = {};
+      for (let favorite of favorites) {
+        newByIdGetAllFavorites[favorite.id] = favorite;
+      }
+      newState.byId = newByIdGetAllFavorites;
+      newState.allFavorites = favorites;
+      return newState;
 
-        case ADD_FAVORITE:
-            newState = { ...state }
-            newState.allFavorites = [...newState.allFavorites, action.payload]
-            newState.byId = { ...newState.byId, [action.payload.id]: action.payload }
-            return newState;
+    case ADD_FAVORITE:
+      newState = { ...state }
+      newState.allFavorites = [...newState.allFavorites, action.payload]
+      newState.byId = { ...newState.byId, [action.payload.id]: action.payload }
+      return newState;
 
+    case DELETE_FAVORITE:
+      const newById = { ...state.byId };
+      delete newById[action.payload];
+      return { ...state, byId: newById, allFavorites: state.allFavorites.filter(item => item.id !== action.payload) };
 
-        default:
-            return state;
+    default:
+      return state;
 
 
         }

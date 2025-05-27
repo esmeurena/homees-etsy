@@ -1,18 +1,18 @@
-#review-form {
+.review-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 30rem;
+    height: auto;
     width: 25em;
 }
 
-#review-form-form {
+/* #review-form-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
+} */
 
 #review-form-title {
     font-size: 2rem;
