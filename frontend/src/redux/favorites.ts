@@ -43,7 +43,7 @@ export const getAllFavoritesThunk = (): any => async (dispatch: any) => {
             if (data.errors) {
                 throw res;
             }
-            dispatch(getAllFavorites(data))
+            dispatch(getAllFavorites(data.favorites))
 
     }
   } catch (error) {
@@ -60,8 +60,8 @@ export const addFavoritesThunk = (productId: number): any => async (dispatch: an
     });
 
     if (res.ok) {
-      const data: IFavorite = await res.json();
-      dispatch(addFavorite(data));
+      const data = await res.json();
+      dispatch(addFavorite(data.favorite));
     }
   } catch (error) {
     return error;
@@ -118,10 +118,13 @@ function favoritesReducer(state = initialState, action: IActionCreator) {
       return newState;
 
     case DELETE_FAVORITE:
+      newState = { ...state };
+      newState.allFavorites = state.allFavorites.filter(favorite => favorite.id !== action.payload);
       const newById = { ...state.byId };
       delete newById[action.payload];
-      return { ...state, byId: newById, allFavorites: state.allFavorites.filter(item => item.id !== action.payload) };
-
+      newState.byId = newById;
+      return newState;
+ 
     default:
       return state;
 
