@@ -28,17 +28,6 @@ function Navigation(): JSX.Element {
         </div>
 
         <div id='nav-right'>
-          <button id='heart-button' onClick={() => navigate('/favorites')}>
-            <img src="/images/question_logo.png" style={{ width: "80px", height: "40px", marginRight: '1.5rem' }} />
-          </button>
-
-          {/* <button id='heart-button' onClick={() => navigate('/favorites')}>
-            <img src="/images/heart_logo.png" style={{ width: "40px", height: "40px" }} />
-          </button>
-          <ProfileButton />
-          <button id='shopping-cart-button' onClick={() => navigate('/shoppingcart')}>
-            <img src="/images/shopping_cart_logo.png" style={{ width: "40px", height: "40px" }} /> */}
-
           <button className='navigation-button' onClick={() => navigate('/favorites')}>
             <img src={Heart} className="navigation-icon" />
           </button>

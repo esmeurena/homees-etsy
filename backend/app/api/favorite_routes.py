@@ -32,9 +32,9 @@ def add_favorite_product():
     db.session.add(favorite_product)
     db.session.commit()
 
-    return favorite_product.to_dict(), 201
+    # return favorite_product.to_dict(), 201
 
-    # return {"message": "Product added to Favorites"}, 201
+    return {"message": "Product added to Favorites"}, 201
 
 
 # Remove a Favorite

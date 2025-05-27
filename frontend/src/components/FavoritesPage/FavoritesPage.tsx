@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllFavoritesThunk } from '../../redux/favorites';
+import { deleteFavoriteThunk, getAllFavoritesThunk } from '../../redux/favorites';
 import { IFavorite } from '../../redux/types/favorites';
 import { RootState, useAppSelector } from '../../redux/store';
 import { useNavigate } from 'react-router-dom';
@@ -28,6 +28,18 @@ const FavoritesPage: React.FC = () => {
         return <div>No favorites yet!</div>;
     }
 
+    // const deleteFavorite = (product_id: number) => {
+    //     dispatch(deleteFavoriteThunk(product_id))
+    //     // navigate("/favorites")
+    // }
+
+    const deleteFavorite = async (e: React.MouseEvent<HTMLButtonElement>, product_id: number) => {
+            e.preventDefault();
+            await dispatch(deleteFavoriteThunk(product_id));
+    
+            navigate("/favorites")
+        };
+
     return (
         <div className="favorites-page-container">
             <h1>Your Favorites</h1>
@@ -39,6 +51,9 @@ const FavoritesPage: React.FC = () => {
                             <p> Name: {fav.product?.name}</p>
                             <p> Description: {fav.product?.description}</p>
                             <p> Rating: {fav.product?.avg_rating}</p>
+                            <button onClick={(e) => deleteFavorite(e, fav.id)}>
+                                Delete Favorite
+                            </button>
                             {/* {fav.product?.name && <p>{fav.product.name}</p>} */}
                         </div>
                     </li>
