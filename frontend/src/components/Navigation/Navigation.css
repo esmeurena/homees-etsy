@@ -1,8 +1,9 @@
 .profile-dropdown {
   position: absolute;
-  margin: 4rem 9rem 0 0;
+  margin: 4rem 10rem 0 0;
   height: 2rem;
   width: 2rem;
+  z-index: 1;
 }
 
 #nav-logo {
