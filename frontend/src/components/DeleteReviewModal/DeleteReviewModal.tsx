@@ -22,10 +22,10 @@ const DeleteReviewModal: React.FC<DeleteReviewModalProps> = ({ reviewId }) => {
         <div className="review-form-container">
             <h1 id="heading">Confirm Delete</h1>
             <div>Are you sure you want to delete this review?</div>
-            <button onClick={handleClickDelete} className="delete-review-button">
+            <button onClick={handleClickDelete} className="delete-review-modal-button">
                 Yes (Delete Review)
             </button>
-            <button onClick={closeModal} className="keep-review-button">
+            <button onClick={closeModal} className="delete-review-modal-button">
                 No (Keep Review)
             </button>
         </div>

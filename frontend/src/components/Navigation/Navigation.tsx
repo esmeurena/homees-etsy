@@ -16,7 +16,7 @@ function Navigation(): JSX.Element {
     <div>
       <div id='nav-bar'>
         <div id="nav-left">
-          <NavLink to="/" id='nav-logo'>Etsy</NavLink>
+          <NavLink to="/" id='nav-logo'>Homees</NavLink>
         </div>
 
         <div id="search-bar-test">
