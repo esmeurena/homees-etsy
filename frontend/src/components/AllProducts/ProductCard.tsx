@@ -2,10 +2,10 @@ import { NavLink } from 'react-router-dom';
 import './ProductCard.css';
 import { IUser } from '../../redux/types/session';
 import { IProductImage } from '../../redux/types/products';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFavoritesThunk } from '../../redux/favorites';
-
+import { addFavoritesThunk, deleteFavoriteThunk, getAllFavoritesThunk } from '../../redux/favorites';
+import { RootState } from '../../redux/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
@@ -22,15 +22,17 @@ interface ProductProps {
 
 const ProductCard = ({id, name, price, User, product_images, avg_rating}: ProductProps): JSX.Element => {
     const dispatch = useDispatch();
-    const [heartFill, setheartFill] = useState(false);
+    const favorites = useSelector((state: RootState) => state.favorites.allFavorites);
+    const isFavorited = favorites.some((fav) => fav.product_id === id);
 
-    const AddToFavoritesHeart = async () => {
-
-        if (!heartFill) {
+   
+    const AddToFavoritesHeart = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!isFavorited) {
             await dispatch(addFavoritesThunk(id));
-            setheartFill(true);
         } else {
-            setheartFill(false);
+           await dispatch(deleteFavoriteThunk(id))
         }
     };
 
@@ -41,10 +43,9 @@ const ProductCard = ({id, name, price, User, product_images, avg_rating}: Produc
                 onClick={AddToFavoritesHeart}
             >
                 <FontAwesomeIcon
-                    icon={heartFill ? faHeartSolid : faHeartRegular}
+                    icon={isFavorited ? faHeartSolid : faHeartRegular}
                     style={{ color: "#F1641E"}}
                 />
-                {heartFill}
             </button>
             <NavLink id='product-card' to={`/products/${id}`}>
                 <img id='product-card-image' src={

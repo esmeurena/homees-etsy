@@ -34,10 +34,9 @@ const FavoritesPage: React.FC = () => {
     // }
 
     const deleteFavorite = async (e: React.MouseEvent<HTMLButtonElement>, product_id: number) => {
-            e.preventDefault();
+        e.preventDefault();
+        e.stopPropagation();
             await dispatch(deleteFavoriteThunk(product_id));
-    
-            navigate("/favorites")
         };
 
     return (
@@ -51,7 +50,7 @@ const FavoritesPage: React.FC = () => {
                             <p> Name: {fav.product?.name}</p>
                             <p> Description: {fav.product?.description}</p>
                             <p> Rating: {fav.product?.avg_rating}</p>
-                            <button onClick={(e) => deleteFavorite(e, fav.id)}>
+                            <button onClick={(e) => deleteFavorite(e, fav.product_id)}>
                                 Delete Favorite
                             </button>
                             {/* {fav.product?.name && <p>{fav.product.name}</p>} */}
