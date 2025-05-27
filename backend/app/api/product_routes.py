@@ -17,7 +17,8 @@ def get_all_products():
 
     for product in all_products:
         user = User.query.get(product['user_id'])
-        products.append(user)
+        if user:    
+            products.append(user)
 
     users = [user.to_dict() for user in products]
 
@@ -30,8 +31,13 @@ def get_all_products():
 # Get Single Product Route
 @product_routes.route('/<int:id>')
 def get_single_product(id):
-    single_product = Product.query.get(id)
-    return single_product.to_dict()
+    try:
+        single_product = Product.query.get(id)
+        if not single_product:
+            return {"message": "Product not found", "statusCode": 404}, 404
+        return single_product.to_dict(), 200
+    except Exception as e:
+        return {"message": "can not fetch the product", "statusCode": 500}, 500
 
 
 # Create a Product Route
@@ -63,13 +69,13 @@ def create_product():
         first_image = True
         for url in urls:
             image = ProductImage(
-                url = url,
+                url = url["url"],
                 preview = first_image,
                 product_id=product_form.id
             )
             db.session.add(image)
             first_image = False
-        # db.session.add(product_form)
+        db.session.add(product_form)
         db.session.commit()
         return product_form.to_dict(), 201
 
@@ -89,27 +95,28 @@ def update_product(id):
     if form.validate_on_submit():
         data = form.data
 
-        # user_id = current_user.id
         update_a_product.name = data['name'],
         update_a_product.description = data['description'],
         update_a_product.price = data['price'],
         update_a_product.item_count = data['item_count'],
         update_a_product.updated_at=datetime.utcnow(),
-        # update_a_product.update({user_id, }),
+
+        ProductImage.query.filter_by( product_id = update_a_product.id ).delete()
+        # ProductImage.query.get( product_id = update_a_product.id ).delete()
         urls = request.json.get("product_images", [])
 
-        # product_images = []
-        # first_image = True
-        # for url in urls:
-        #     image = ProductImage(
-        #         url = url,
-        #         preview = first_image,
-        #         product_id=update_a_product.id
-        #     )
-        #     db.session.add(image)
-        #     first_image = False
+        first_image = True
+        for url in urls:
+            image = ProductImage(
+                url = url["url"],
+                preview = first_image,
+                product_id=update_a_product.id
+            )
+            # update_a_product.product_images.append(image)
+            db.session.add(image)
+            first_image = False
 
-        db.session.update(update_a_product)
+        # db.session.update(update_a_product)
         db.session.commit()
         return update_a_product.to_dict(), 200
 

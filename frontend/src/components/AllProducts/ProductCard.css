@@ -13,10 +13,12 @@
     height: 15rem;
     object-fit: cover;
     transition: filter .1s ease-in;
+    z-index: 0;
+    border-radius: 1rem;
 }
 
 #product-card:hover #product-card-image {
-    filter: drop-shadow(0 0 .1rem rgb(177, 177, 177))
+    filter: drop-shadow(0 0 .1rem rgb(177, 177, 177));
 }
 
 #product-card-name-review {
@@ -27,4 +29,21 @@
 .product-card-text {
     font-size: .9rem;
     margin: .5rem 0;
+}
+
+.heart {
+  background: transparent;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1.5rem;
+  z-index: 2;
+  transition: transform 0.1s;
+}
+.product-and-heart{
+    position: relative;
+    width: auto;
 }

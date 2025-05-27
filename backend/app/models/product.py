@@ -21,12 +21,12 @@ class Product(db.Model):
 
     # one-to-many
     user = db.relationship("User", back_populates="products")
-    reviews = db.relationship("Review", back_populates="products")
+    reviews = db.relationship("Review", back_populates="products", cascade="all, delete-orphan")
     product_images = db.relationship("ProductImage", back_populates="product", cascade="all, delete-orphan")
-    favorites = db.relationship("Favorite", back_populates="products")
-    shopping_carts = db.relationship("ShoppingCart", back_populates="products")
-    transactions = db.relationship("Transaction", back_populates="products")
-    shopping_cart_items = db.relationship("ShoppingCartItem", back_populates="products")
+    favorites = db.relationship("Favorite", back_populates="products", cascade="all, delete-orphan")
+    shopping_carts = db.relationship("ShoppingCart", back_populates="products", cascade="all, delete-orphan")
+    transactions = db.relationship("Transaction", back_populates="products", cascade="all, delete-orphan")
+    shopping_cart_items = db.relationship("ShoppingCartItem", back_populates="products", cascade="all, delete-orphan")
 
 
     def to_dict(self):

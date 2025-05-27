@@ -2,8 +2,7 @@
 ↓↓↓↓↓↓↓↓↓↓ IMPORTS ↓↓↓↓↓↓↓↓↓↓
  ***************************/
 
-
-import { IProduct, IProductState, IActionCreator, ICreateProduct } from './types/products';
+import { IProduct, IProductState, IActionCreator } from './types/products';
 
 /*********************************
 ↓↓↓↓↓↓↓↓↓↓ ACTION TYPES ↓↓↓↓↓↓↓↓↓↓
@@ -19,26 +18,25 @@ const DELETE_A_PRODUCT = 'products/DELETE_A_PRODUCT';
 ↓↓↓↓↓↓↓↓↓↓ ACTION CREATORS ↓↓↓↓↓↓↓↓↓↓
  ***********************************/
 
-
 const createProduct = (product: IProduct) => ({
   type: CREATE_A_PRODUCT,
   payload: product
 });
 
 const getAllProducts = (products: IProduct[]) => ({
-    type: GET_ALL_PRODUCTS,
-    payload: products
+  type: GET_ALL_PRODUCTS,
+  payload: products
 })
 
 
 const getSingleProduct = (product: IProduct) => ({
-    type: GET_SINGLE_PRODUCT,
-    payload: product
+  type: GET_SINGLE_PRODUCT,
+  payload: product
 })
 
 const updateAProduct = (product: IProduct) => ({
-    type: UPDATE_A_PRODUCT,
-    payload: product
+  type: UPDATE_A_PRODUCT,
+  payload: product
 })
 
 const deleteAProduct = (productId: number) => ({
@@ -50,7 +48,7 @@ const deleteAProduct = (productId: number) => ({
 ↓↓↓↓↓↓↓↓↓↓ THUNKS ↓↓↓↓↓↓↓↓↓↓
  **************************/
 
-export const createProductThunk = (product: ICreateProduct):any => async (dispatch: any) => {
+export const createProductThunk = (product: IProduct): any => async (dispatch: any) => {
   try {
 
     const response = await fetch("/api/products/create", {
@@ -60,8 +58,8 @@ export const createProductThunk = (product: ICreateProduct):any => async (dispat
     });
 
     if (response.ok) {
-    //   const data = await response.json();
-    const data : IProduct = await response.json();
+    const data = await response.json();
+    // const data : IProduct = await response.json();
       dispatch(createProduct(data));
     } else {
       throw response;
@@ -72,46 +70,44 @@ export const createProductThunk = (product: ICreateProduct):any => async (dispat
   }
 };
 
-
 export const getAllProductsThunk = (): any => async (dispatch: any) => {
-    try {
-        const res = await fetch('/api/products');
-        if (res.ok) {
-            const data = await res.json();
-            if (data.errors) {
-                throw res;
-            }
-            dispatch(getAllProducts(data))
-            return data.Products;
-        } else {
-            throw res;
-        }
-    } catch (e) {
-        const err = e as Response;
-        return (await err.json());
+  try {
+    const res = await fetch('/api/products');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.errors) {
+        throw res;
+      }
+      dispatch(getAllProducts(data))
+      return data.Products;
+    } else {
+      throw res;
     }
+  } catch (e) {
+    const err = e as Response;
+    return (await err.json());
+  }
 }
 
-
 export const getSingleProductThunk = (productId: number): any => async (dispatch: any) => {
-    try {
-        const res = await fetch(`/api/products/${productId}`);
-        if (res.ok) {
-            const data = await res.json();
-            dispatch(getSingleProduct(data));
-            return data;
+  try {
+    const res = await fetch(`/api/products/${productId}`);
+    if (res.ok) {
+      const data = await res.json();
+      dispatch(getSingleProduct(data));
+      return data;
 
 
-        } else {
-            throw res;
-        }
-    } catch (error) {
-
-        return error;
+    } else {
+      throw res;
     }
+  } catch (error) {
+
+    return error;
+  }
 };
 
-export const updateAProductThunk = (productId: number, product: ICreateProduct):any => async (dispatch: any) => {
+export const updateAProductThunk = (productId: number, product: IProduct): any => async (dispatch: any) => {
   try {
 
     const response = await fetch(`/api/products/${productId}`, {
@@ -121,8 +117,8 @@ export const updateAProductThunk = (productId: number, product: ICreateProduct):
     });
 
     if (response.ok) {
-    //   const data = await response.json();
-    const data : IProduct = await response.json();
+      // const data = await response.json();
+      const data: IProduct = await response.json();
       dispatch(updateAProduct(data));
     } else {
       throw response;
@@ -132,7 +128,6 @@ export const updateAProductThunk = (productId: number, product: ICreateProduct):
     return (await err.json())
   }
 };
-
 
 export const deleteAProductThunk = (productId: number): any => async (dispatch: any) => {
   try {
@@ -151,84 +146,79 @@ export const deleteAProductThunk = (productId: number): any => async (dispatch: 
   }
 };
 
-
-
 /**********************************
 ↓↓↓↓↓↓↓↓↓↓ INITIAL STATE ↓↓↓↓↓↓↓↓↓↓
  *********************************/
 
-
 const initialState: IProductState = {
-    byId: {},
-    allProducts: []
+  byId: {},
+  allProducts: []
 };
-
 
 /****************************
 ↓↓↓↓↓↓↓↓↓↓ REDUCER ↓↓↓↓↓↓↓↓↓↓
  ***************************/
 
 function productsReducer(state = initialState, action: IActionCreator) {
-    // let newState: IProductState = {
-    //     byId: { ...state.byId },
-    //     allProducts: [...state.allProducts]
-    // };
-    let newState;
-    switch (action.type) {
+  // let newState: IProductState = {
+  //     byId: { ...state.byId },
+  //     allProducts: [...state.allProducts]
+  // };
+  let newState;
+  switch (action.type) {
 
-        case CREATE_A_PRODUCT:
-            newState = { ...state };
-            newState.allProducts = [...newState.allProducts, action.payload];
-            newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
+    case CREATE_A_PRODUCT:
+      newState = { ...state };
+      newState.allProducts = [...newState.allProducts, action.payload];
+      newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
 
-            return newState;
+      return newState;
 
-        case GET_ALL_PRODUCTS:
-            const products = action.payload.Products;
-            newState = { ...state }
-            newState.allProducts = products;
-            let newByIdGetAllProducts: { [id: number]: IProduct} = {};
-            for (let product of products) {
-                newByIdGetAllProducts[product.id] = product;
-            }
-            newState.byId = newByIdGetAllProducts;
-            newState.allProducts = products;
-            return newState;
+    case GET_ALL_PRODUCTS:
+      const products = action.payload.Products;
+      newState = { ...state }
+      newState.allProducts = products;
+      
+      let newByIdGetAllProducts: { [id: number]: IProduct } = {};
+      for (let product of products) {
+        newByIdGetAllProducts[product.id] = product;
+      }
+      newState.byId = newByIdGetAllProducts;
+      newState.allProducts = products;
+      return newState;
 
-        case GET_SINGLE_PRODUCT:
-            // const singleProduct = [action.payload];
-            // newState.allProducts = singleProduct;
-            // let newByIdGetSingleProduct: { [id: number]: IProduct } = {};
-            // for (let product of [singleProduct]) {
-            //     newByIdGetSingleProduct[product.id] = product;
-            // }
-            // newState.byId = newByIdGetSingleProduct;
-            newState = { ...state };
-            newState.allProducts = [action.payload];
+    case GET_SINGLE_PRODUCT:
+      // const singleProduct = [action.payload];
+      // newState.allProducts = singleProduct;
+      // let newByIdGetSingleProduct: { [id: number]: IProduct } = {};
+      // for (let product of [singleProduct]) {
+      //     newByIdGetSingleProduct[product.id] = product;
+      // }
+      // newState.byId = newByIdGetSingleProduct;
+      newState = { ...state };
+      newState.allProducts = [action.payload];
 
-            newState.byId[action.payload.id] = action.payload;
-            return newState;
+      newState.byId[action.payload.id] = action.payload;
+      return newState;
 
-        case UPDATE_A_PRODUCT:
-            newState = { ...state };
-            newState.allProducts = [...newState.allProducts, action.payload];
-            newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
+    case UPDATE_A_PRODUCT:
+      newState = { ...state };
+      newState.allProducts = [...newState.allProducts, action.payload];
+      newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
 
-            return newState;
+      return newState;
 
-
-
-        case DELETE_A_PRODUCT:
-          newState = { ...state };
-          newState.allProducts = state.allProducts.filter( (product) => product.id !== action.payload);
-          newState.byId = { ...state.byId };
-          delete newState.byId[action.payload];
-          return newState;
+    case DELETE_A_PRODUCT:
+      newState = { ...state };
+      newState.allProducts = state.allProducts.filter((product) => product.id !== action.payload);
+      newState.byId = { ...state.byId };
+      delete newState.byId[action.payload];
+      return newState;
 
 
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 }
 
 

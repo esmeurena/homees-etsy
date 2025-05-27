@@ -1,8 +1,24 @@
 import './ReviewCard.css';
-import { IReviewCard } from '../../redux/types/reviews';
+import { IReview, IReviewCard } from '../../redux/types/reviews';
+import { useModal } from '../../context/Modal'
+import UpdateReviewModal from '../AllProducts/UpdateAReview';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import OpenModalButton from '../OpenModalButton';
+import DeleteReviewModal from '../DeleteReviewModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 
-const ReviewCard = ({review}: IReviewCard) => {
+interface ReviewCardProps {
+    review: IReview;
+    currentUserId?: number;
+    productId: number;
+}
 
+
+const ReviewCard = ({ review, currentUserId, productId }: ReviewCardProps) => {
+    const { setModalContent } = useModal();
+    const currentUser = useSelector((state: RootState) => state.session.user)
     const reviewDate = (reviewDate: string) => {
         const splReviewDate: string[] = reviewDate.split(' ');
         const constructedReviewDate: string =
@@ -13,11 +29,13 @@ const ReviewCard = ({review}: IReviewCard) => {
     return (
         <div id='review-card'>
             <div id='review-card-stars'>
-                {Array(review.stars).fill(0).map((star, i) => {
-                    return (
-                        <span key={`${star}-${i}`}>&#9733;</span>
-                    )
-                })}
+                {Array(review.stars).fill(0).map((_, i) => (
+                    <FontAwesomeIcon
+                        key={i}
+                        icon={faStar}
+                        style={{marginRight: "2px"}}
+                    />
+                ))}
             </div>
             <span style={{fontSize: '1.1rem'}}>{review.review}</span>
                 {review.review_images.map((image, i) => {
@@ -35,7 +53,28 @@ const ReviewCard = ({review}: IReviewCard) => {
                     {reviewDate(review.updated_at)}
                 </span>
             </div>
-
+            { currentUser && currentUser.id === review.user.id && (
+                <div id='review-card-buttons'>
+                <button
+                    className='update-delete-button'
+                    onClick={() =>
+                        setModalContent(
+                            <UpdateReviewModal
+                                reviewId={review.id}
+                                productId={productId}
+                            />
+                        )
+                    }
+                >
+                    Edit
+                </button>
+                <OpenModalButton
+                        buttonText="Delete"
+                        buttonClassName="delete-btn"
+                    modalComponent={<DeleteReviewModal reviewId={review.id} />}
+                />
+               </div>
+                )}
         </div>
     )
 }
