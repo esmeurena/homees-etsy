@@ -118,9 +118,11 @@ function favoritesReducer(state = initialState, action: IActionCreator) {
       return newState;
 
     case DELETE_FAVORITE:
-      const newById = { ...state.byId };
-      delete newById[action.payload];
-      return { ...state, byId: newById, allFavorites: state.allFavorites.filter(item => item.id !== action.payload) };
+      newState = { ...state };
+      newState.allFavorites = state.allFavorites.filter((favorite) => favorite.product_id !== action.payload);
+      newState.byId = { ...state.byId }
+      delete newState.byId[action.payload];
+      return newState;
 
     default:
       return state;
