@@ -7,7 +7,7 @@ import { getSingleProductThunk } from '../../redux/products';
 import { RootState } from '../../redux/store';
 import OpenModalButton from '../OpenModalButton';
 import ReviewFormModal from '../AllProducts/ReviewFormModal/ReviewFormModal';
-import { addItemToShoppingCartThunk, updateItemInShoppingCartThunk } from '../../redux/shopping_cart';
+import { addItemToShoppingCartThunk, getAllShoppingCartItemsThunk, updateItemInShoppingCartThunk } from '../../redux/shopping_cart';
 import DeleteProductModal from '../DeleteProductModal';
 import AllReviews from '../AllReviews';
 import { IReview } from '../../redux/types/reviews';
@@ -33,7 +33,8 @@ const GetSingleProduct = (): JSX.Element => {
     useEffect(() => {
         const singleProduct = async () => {
             await dispatch(getSingleProductThunk(Number(id)));
-            await dispatch(getAllReviewsThunk(Number(id)))
+            await dispatch(getAllReviewsThunk(Number(id)));
+            await dispatch(getAllShoppingCartItemsThunk());
             setIsLoaded(true);
         };
 
@@ -53,25 +54,29 @@ const GetSingleProduct = (): JSX.Element => {
     }
 
     const makeButtonGreen = async () => {
-        let added_to_cart = false;
-        for(let i = 0; i < shoppingCart.length; i++){
-            if(shoppingCart[i].product_id == product.id ){
-                added_to_cart = true;
-            }
-        }
+        // let added_to_cart = false;
+        // for(let i = 0; i < shoppingCart.length; i++){
+        //     if(shoppingCart[i].product_id == product.id ){
+        //         added_to_cart = true;
+        //     }
+        // }
+        setIsClicked(true);
 
-        if(added_to_cart) {
-            const new_item_count = product.item_count + 1;
+        let alreadyInShoppingCart = shoppingCart.find(item => item.product_id === product.id);
+        if(alreadyInShoppingCart) {
+            const new_item_count = alreadyInShoppingCart.item_count + 1;
             await dispatch(updateItemInShoppingCartThunk(product.id, new_item_count));
+            setTextInsideButton('Added to cart again ✓');
         } else {
             await dispatch(addItemToShoppingCartThunk(product.id));
-        }
-        setIsClicked(true);
-        if (textInsideButton === 'Add to cart') {
             setTextInsideButton('Added to cart ✓');
-        } else {
-            setTextInsideButton('Add to cart');
         }
+        // setIsClicked(true);
+        // if (textInsideButton === 'Add to cart') {
+        //     setTextInsideButton('Added to cart ✓');
+        // } else {
+        //     setTextInsideButton('Add to cart');
+        // }
     };
 
     const hasReviewed = reviews.some(

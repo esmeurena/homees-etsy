@@ -21,6 +21,8 @@ def add_favorite_product():
     data = request.get_json()
     product_id = data.get("product_id")
     user_id = current_user.id
+
+
     single_product = Product.query.get(product_id)
 
     favorite_product = Favorite(
@@ -32,7 +34,7 @@ def add_favorite_product():
     db.session.add(favorite_product)
     db.session.commit()
 
-    # return favorite_product.to_dict(), 201
+    return favorite_product.to_dict(), 201
 
     return {"message": "Product added to Favorites"}, 201
 
@@ -41,16 +43,15 @@ def add_favorite_product():
 @favorite_routes.route('/<int:product_id>', methods=['DELETE'])
 @login_required
 def remove_favorite(product_id):
-    favorite = Favorite.query.get(product_id)
-
+    favorite = Favorite.query.filter_by(
+        user_id=current_user.id,
+        product_id=product_id
+    ).first()
 
     if not favorite:
-        return {"error": "Favorite not found"}, 404
-
-    if favorite.user_id != current_user.id:
-        return {"error": "Unauthorized"}, 403
+        return {"error": "favorite not found"}, 404
 
     db.session.delete(favorite)
     db.session.commit()
 
-    return {"message": "Favorite deleted successfully"}, 200
+    return {"message": "Favorite product deleted successfully"}, 200

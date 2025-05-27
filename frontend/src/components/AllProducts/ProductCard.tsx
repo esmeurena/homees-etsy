@@ -4,8 +4,8 @@ import { IUser } from '../../redux/types/session';
 import { IProductImage } from '../../redux/types/products';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFavoritesThunk } from '../../redux/favorites';
-
+import { addFavoritesThunk, deleteFavoriteThunk } from '../../redux/favorites';
+import { RootState } from '../../redux/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
@@ -25,15 +25,15 @@ const ProductCard = ({ id, name, price, User, product_images, avg_rating }: Prod
     const dispatch = useDispatch();
     const [heartFill, setheartFill] = useState(false);
     const currentUser = useSelector((state: RootState) => state.session.user);
+    const favorites = useSelector((state: RootState) => state.favorites.allFavorites)
 
-
+    const isFavorited = favorites.some((fav) => fav.product_id === id)
     const AddToFavoritesHeart = async () => {
 
-        if (!heartFill) {
+        if (!isFavorited) {
             await dispatch(addFavoritesThunk(id));
-            setheartFill(true);
         } else {
-            setheartFill(false);
+            await dispatch(deleteFavoriteThunk(id))
         }
     };
 
