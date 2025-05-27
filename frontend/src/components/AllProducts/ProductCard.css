@@ -10,10 +10,10 @@
 
 
 #product-card-image {
+    z-index: -1;
     height: 15rem;
     object-fit: cover;
     transition: filter .1s ease-in;
-    z-index: 0;
 }
 
 #product-card:hover #product-card-image {
@@ -39,8 +39,8 @@
   cursor: pointer;
   padding: 0;
   font-size: 1.5rem;
-  z-index: 2;
   transition: transform 0.1s;
+  z-index: 0;
 }
 .product-and-heart{
     position: relative;

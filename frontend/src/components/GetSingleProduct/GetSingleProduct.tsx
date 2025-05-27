@@ -197,7 +197,7 @@ const GetSingleProduct = (): JSX.Element => {
                     })}
                     </div>
                 </div>
-            
+
 
             {/* {currentUser?.id === product.user_id && (
                 <>
