@@ -1,11 +1,11 @@
 # Homeees
 ## Description Sumamry
 
+This project is a full-stack recreation of Etsy.com built from scratch with Docker for containerization. It leverages SQLAlchemy, Python, and Flask for the backend, along with TypeScript, React, Redux, and CSS for the frontend.
 
+## View the website here:
 
-# Flask React Project
-
-This is the starter for the Flask React project.
+https://homees.onrender.com
 
 ## Getting started
 
